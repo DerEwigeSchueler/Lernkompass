@@ -1,0 +1,989 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lernkompass</title>
+<meta name="description" content="Lernkompass: die passende Lernmethode finden, Methoden mit Belegen nachlesen, nach dem Unterricht abrufen, Aufschieben überwinden und mit KI eine Probeklausur erstellen.">
+<meta name="theme-color" content="#f8f7fb" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1d1b23" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Lernkompass">
+<style>
+@font-face{font-family:"Lora";src:url(fonts/lora.woff) format("woff");font-weight:400 700;font-style:normal;font-display:swap}
+@font-face{font-family:"Lora";src:url(fonts/lora-italic.woff) format("woff");font-weight:400 700;font-style:italic;font-display:swap}
+@font-face{font-family:"Poppins";src:url(fonts/poppins-400.woff) format("woff");font-weight:400;font-display:swap}
+@font-face{font-family:"Poppins";src:url(fonts/poppins-500.woff) format("woff");font-weight:500;font-display:swap}
+@font-face{font-family:"Poppins";src:url(fonts/poppins-700.woff) format("woff");font-weight:600 700;font-display:swap}
+/* Layout: helle, luftige Lesespalte; feine Linienornamente schweben im Hintergrund; Karten mit weichen, mehrschichtigen Schatten; unten eine schwebende Navigationsleiste. */
+:root{
+  --bg:#fcfbfe; --bg2:#f6f3fb; --paper:#ffffff; --ink:#2b2834; --body:#514c5c; --muted:#8a8494; --line:#ece8f2; --line2:#ddd6e8;
+  --lav:#7a68b8; --lav-l:#f0ecfa; --peach:#c47f52; --peach-l:#fdf0e6; --sage:#4f8a68; --sage-l:#e7f3ec;
+  --sky:#4f86b8; --sky-l:#e8f1fa; --rose:#c06a7e; --rose-l:#fbebef; --gold:#a07714; --gold-l:#fcf4dc;
+  --ok:#3a7c55; --ok-l:#e3f3e9; --no:#b0475e; --no-l:#fbe7eb;
+  --sh-1:0 1px 2px rgba(60,48,96,.05),0 2px 6px rgba(60,48,96,.04);
+  --sh-2:0 1px 2px rgba(60,48,96,.04),0 6px 18px -6px rgba(90,72,150,.14),0 18px 40px -24px rgba(90,72,150,.22);
+  --sh-3:0 2px 4px rgba(60,48,96,.05),0 12px 28px -10px rgba(90,72,150,.22),0 30px 60px -30px rgba(90,72,150,.30);
+  --orn:#b9acd9; --orn2:#e2b79a; --orn3:#9cc7ad;
+  --serif:"Lora",Georgia,"Times New Roman",serif; --sans:"Poppins",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --navh:66px; --ease:cubic-bezier(.22,.8,.3,1);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1c1a22; --bg2:#221f29; --paper:#27242e; --ink:#f1edf4; --body:#d5cfdb; --muted:#a39cab; --line:#363140; --line2:#433d4f;
+  --lav:#b5a8e0; --lav-l:#322d45; --peach:#eeb995; --peach-l:#3f3128; --sage:#9cc4ab; --sage-l:#28372e;
+  --sky:#9fc0de; --sky-l:#283542; --rose:#e4a1b0; --rose-l:#402e37; --gold:#e2bc5d; --gold-l:#3d3420;
+  --ok:#8fd0a6; --ok-l:#24372b; --no:#ec98a8; --no-l:#43272e;
+  --sh-1:0 1px 2px rgba(0,0,0,.3); --sh-2:0 1px 2px rgba(0,0,0,.3),0 10px 24px -12px rgba(0,0,0,.55); --sh-3:0 2px 4px rgba(0,0,0,.35),0 18px 40px -16px rgba(0,0,0,.6);
+  --orn:#5d5480; --orn2:#7a5a45; --orn3:#4b6b58; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1c1a22; --bg2:#221f29; --paper:#27242e; --ink:#f1edf4; --body:#d5cfdb; --muted:#a39cab; --line:#363140; --line2:#433d4f;
+  --lav:#b5a8e0; --lav-l:#322d45; --peach:#eeb995; --peach-l:#3f3128; --sage:#9cc4ab; --sage-l:#28372e;
+  --sky:#9fc0de; --sky-l:#283542; --rose:#e4a1b0; --rose-l:#402e37; --gold:#e2bc5d; --gold-l:#3d3420;
+  --ok:#8fd0a6; --ok-l:#24372b; --no:#ec98a8; --no-l:#43272e;
+  --sh-1:0 1px 2px rgba(0,0,0,.3); --sh-2:0 1px 2px rgba(0,0,0,.3),0 10px 24px -12px rgba(0,0,0,.55); --sh-3:0 2px 4px rgba(0,0,0,.35),0 18px 40px -16px rgba(0,0,0,.6);
+  --orn:#5d5480; --orn2:#7a5a45; --orn3:#4b6b58; color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);background-image:radial-gradient(120% 60% at 100% 0%,var(--lav-l) 0%,transparent 55%),radial-gradient(90% 50% at 0% 100%,var(--peach-l) 0%,transparent 60%);background-attachment:fixed;
+  color:var(--body);font-family:var(--sans);font-size:15px;line-height:1.65;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-top:max(20px,env(safe-area-inset-top,0px));padding-bottom:calc(var(--navh) + 40px + env(safe-area-inset-bottom,0px));overflow-x:hidden}
+.orn{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.orn svg{position:absolute;fill:none;stroke-width:1;vector-effect:non-scaling-stroke}
+.orn .o1{width:300px;height:300px;top:-90px;right:-110px;stroke:var(--orn)}
+.orn .o2{width:180px;height:180px;bottom:9%;left:-70px;stroke:var(--orn2)}
+.orn .o3{width:120px;height:120px;top:42%;right:-30px;stroke:var(--orn3)}
+.orn .o4{width:90px;height:90px;top:16%;left:-18px;stroke:var(--orn)}
+main{position:relative;z-index:1;max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1,h2,h3{font-family:var(--serif);color:var(--ink);text-wrap:balance;margin:0;line-height:1.22;letter-spacing:-.005em}
+h1{font-size:clamp(1.75rem,5.4vw,2.35rem);font-weight:600}
+h2{font-size:1.32rem;font-weight:600}
+h3{font-size:1.04rem;font-weight:600}
+p{margin:0}
+a{color:var(--lav)}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:.68rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--lav);background:var(--paper);border:1px solid var(--line2);padding:5px 12px 5px 10px;border-radius:99px;width:fit-content;box-shadow:var(--sh-1)}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.7}
+.flourish{display:block;width:100%;max-width:260px;height:14px;color:var(--orn)}
+.flourish path{stroke-dasharray:420;stroke-dashoffset:0}
+header.top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 16px;align-items:center}
+header.top .txt{display:flex;flex-direction:column;gap:8px;min-width:0}
+header.top .ill{width:clamp(104px,28vw,160px);aspect-ratio:1;max-width:100%}
+header.top .ill img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 10px 14px rgba(90,72,150,.14))}
+.lead{max-width:62ch;grid-column:1/-1}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:20px clamp(16px,3.5vw,26px);display:flex;flex-direction:column;gap:14px;box-shadow:var(--sh-2)}
+.box{border-radius:16px;padding:13px 15px;font-size:.92rem;color:var(--ink);border:1px solid transparent}
+.box.tip{background:var(--gold-l);border-color:color-mix(in srgb,var(--gold) 14%,transparent)} .box.info{background:var(--sky-l);border-color:color-mix(in srgb,var(--sky) 14%,transparent)} .box.warm{background:var(--rose-l);border-color:color-mix(in srgb,var(--rose) 14%,transparent)} .box.ok{background:var(--ok-l)} .box.lav{background:var(--lav-l);border-color:color-mix(in srgb,var(--lav) 14%,transparent)}
+.box b.k{color:var(--gold)}
+.note{font-size:.82rem;color:var(--muted)}
+.src{font-size:.78rem;color:var(--muted)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{font:inherit;font-weight:600;font-size:.9rem;border-radius:99px;padding:10px 20px;border:1px solid transparent;background:linear-gradient(180deg,color-mix(in srgb,var(--lav) 88%,#fff),var(--lav));color:#fff;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;box-shadow:0 1px 1px rgba(60,48,96,.12),0 6px 16px -6px color-mix(in srgb,var(--lav) 70%,transparent);transition:transform .18s var(--ease),box-shadow .18s var(--ease),filter .18s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 2px 2px rgba(60,48,96,.12),0 10px 22px -8px color-mix(in srgb,var(--lav) 75%,transparent)}
+.btn:active{transform:translateY(0) scale(.97)}
+.btn.ghost{background:var(--paper);color:var(--ink);border-color:var(--line2);box-shadow:var(--sh-1)}
+.btn.small{padding:6px 14px;font-size:.82rem}
+.btn:disabled{opacity:.4;cursor:default;transform:none}
+.link{font:inherit;background:none;border:0;padding:0;color:var(--lav);font-weight:600;cursor:pointer;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,label.opt:focus-within{outline:2px solid var(--lav);outline-offset:3px}
+.back{font:inherit;font-size:.86rem;background:transparent;border:0;color:var(--muted);cursor:pointer;padding:0;width:fit-content}
+input[type=text],textarea,select{font:inherit;font-size:.95rem;color:var(--ink);background:var(--bg);border:1px solid var(--line2);border-radius:14px;padding:11px 13px;width:100%;transition:border-color .2s,box-shadow .2s,background .2s}
+input[type=text]:focus,textarea:focus,select:focus{outline:none;border-color:var(--lav);background:var(--paper);box-shadow:0 0 0 4px var(--lav-l)}
+textarea{min-height:110px;resize:vertical;line-height:1.5}
+label.f{display:flex;flex-direction:column;gap:6px;font-size:.86rem;font-weight:500;color:var(--ink)}
+
+/* Start */
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:420px){.tiles{grid-template-columns:1fr}}
+.tile{font:inherit;text-align:left;cursor:pointer;border-radius:22px;padding:16px;border:1px solid var(--line);background:var(--paper);color:var(--body);display:flex;flex-direction:column;gap:6px;min-height:132px;position:relative;overflow:hidden;box-shadow:var(--sh-2);transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.tile::after{content:"";position:absolute;right:-26px;bottom:-26px;width:90px;height:90px;border-radius:50%;border:1px solid var(--tc,var(--orn));opacity:.5;transition:transform .5s var(--ease)}
+.tile:hover{transform:translateY(-3px);box-shadow:var(--sh-3)}
+.tile:hover::after{transform:scale(1.25)}
+.ic{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.6),0 4px 10px -4px currentColor}
+.ic svg{width:22px;height:22px}
+.tile b{font-family:var(--serif);font-size:1.08rem;color:var(--ink);line-height:1.25}
+.tile span.d{font-size:.84rem}
+.due{display:flex;gap:14px;align-items:center;background:linear-gradient(135deg,var(--sage-l),var(--paper));border:1px solid var(--line);border-radius:20px;padding:14px 16px;color:var(--ink);box-shadow:var(--sh-2)}
+.due .n{font-family:var(--serif);font-weight:700;font-size:2rem;color:var(--sage);line-height:1;min-width:1.2ch;text-align:center}
+
+/* Finder */
+.prog{display:flex;gap:5px}
+.prog i{flex:1;height:5px;border-radius:3px;background:var(--line);overflow:hidden;position:relative}
+.prog i.done::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--lav),color-mix(in srgb,var(--lav) 60%,var(--rose)));border-radius:3px;animation:fill .5s var(--ease) both}
+@keyframes fill{from{transform:scaleX(0);transform-origin:left}to{transform:scaleX(1);transform-origin:left}}
+.opts{display:grid;gap:9px}
+.opt{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);border-radius:16px;padding:13px 15px;background:var(--paper);cursor:pointer;color:var(--ink);font-size:.94rem;line-height:1.4;box-shadow:var(--sh-1);transition:border-color .2s,background .2s,transform .2s var(--ease),box-shadow .2s}
+.opt:hover{transform:translateX(2px);box-shadow:var(--sh-2)}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt .dot{flex:0 0 20px;height:20px;border-radius:50%;border:1.5px solid var(--line2);margin-top:1px;display:grid;place-items:center;transition:border-color .2s}
+.opt .dot::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--lav);transform:scale(0);transition:transform .25s var(--ease)}
+.opt small{display:block;color:var(--muted);font-size:.8rem;margin-top:2px}
+.opt.sel{border-color:color-mix(in srgb,var(--lav) 55%,transparent);background:var(--lav-l)}
+.opt.sel .dot{border-color:var(--lav)}
+.opt.sel .dot::after{transform:scale(1)}
+.rec{border:1px solid var(--line);border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px;background:var(--paper);box-shadow:var(--sh-2);position:relative;overflow:hidden}
+.rec.first{box-shadow:var(--sh-3);border-color:color-mix(in srgb,var(--lav) 30%,var(--line))}
+.rec.first::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--lav),var(--rose),var(--peach))}
+.rec .rank{font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--lav)}
+.rec ul{margin:0;padding-left:18px;font-size:.9rem}
+
+/* Methoden */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:.82rem;border-radius:99px;padding:6px 14px;border:1px solid var(--line2);background:var(--paper);color:var(--body);cursor:pointer;box-shadow:var(--sh-1);transition:all .2s var(--ease)}
+.chip[aria-pressed="true"]{background:var(--lav);color:#fff;border-color:var(--lav);box-shadow:0 6px 14px -6px var(--lav)}
+.mlist{display:grid;gap:10px}
+.mitem{font:inherit;text-align:left;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;border:1px solid var(--line);border-radius:18px;padding:15px 16px;background:var(--paper);color:var(--body);box-shadow:var(--sh-1);transition:transform .22s var(--ease),box-shadow .22s var(--ease)}
+.mitem:hover{transform:translateY(-2px);box-shadow:var(--sh-2)}
+.mitem b{font-family:var(--serif);font-size:1.04rem;color:var(--ink)}
+.mitem span.d{grid-column:1/-1;font-size:.84rem}
+.ev{display:inline-flex;align-items:center;gap:6px;font-size:.7rem;font-weight:600;border-radius:99px;padding:3px 10px;white-space:nowrap}
+.ev i{display:inline-flex;gap:2px}
+.ev i em{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.22}
+.ev i em.on{opacity:1}
+.ev.e3{background:var(--ok-l);color:var(--ok)} .ev.e2{background:var(--gold-l);color:var(--gold)} .ev.e1{background:var(--no-l);color:var(--no)} .ev.e0{background:var(--bg2);color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:.72rem;font-weight:500;border-radius:99px;padding:2px 10px;background:var(--lav-l);color:var(--lav)}
+.tag.art{background:var(--paper);border:1px solid var(--line2);color:var(--body)}
+.sec{display:flex;flex-direction:column;gap:8px}
+.sec h3{display:flex;gap:10px;align-items:center}
+.sec h3 .bar{width:18px;height:1px;background:currentColor;opacity:.6}
+ol.steps{margin:0;padding:0;list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:9px}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:28px minmax(0,1fr);gap:11px;font-size:.93rem}
+ol.steps li::before{content:counter(s);width:28px;height:28px;border-radius:50%;background:var(--paper);border:1px solid color-mix(in srgb,var(--lav) 40%,transparent);color:var(--lav);font-weight:600;display:grid;place-items:center;font-size:.8rem;box-shadow:var(--sh-1)}
+ul.plain{margin:0;padding-left:18px;font-size:.93rem;display:flex;flex-direction:column;gap:4px}
+.cite{border-left:1px solid var(--line2);padding:2px 0 2px 14px;font-size:.88rem;display:flex;flex-direction:column;gap:3px}
+.cite .ref{font-size:.79rem;color:var(--muted)}
+.cite .ref a{color:var(--muted)}
+.copyref{font:inherit;font-size:.72rem;border:1px solid var(--line2);background:var(--paper);border-radius:99px;padding:2px 10px;color:var(--muted);cursor:pointer;width:fit-content;margin-top:3px}
+.map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:480px){.map{grid-template-columns:1fr}}
+.map .m{border:1px solid var(--line);border-radius:18px;padding:13px 14px;background:linear-gradient(160deg,var(--paper),var(--bg2));display:flex;flex-direction:column;gap:5px;font-size:.88rem}
+.map .m b{font-family:var(--serif);color:var(--ink);font-size:1rem}
+.cycle{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.82rem;font-weight:600;color:var(--lav)}
+.cycle span{background:var(--lav-l);border-radius:99px;padding:4px 11px}
+.pyr{display:flex;flex-direction:column;align-items:center;gap:4px}
+.pyr div{border-radius:10px;padding:6px 10px;text-align:center;font-size:.8rem;color:var(--ink);background:var(--lav-l);border:1px solid color-mix(in srgb,var(--lav) 18%,transparent)}
+
+/* Timer */
+.stage{border-radius:22px;background:linear-gradient(180deg,var(--bg2),var(--paper));border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;gap:10px;padding:22px 14px;text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+.clock{font-family:var(--serif);font-weight:600;font-size:clamp(2.6rem,12vw,3.8rem);color:var(--ink);font-variant-numeric:tabular-nums;line-height:1}
+.clock.warn{color:var(--rose);animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.6}}
+.ring{width:100%;height:6px;border-radius:4px;background:var(--line);overflow:hidden}
+.ring span{display:block;height:100%;background:linear-gradient(90deg,var(--lav),var(--rose));border-radius:4px;width:0}
+.seg{display:inline-flex;border:1px solid var(--line2);border-radius:99px;overflow:hidden;flex-wrap:wrap;background:var(--paper);box-shadow:var(--sh-1)}
+.seg button{font:inherit;font-size:.82rem;padding:6px 13px;border:0;background:transparent;color:var(--body);cursor:pointer;transition:background .2s}
+.seg button[aria-pressed="true"]{background:var(--lav-l);color:var(--ink);font-weight:600}
+
+/* Abruf */
+.flow{display:flex;gap:6px;flex-wrap:wrap}
+.flow span{font-size:.72rem;font-weight:600;border-radius:99px;padding:4px 11px;background:var(--paper);border:1px solid var(--line);color:var(--muted);transition:all .3s var(--ease)}
+.flow span.on{background:var(--lav);border-color:var(--lav);color:#fff;box-shadow:0 6px 14px -6px var(--lav)}
+.flow span.done{background:var(--lav-l);border-color:transparent;color:var(--lav)}
+.qrow{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start}
+.lvl{font-size:.72rem;font-weight:700;border-radius:9px;padding:4px 8px;white-space:nowrap;margin-top:8px}
+.lvl.l1{background:var(--sky-l);color:var(--sky)} .lvl.l2{background:var(--peach-l);color:var(--peach)} .lvl.l3{background:var(--sage-l);color:var(--sage)}
+.conf{display:flex;flex-wrap:wrap;gap:8px}
+.conf button{font:inherit;font-size:.84rem;border-radius:99px;padding:7px 14px;border:1px solid var(--line2);background:var(--paper);color:var(--ink);cursor:pointer;transition:all .2s var(--ease)}
+.conf button[aria-pressed="true"]{background:var(--lav-l);border-color:var(--lav);font-weight:600}
+.modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+@media (max-width:460px){.modes{grid-template-columns:1fr}}
+.mode{font:inherit;text-align:left;cursor:pointer;border:1px solid var(--line);border-radius:16px;padding:11px 12px;background:var(--paper);color:var(--ink);display:flex;flex-direction:column;gap:3px;font-size:.84rem;line-height:1.35;box-shadow:var(--sh-1);transition:all .2s var(--ease)}
+.mode b{font-size:.9rem}
+.mode[aria-pressed="true"]{border-color:var(--lav);background:var(--lav-l)}
+.entry{border:1px solid var(--line);border-radius:18px;padding:12px 14px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 10px;align-items:center;background:var(--paper);box-shadow:var(--sh-1)}
+.entry b{color:var(--ink);overflow-wrap:anywhere}
+.entry .st{font-size:.72rem;font-weight:600;border-radius:99px;padding:3px 10px;white-space:nowrap}
+.st.today{background:var(--rose-l);color:var(--rose)} .st.later{background:var(--sky-l);color:var(--sky)} .st.fest{background:var(--ok-l);color:var(--ok)}
+.entry .acts{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}
+
+/* Anfangen */
+.paths{display:grid;gap:9px}
+.pathbtn{font:inherit;text-align:left;cursor:pointer;border:1px solid var(--line);border-radius:16px;padding:12px 14px;background:var(--paper);color:var(--ink);display:flex;gap:12px;align-items:center;font-size:.94rem;line-height:1.35;box-shadow:var(--sh-1);transition:all .22s var(--ease)}
+.pathbtn:hover{transform:translateX(3px);box-shadow:var(--sh-2)}
+.pathbtn .e{flex:0 0 34px;height:34px;border-radius:11px;display:grid;place-items:center;font-weight:600;font-family:var(--serif);font-size:1rem}
+.pathbtn[aria-pressed="true"]{border-color:var(--lav);background:var(--lav-l)}
+.res{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:start}
+.res .ill{width:clamp(90px,24vw,130px)}
+.res .ill img{width:100%;filter:drop-shadow(0 8px 12px rgba(90,72,150,.14))}
+.slider{display:flex;flex-direction:column;gap:4px}
+.slider label{font-size:.86rem;font-weight:500;color:var(--ink);display:flex;justify-content:space-between;gap:8px}
+.slider output{font-weight:600;color:var(--lav);font-size:.82rem}
+input[type=range]{width:100%;accent-color:var(--lav)}
+.scale{display:flex;justify-content:space-between;font-size:.72rem;color:var(--muted)}
+
+/* KI */
+.prompt{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.8rem;line-height:1.55;background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:13px;white-space:pre-wrap;overflow-wrap:anywhere;max-height:340px;overflow:auto;color:var(--ink)}
+.optable{width:100%;border-collapse:collapse;font-size:.86rem}
+.optable th,.optable td{border-bottom:1px solid var(--line);padding:9px 6px;text-align:left;vertical-align:top;color:var(--ink)}
+.optable th{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.tw{overflow-x:auto}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:480px){.grid2{grid-template-columns:1fr}}
+
+/* Quellen */
+.reflist{display:flex;flex-direction:column;gap:12px;font-size:.86rem;color:var(--ink)}
+.reflist p{padding-left:22px;text-indent:-22px;overflow-wrap:anywhere}
+.reflist .chk{font-size:.7rem;color:var(--ok);font-weight:600;margin-left:4px}
+
+/* Navigation */
+nav.tabs{position:fixed;left:max(10px,env(safe-area-inset-left,0px));right:max(10px,env(safe-area-inset-right,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:20;max-width:620px;margin:0 auto;
+  background:color-mix(in srgb,var(--paper) 86%,transparent);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);border:1px solid var(--line);border-radius:24px;padding:6px;box-shadow:var(--sh-3)}
+nav.tabs .in{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:1px;position:relative}
+nav.tabs button.live::after{content:"";position:absolute;top:5px;right:calc(50% - 15px);width:8px;height:8px;border-radius:50%;background:var(--rose);box-shadow:0 0 0 2px var(--paper);animation:pulse 1.4s ease-in-out infinite}
+.ringwrap{position:relative;width:min(260px,72vw);aspect-ratio:1}
+.ringwrap svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ringwrap .trk{fill:none;stroke:var(--line);stroke-width:6}
+.ringwrap .bar{fill:none;stroke:url(#rg);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .3s linear}
+.ringwrap .mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;padding:18%}
+.ringwrap .mid img{width:70%;max-width:100%}
+.welcome{position:relative;overflow:hidden;background:linear-gradient(150deg,var(--paper) 40%,var(--lav-l));border:1px solid color-mix(in srgb,var(--lav) 25%,var(--line))}
+.steps3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:520px){.steps3{grid-template-columns:1fr}}
+.st3{font:inherit;text-align:left;cursor:pointer;border:1px solid var(--line);border-radius:18px;padding:13px 14px;background:var(--paper);color:var(--body);display:grid;grid-template-columns:34px minmax(0,1fr);gap:4px 10px;align-items:center;box-shadow:var(--sh-1);transition:transform .22s var(--ease),box-shadow .22s var(--ease)}
+.st3:hover{transform:translateY(-2px);box-shadow:var(--sh-2)}
+.st3 .n{grid-row:span 2;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-weight:600;border:1px solid currentColor}
+.st3 b{font-family:var(--serif);color:var(--ink);font-size:1rem;line-height:1.2}
+.st3 span.d{font-size:.8rem;line-height:1.35;color:var(--body)}
+.why{font-size:.84rem;color:var(--body)}
+.why summary{cursor:pointer;color:var(--lav);font-weight:500;list-style:none;display:inline-flex;gap:6px;align-items:center}
+.why summary::-webkit-details-marker{display:none}
+.why summary::before{content:"?";width:18px;height:18px;border-radius:50%;border:1px solid currentColor;display:grid;place-items:center;font-size:.7rem;font-weight:700}
+.why p{margin-top:6px;padding-left:24px}
+.intro-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.intro-list li{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:start;font-size:.92rem}
+.intro-list .ic{width:36px;height:36px;border-radius:12px}
+.intro-list .ic svg{width:19px;height:19px}
+nav.tabs button{font:inherit;font-size:.64rem;font-weight:500;background:transparent;border:0;border-radius:18px;padding:7px 2px;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1.2;position:relative;z-index:1;transition:color .25s}
+nav.tabs svg{width:22px;height:22px;transition:transform .3s var(--ease)}
+nav.tabs button[aria-current="page"]{color:var(--lav);font-weight:600}
+nav.tabs button[aria-current="page"] svg{transform:translateY(-1px) scale(1.06)}
+nav.tabs .pill{position:absolute;top:0;bottom:0;left:0;border-radius:18px;background:var(--lav-l);transition:transform .38s var(--ease),width .38s var(--ease);z-index:0}
+footer{font-size:.76rem;color:var(--muted);text-align:center;display:flex;flex-direction:column;gap:4px;align-items:center}
+.toast{position:fixed;left:50%;bottom:calc(var(--navh) + 30px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--paper);padding:9px 18px;border-radius:99px;font-size:.84rem;z-index:30;box-shadow:var(--sh-3);transform:translateX(-50%)}
+
+/* Bewegung */
+@media (prefers-reduced-motion:no-preference){
+  .orn svg{animation:drift 22s ease-in-out infinite alternate}
+  .orn .o2{animation-duration:28s;animation-delay:-6s}.orn .o3{animation-duration:18s;animation-delay:-3s}.orn .o4{animation-duration:25s;animation-delay:-9s}
+  @keyframes drift{0%{transform:translate(0,0) rotate(0deg)}100%{transform:translate(-14px,18px) rotate(14deg)}}
+  .enter>*{animation:rise .55s var(--ease) both}
+  .enter>*:nth-child(2){animation-delay:.05s}.enter>*:nth-child(3){animation-delay:.1s}.enter>*:nth-child(4){animation-delay:.15s}.enter>*:nth-child(5){animation-delay:.2s}.enter>*:nth-child(6){animation-delay:.25s}.enter>*:nth-child(n+7){animation-delay:.3s}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .tiles .tile,.mlist>*,.paths>*{animation:rise .5s var(--ease) both}
+  .tiles .tile:nth-child(2),.mlist>*:nth-child(2),.paths>*:nth-child(2){animation-delay:.06s}.tiles .tile:nth-child(3),.mlist>*:nth-child(3),.paths>*:nth-child(3){animation-delay:.12s}.tiles .tile:nth-child(4),.mlist>*:nth-child(4),.paths>*:nth-child(4){animation-delay:.18s}.tiles .tile:nth-child(5),.mlist>*:nth-child(5),.paths>*:nth-child(5){animation-delay:.24s}.tiles .tile:nth-child(n+6),.mlist>*:nth-child(n+6){animation-delay:.3s}
+  .ill img{animation:bob 5s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(-6px)}}
+  .flourish path{animation:draw 1.4s var(--ease) both}
+  @keyframes draw{from{stroke-dashoffset:420}to{stroke-dashoffset:0}}
+  .flourish circle{animation:pop .5s .9s var(--ease) both}
+  @keyframes pop{from{opacity:0;transform:scale(0);transform-box:fill-box;transform-origin:center}to{opacity:1;transform:scale(1);transform-box:fill-box;transform-origin:center}}
+  .toast{animation:toast .35s var(--ease) both}
+  @keyframes toast{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
+  .due .n{animation:pop2 .6s .3s var(--ease) both}
+  @keyframes pop2{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+}
+</style>
+</head>
+<body>
+<div class="orn" aria-hidden="true">
+<svg class="o1" viewBox="0 0 300 300"><circle cx="150" cy="150" r="120"/><circle cx="150" cy="150" r="96" stroke-dasharray="2 7"/><circle cx="62" cy="230" r="4"/></svg>
+<svg class="o2" viewBox="0 0 180 180"><rect x="34" y="34" width="112" height="112" rx="26" transform="rotate(18 90 90)"/><path d="M20 160 C 60 120, 110 170, 160 120"/></svg>
+<svg class="o3" viewBox="0 0 120 120"><circle cx="60" cy="60" r="44"/><circle cx="60" cy="60" r="3"/></svg>
+<svg class="o4" viewBox="0 0 90 90"><path d="M45 10 L80 72 L10 72 Z"/></svg>
+</div>
+<main id="app"></main>
+<nav class="tabs" aria-label="Bereiche"><div class="in" id="tabs"><span class="pill" id="pill"></span></div></nav>
+<div class="toast" id="toast" hidden role="status"></div>
+
+<script>
+(function(){
+"use strict";
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=s=>{s=Math.max(0,Math.ceil(s));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
+const FL='<svg class="flourish" viewBox="0 0 340 18" fill="none" aria-hidden="true"><path d="M2 9 C 60 1, 100 17, 170 9 S 280 1, 338 9" stroke="currentColor" stroke-width=".9"/><circle cx="170" cy="9" r="2.6" fill="currentColor"/><circle cx="20" cy="7" r="1.6" fill="currentColor"/><circle cx="320" cy="7" r="1.6" fill="currentColor"/></svg>';
+function toast(t){const el=$('#toast');el.textContent=t;el.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>el.hidden=true,2200)}
+async function copy(text,ok){try{await navigator.clipboard.writeText(text);toast(ok||'Kopiert')}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();let done=false;try{done=document.execCommand('copy')}catch(_){}ta.remove();toast(done?(ok||'Kopiert'):'Bitte Text markieren und kopieren')}}
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+/* ---------- Ton & Timer ---------- */
+let actx=null;function unlock(){try{if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();if(actx.state==='suspended')actx.resume()}catch(e){}}
+function gong(n){try{unlock();if(!actx)return;for(let k=0;k<(n||1);k++){const t0=actx.currentTime+k*.9;[523.25,784,1046.5].forEach((f,i)=>{const o=actx.createOscillator(),g=actx.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(.0001,t0);g.gain.exponentialRampToValueAtTime(.2/(i+1),t0+.02);g.gain.exponentialRampToValueAtTime(.0001,t0+2.2);o.connect(g).connect(actx.destination);o.start(t0);o.stop(t0+2.3)})}}catch(e){}}
+let lock=null;async function wake(on){try{if(on&&!lock&&navigator.wakeLock){lock=await navigator.wakeLock.request('screen');lock.addEventListener('release',()=>lock=null)}else if(!on&&lock){await lock.release();lock=null}}catch(e){}}
+let timers=[];function stopTimers(){timers.forEach(t=>t.stop());timers=[]}
+function Timer(sec,tick,end){let e=0,id=null;const t={start(){e=Date.now()+sec*1000;clearInterval(id);wake(true);const f=()=>{const r=(e-Date.now())/1000;tick(r,sec);if(r<=0){clearInterval(id);id=null;if(FT.phase==='idle')wake(false);end&&end()}};f();id=setInterval(f,250)},stop(){clearInterval(id);id=null;if(FT.phase==='idle')wake(false)}};timers.push(t);return t}
+
+/* ---------- Icons ---------- */
+const I={
+ home:'<path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/>',
+ compass:'<circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
+ book:'<path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5C4.7 19 4 19.7 4 20.5z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5.7 1.5 1.5z"/>',
+ recall:'<path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3"/><path d="M4 4v4h4"/><path d="M12 8v4l3 2"/>',
+ start:'<circle cx="12" cy="12" r="8.5"/><path d="m10 8.5 5 3.5-5 3.5z"/>',
+ spark:'<path d="M12 3.5 13.8 9l5.7 1.8-5.7 1.9L12 18.5l-1.8-5.8L4.5 10.8 10.2 9z"/><path d="M18.5 16v4M16.5 18h4"/>',
+ src:'<path d="M7 4h8l4 4v12H7z"/><path d="M15 4v4h4M10 12h6M10 15.5h6"/>',
+ timer:'<circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.6 1.8M9.5 3.5h5M12 3.5V6M18.5 6.5l1.2-1.2"/>',
+ check:'<circle cx="12" cy="12" r="8.5"/><path d="m8.5 12.2 2.4 2.4 4.6-4.8"/>',
+ lock:'<rect x="5.5" y="10.5" width="13" height="9" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/>'
+};
+const ic=(k,c)=>`<svg viewBox="0 0 24 24" fill="none" stroke="${c||'currentColor'}" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[k]}</svg>`;
+
+/* ---------- Quellen (DOIs am 25.10.2026 über Crossref geprüft) ---------- */
+const REF={
+ adesope2017:{a:'Adesope, O. O., Trevisan, D. A., & Sundararajan, N. (2017).',t:'Rethinking the use of tests: A meta-analysis of practice testing.',j:'Review of Educational Research, 87',v:'(3), 659–701.',doi:'10.3102/0034654316689306',k:'Adesope et al., 2017'},
+ atkinson1957:{a:'Atkinson, J. W. (1957).',t:'Motivational determinants of risk-taking behavior.',j:'Psychological Review, 64',v:'(6), 359–372.',doi:'10.1037/h0043445',k:'Atkinson, 1957'},
+ bandura1977:{a:'Bandura, A. (1977).',t:'Self-efficacy: Toward a unifying theory of behavioral change.',j:'Psychological Review, 84',v:'(2), 191–215.',doi:'10.1037/0033-295X.84.2.191',k:'Bandura, 1977'},
+ bartlett1932:{a:'Bartlett, F. C. (1932).',t:'Remembering: A study in experimental and social psychology.',j:'Cambridge University Press.',v:'',k:'Bartlett, 1932',book:1},
+ deci1993:{a:'Deci, E. L., & Ryan, R. M. (1993).',t:'Die Selbstbestimmungstheorie der Motivation und ihre Bedeutung für die Pädagogik.',j:'Zeitschrift für Pädagogik, 39',v:'(2), 223–238.',k:'Deci & Ryan, 1993',book:1},
+ hasselhorn2017:{a:'Hasselhorn, M., & Gold, A. (2017).',t:'Pädagogische Psychologie: Erfolgreiches Lernen und Lehren',j:'(4. Aufl.). Kohlhammer.',v:'',k:'Hasselhorn & Gold, 2017',book:1},
+ horstmann2012:{a:'Horstmann, G., & Dreisbach, G. (2012).',t:'Allgemeine Psychologie 2 kompakt: Lernen, Emotion, Motivation, Gedächtnis.',j:'Beltz.',v:'',k:'Horstmann & Dreisbach, 2012',book:1},
+ latham1991:{a:'Latham, G. P., & Locke, E. A. (1991).',t:'Self-regulation through goal setting.',j:'Organizational Behavior and Human Decision Processes, 50',v:'(2), 212–247.',doi:'10.1016/0749-5978(91)90021-K',k:'Latham & Locke, 1991'},
+ weiner1979:{a:'Weiner, B. (1979).',t:'A theory of motivation for some classroom experiences.',j:'Journal of Educational Psychology, 71',v:'(1), 3–25.',doi:'10.1037/0022-0663.71.1.3',k:'Weiner, 1979'},
+ anderson2001:{a:'Anderson, L. W., & Krathwohl, D. R. (Hrsg.). (2001).',t:'A taxonomy for learning, teaching, and assessing: A revision of Bloom’s taxonomy of educational objectives.',j:'Longman.',v:'',k:'Anderson & Krathwohl, 2001',book:1},
+ bisra2018:{a:'Bisra, K., Liu, Q., Nesbit, J. C., Salimi, F., & Winne, P. H. (2018).',t:'Inducing self-explanation: A meta-analysis.',j:'Educational Psychology Review, 30',v:'(3), 703–725.',doi:'10.1007/s10648-018-9434-x',k:'Bisra et al., 2018'},
+ biwer2023:{a:'Biwer, F., Wiradhany, W., oude Egbrink, M. G. A., & de Bruin, A. B. H. (2023).',t:'Understanding effort regulation: Comparing ‘Pomodoro’ breaks and self-regulated breaks.',j:'British Journal of Educational Psychology, 93',v:'(S2), 353–367.',doi:'10.1111/bjep.12593',k:'Biwer et al., 2023'},
+ bjork2011:{a:'Bjork, E. L., & Bjork, R. A. (2011).',t:'Making things hard on yourself, but in a good way: Creating desirable difficulties to enhance learning.',j:'In M. A. Gernsbacher, R. W. Pew, L. M. Hough & J. R. Pomerantz (Hrsg.), Psychology and the real world (S. 56–64). Worth.',v:'',k:'Bjork & Bjork, 2011',book:1},
+ bloom1956:{a:'Bloom, B. S. (Hrsg.). (1956).',t:'Taxonomy of educational objectives: Handbook I. Cognitive domain.',j:'David McKay.',v:'',k:'Bloom, 1956',book:1},
+ breines2012:{a:'Breines, J. G., & Chen, S. (2012).',t:'Self-compassion increases self-improvement motivation.',j:'Personality and Social Psychology Bulletin, 38',v:'(9), 1133–1143.',doi:'10.1177/0146167212445599',k:'Breines & Chen, 2012'},
+ brunmair2019:{a:'Brunmair, M., & Richter, T. (2019).',t:'Similarity matters: A meta-analysis of interleaved learning and its moderators.',j:'Psychological Bulletin, 145',v:'(11), 1029–1052.',doi:'10.1037/bul0000209',k:'Brunmair & Richter, 2019'},
+ cepeda2006:{a:'Cepeda, N. J., Pashler, H., Vul, E., Wixted, J. T., & Rohrer, D. (2006).',t:'Distributed practice in verbal recall tasks: A review and quantitative synthesis.',j:'Psychological Bulletin, 132',v:'(3), 354–380.',doi:'10.1037/0033-2909.132.3.354',k:'Cepeda et al., 2006'},
+ diekelmann2010:{a:'Diekelmann, S., & Born, J. (2010).',t:'The memory function of sleep.',j:'Nature Reviews Neuroscience, 11',v:'(2), 114–126.',doi:'10.1038/nrn2762',k:'Diekelmann & Born, 2010'},
+ dunlosky2012:{a:'Dunlosky, J., & Rawson, K. A. (2012).',t:'Overconfidence produces underachievement: Inaccurate self evaluations undermine students’ learning and retention.',j:'Learning and Instruction, 22',v:'(4), 271–280.',doi:'10.1016/j.learninstruc.2011.08.003',k:'Dunlosky & Rawson, 2012'},
+ dunlosky2013:{a:'Dunlosky, J., Rawson, K. A., Marsh, E. J., Nathan, M. J., & Willingham, D. T. (2013).',t:'Improving students’ learning with effective learning techniques: Promising directions from cognitive and educational psychology.',j:'Psychological Science in the Public Interest, 14',v:'(1), 4–58.',doi:'10.1177/1529100612453266',k:'Dunlosky et al., 2013'},
+ fiorella2016:{a:'Fiorella, L., & Mayer, R. E. (2016).',t:'Eight ways to promote generative learning.',j:'Educational Psychology Review, 28',v:'(4), 717–741.',doi:'10.1007/s10648-015-9348-9',k:'Fiorella & Mayer, 2016'},
+ fiorella2018:{a:'Fiorella, L., & Zhang, Q. (2018).',t:'Drawing boundary conditions for learning by drawing.',j:'Educational Psychology Review, 30',v:'(3), 1115–1137.',doi:'10.1007/s10648-018-9444-8',k:'Fiorella & Zhang, 2018'},
+ gollwitzer2006:{a:'Gollwitzer, P. M., & Sheeran, P. (2006).',t:'Implementation intentions and goal achievement: A meta-analysis of effects and processes.',j:'Advances in Experimental Social Psychology, 38',v:', 69–119.',doi:'10.1016/S0065-2601(06)38002-1',k:'Gollwitzer & Sheeran, 2006'},
+ karpicke2011:{a:'Karpicke, J. D., & Blunt, J. R. (2011).',t:'Retrieval practice produces more learning than elaborative studying with concept mapping.',j:'Science, 331',v:'(6018), 772–775.',doi:'10.1126/science.1199327',k:'Karpicke & Blunt, 2011'},
+ kasneci2023:{a:'Kasneci, E., Sessler, K., Küchemann, S., Bannert, M., Dementieva, D., Fischer, F., … Kasneci, G. (2023).',t:'ChatGPT for good? On opportunities and challenges of large language models for education.',j:'Learning and Individual Differences, 103',v:', Artikel 102274.',doi:'10.1016/j.lindif.2023.102274',k:'Kasneci et al., 2023'},
+ kobayashi2019:{a:'Kobayashi, K. (2019).',t:'Learning by preparing-to-teach and teaching: A meta-analysis.',j:'Japanese Psychological Research, 61',v:'(3), 192–203.',doi:'10.1111/jpr.12221',k:'Kobayashi, 2019'},
+ kornell2008:{a:'Kornell, N., & Bjork, R. A. (2008).',t:'Learning concepts and categories: Is spacing the “enemy of induction”?',j:'Psychological Science, 19',v:'(6), 585–592.',doi:'10.1111/j.1467-9280.2008.02127.x',k:'Kornell & Bjork, 2008'},
+ kornell2009:{a:'Kornell, N. (2009).',t:'Optimising learning using flashcards: Spacing is more effective than cramming.',j:'Applied Cognitive Psychology, 23',v:'(9), 1297–1317.',doi:'10.1002/acp.1537',k:'Kornell, 2009'},
+ miyatsu2018:{a:'Miyatsu, T., Nguyen, K., & McDaniel, M. A. (2018).',t:'Five popular study strategies: Their pitfalls and optimal implementations.',j:'Perspectives on Psychological Science, 13',v:'(3), 390–407.',doi:'10.1177/1745691617710510',k:'Miyatsu et al., 2018'},
+ murre2015:{a:'Murre, J. M. J., & Dros, J. (2015).',t:'Replication and analysis of Ebbinghaus’ forgetting curve.',j:'PLOS ONE, 10',v:'(7), Artikel e0120644.',doi:'10.1371/journal.pone.0120644',k:'Murre & Dros, 2015'},
+ pashler2008:{a:'Pashler, H., McDaniel, M., Rohrer, D., & Bjork, R. (2008).',t:'Learning styles: Concepts and evidence.',j:'Psychological Science in the Public Interest, 9',v:'(3), 105–119.',doi:'10.1111/j.1539-6053.2009.01038.x',k:'Pashler et al., 2008'},
+ ponce2022:{a:'Ponce, H. R., Mayer, R. E., & Méndez, E. E. (2022).',t:'Effects of learner-generated highlighting and instructor-provided highlighting on learning from text: A meta-analysis.',j:'Educational Psychology Review, 34',v:'(2), 989–1024.',doi:'10.1007/s10648-021-09654-1',k:'Ponce et al., 2022'},
+ roediger2006:{a:'Roediger, H. L., III, & Karpicke, J. D. (2006).',t:'Test-enhanced learning: Taking memory tests improves long-term retention.',j:'Psychological Science, 17',v:'(3), 249–255.',doi:'10.1111/j.1467-9280.2006.01693.x',k:'Roediger & Karpicke, 2006'},
+ rowland2014:{a:'Rowland, C. A. (2014).',t:'The effect of testing versus restudy on retention: A meta-analytic review of the testing effect.',j:'Psychological Bulletin, 140',v:'(6), 1432–1463.',doi:'10.1037/a0037559',k:'Rowland, 2014'},
+ schroeder2018:{a:'Schroeder, N. L., Nesbit, J. C., Anguiano, C. J., & Adesope, O. O. (2018).',t:'Studying and constructing concept maps: A meta-analysis.',j:'Educational Psychology Review, 30',v:'(2), 431–455.',doi:'10.1007/s10648-017-9403-9',k:'Schroeder et al., 2018'},
+ sirois2013:{a:'Sirois, F., & Pychyl, T. (2013).',t:'Procrastination and the priority of short-term mood regulation: Consequences for future self.',j:'Social and Personality Psychology Compass, 7',v:'(2), 115–127.',doi:'10.1111/spc3.12011',k:'Sirois & Pychyl, 2013'},
+ steel2007:{a:'Steel, P. (2007).',t:'The nature of procrastination: A meta-analytic and theoretical review of quintessential self-regulatory failure.',j:'Psychological Bulletin, 133',v:'(1), 65–94.',doi:'10.1037/0033-2909.133.1.65',k:'Steel, 2007'},
+ vaneerde2018:{a:'van Eerde, W., & Klingsieck, K. B. (2018).',t:'Overcoming procrastination? A meta-analysis of intervention studies.',j:'Educational Research Review, 25',v:', 73–85.',doi:'10.1016/j.edurev.2018.09.002',k:'van Eerde & Klingsieck, 2018'},
+ wammes2016:{a:'Wammes, J. D., Meade, M. E., & Fernandes, M. A. (2016).',t:'The drawing effect: Evidence for reliable and robust memory benefits in free recall.',j:'Quarterly Journal of Experimental Psychology, 69',v:'(9), 1752–1776.',doi:'10.1080/17470218.2015.1094494',k:'Wammes et al., 2016'},
+ wohl2010:{a:'Wohl, M. J. A., Pychyl, T. A., & Bennett, S. H. (2010).',t:'I forgive myself, now I can study: How self-forgiveness for procrastinating can reduce future procrastination.',j:'Personality and Individual Differences, 48',v:'(7), 803–808.',doi:'10.1016/j.paid.2010.01.029',k:'Wohl et al., 2010'}
+};
+const refText=id=>{const r=REF[id];return `${r.a} ${r.t} ${r.j}${r.v}${r.doi?' https://doi.org/'+r.doi:''}`};
+const refHTML=id=>{const r=REF[id];return `${esc(r.a)} ${esc(r.t)} <i>${esc(r.j)}</i>${esc(r.v)}${r.doi?` <a href="https://doi.org/${r.doi}" target="_blank" rel="noopener">https://doi.org/${r.doi}</a>`:''}`};
+
+/* ---------- Methoden ---------- */
+const GOALS={ueberblick:'Überblick',verstehen:'Verstehen',behalten:'Behalten',wiederholen:'Wiederholen',anwenden:'Anwenden'};
+const EVL={3:'gut belegt',2:'mittel belegt',1:'wenig belegt',0:'als Ganzes kaum untersucht'};
+const M=[
+ {id:'abruf',name:'Aktives Abrufen',alias:'Selbsttest · „Gehirn-Entleerung“',ev:3,goals:['behalten','wiederholen','verstehen'],min:5,col:'lav',
+  kurz:'Unterlagen zu – und alles aus dem Kopf holen, was du weißt. Danach vergleichen.',
+  wie:['Unterlagen zuklappen.','Alles aufschreiben, was du zum Thema weißt – Stichworte, Skizzen, Pfeile. Oder: Fragen beantworten, Karteikarten abfragen.','Unterlagen öffnen und vergleichen. Fehlendes in einer zweiten Farbe ergänzen.','Aus den Lücken neue Fragen machen – sie sind dein Material fürs nächste Mal.'],
+  wirk:'Beim Abrufen wird die Erinnerung nicht nur „abgelesen“, sondern neu aufgebaut. Das festigt die Gedächtnisspur und die Wege, auf denen du sie wiederfindest. Gleichzeitig zeigt dir der Vergleich ehrlich, was du schon kannst und was nicht. Wiederlesen erzeugt dagegen leicht das trügerische Gefühl „Kenn ich schon“. Abrufen fühlt sich anstrengender an – diese Mühe ist gewollt („erwünschte Schwierigkeit“).',
+  pflege:'Direkt nach dem Unterricht zu den Vitalzeichen: 3 Minuten alles aufschreiben, was du über Puls, Blutdruck und Normwerte weißt. Dann mit der Mitschrift vergleichen.',
+  stolper:['Ohne Vergleich prägst du dir auch Fehler ein – immer kontrollieren.','Am Anfang fällt wenig ein. Das ist normal und kein Zeichen, dass die Methode bei dir nicht wirkt.','Nur „im Kopf kurz drüber nachdenken“ reicht selten. Schreib oder sprich die Antwort wirklich aus.'],
+  belege:[['roediger2006','Wer einen Text las und sich danach selbst testete, erinnerte sich eine Woche später an mehr als Lernende, die den Text erneut lasen – obwohl Letztere sich kurz nach dem Lernen sicherer fühlten.'],
+   ['rowland2014','Meta-Analyse: Üben durch Abrufen bringt im Mittel mehr als erneutes Lernen mit dem Material.'],
+   ['adesope2017','Meta-Analyse: Übungstests waren dem Wiederlesen und allen anderen Vergleichsbedingungen überlegen – in Schule, Hochschule und Labor.'],
+   ['dunlosky2013','Überblicksarbeit zu zehn Lerntechniken: Selbsttesten erhält die Bewertung „hoher Nutzen“.'],
+   ['karpicke2011','Abrufen führte in einem späteren Test zu mehr Lernerfolg als das Erstellen einer Concept-Map mit offenem Text.']]},
+ {id:'verteilt',name:'Verteiltes Wiederholen',alias:'Spacing · 1 – 3 – 7 Tage',ev:3,goals:['behalten','wiederholen'],min:10,col:'sage',
+  kurz:'Lieber oft kurz als einmal lang: denselben Stoff über mehrere Tage verteilt wiederholen.',
+  wie:['Plane gleich nach dem Lernen feste Wiederholtermine, z. B. nach 1, 3 und 7 Tagen.','Jede Wiederholung ist kurz (10–15 Minuten) und beginnt mit Abrufen aus dem Kopf.','Je länger du dir etwas merken willst, desto größer dürfen die Abstände werden.','Trag die Termine in Kalender oder Abrufblatt ein – das Tool „Abrufen“ in dieser App macht das automatisch.'],
+  wirk:'Zwischen zwei Lerneinheiten vergisst du ein wenig. Dadurch wird das nächste Abrufen anstrengender – und genau das stärkt die Erinnerung mehr als pausenloses Wiederholen am Stück. Außerdem bekommt das Gehirn zwischen den Einheiten Zeit zum Festigen, unter anderem im Schlaf.',
+  pflege:'Die Medikamentengruppen aus der Pharmakologie nicht am Abend vor der Klausur, sondern über drei Wochen in vier kurzen Runden wiederholen.',
+  stolper:['Massiertes Lernen („Bulimie-Lernen“) fühlt sich kurzfristig erfolgreicher an – das täuscht.','Ohne festen Plan gehen Wiederholungen im Alltag unter. Termine sofort eintragen.'],
+  belege:[['cepeda2006','Überblick über viele Experimente: Verteiltes Lernen schlägt massiertes Lernen zuverlässig. Der günstigste Abstand wächst mit der Zeit, über die man sich etwas merken will.'],
+   ['dunlosky2013','Verteiltes Üben erhält die Bewertung „hoher Nutzen“.'],
+   ['murre2015','Ebbinghaus’ Vergessenskurve wurde mit modernen Methoden nachgebildet und im Wesentlichen bestätigt.'],
+   ['diekelmann2010','Überblicksarbeit: Schlaf unterstützt das Festigen neu gelernter Inhalte im Gedächtnis.']]},
+ {id:'karten',name:'Karteikarten & Leitner-Box',alias:'auch digital mit Anki oder Quizlet',ev:3,goals:['behalten','wiederholen'],min:10,col:'peach',
+  kurz:'Fragen vorne, Antwort hinten – und gewusste Karten wandern in Fächer, die seltener drankommen.',
+  wie:['Vorne eine echte Frage („Welche drei Anzeichen …?“), hinten die Antwort in eigenen Worten, gern mit Mini-Skizze.','Antwort laut oder schriftlich geben, bevor du umdrehst.','Gewusst: Karte ein Fach weiter. Nicht gewusst: zurück in Fach 1.','Fach 1 täglich, Fach 2 alle 2 Tage, Fach 3 wöchentlich, Fach 4 alle 2 Wochen, Fach 5 vor der Klausur.'],
+  wirk:'Karteikarten verbinden die zwei wirksamsten Prinzipien: Abrufen und Verteilen. Die Leitner-Box sorgt dafür, dass schwierige Karten öfter kommen und leichte seltener.',
+  pflege:'Fachbegriffe aus der Anatomie oder Normwerte – aber als Frage formuliert: „Ab welchem Wert spricht man von Tachykardie?“',
+  stolper:['Karten zu früh aussortieren: Lege eine Karte erst weg, wenn du sie mehrmals hintereinander gewusst hast.','Nur Begriff ↔ Definition auswendig lernen bleibt oberflächlich. Ergänze Warum- und Anwendungsfragen.','Viele kleine Stapel, die man am Stück durchgeht, bringen weniger als ein großer, gemischter Stapel.'],
+  belege:[['kornell2009','Lernen mit einem großen Kartenstapel (Wiederholungen weit verteilt) war wirksamer als mit mehreren kleinen Stapeln (Wiederholungen eng beieinander) – obwohl die Lernenden das Gegenteil vermuteten.'],
+   ['miyatsu2018','Empfehlungen für gutes Karteikartenlernen: Karten nicht zu früh aussortieren, Antworten wirklich abrufen, Inhalte verknüpfen statt isoliert pauken.'],
+   ['dunlosky2013','Die zugrunde liegenden Techniken – Selbsttesten und verteiltes Üben – haben hohen Nutzen.']]},
+ {id:'mischen',name:'Gemischtes Üben',alias:'Interleaving',ev:2,goals:['anwenden','verstehen'],min:20,col:'sky',
+  kurz:'Ähnliche Aufgabentypen nicht nacheinander, sondern gemischt üben – damit du lernst, sie zu unterscheiden.',
+  wie:['Erst die Grundlagen jedes Themas einzeln lernen.','Dann Aufgaben oder Fälle zu verschiedenen, leicht verwechselbaren Themen bunt mischen.','Bei jeder Aufgabe zuerst fragen: „Um welches Problem geht es hier – und woran erkenne ich das?“'],
+  wirk:'Wer blockweise übt, weiß immer schon, welches Wissen gerade gefragt ist. Beim Mischen musst du selbst erkennen, worum es geht. Das schärft den Blick für Unterschiede – genau das, was in Klausuren und in der Praxis verlangt wird.',
+  pflege:'Fallbeispiele zu Herzinsuffizienz, COPD und Pneumonie gemischt bearbeiten: Woran unterscheidest du die Atemnot?',
+  stolper:['Es fühlt sich chaotischer und langsamer an – das ist Teil der Wirkung.','Bei einfachem Vokabel- oder Begriffslernen bringt Mischen kaum etwas, eher sogar Nachteile.'],
+  belege:[['kornell2008','Malstile wurden besser erkannt, wenn Bilder verschiedener Künstler gemischt statt nacheinander gezeigt wurden.'],
+   ['brunmair2019','Meta-Analyse: insgesamt mittlerer Vorteil (g = 0,42), am größten bei Bildern (g = 0,67), klein bei Mathematik (g = 0,34). Bei Wörtern war blockweises Lernen besser (g = −0,39), bei Sachtexten blieb es unklar. Mischen hilft also vor allem dort, wo Dinge leicht verwechselt werden.'],
+   ['dunlosky2013','Gemischtes Üben erhält die Bewertung „mittlerer Nutzen“, weil es noch wenig in echten Lernsituationen untersucht war.']]},
+ {id:'selbsterklaeren',name:'Selbsterklären',alias:'beim Lernen sich selbst erklären',ev:2,goals:['verstehen','anwenden'],min:15,col:'rose',
+  kurz:'Nach jedem Abschnitt innehalten und dir selbst erklären, was er bedeutet und wie er zu deinem Wissen passt.',
+  wie:['Einen Abschnitt lesen oder einen Arbeitsschritt anschauen.','Laut oder schriftlich erklären: „Was heißt das? Warum ist das so? Wie hängt das mit … zusammen?“','Wo du stockst, ist eine Verständnislücke – dort noch einmal nachlesen.'],
+  wirk:'Beim Erklären musst du Neues mit Vorwissen verknüpfen und Lücken füllen. So entsteht ein zusammenhängendes Verständnis statt einzelner Fakten.',
+  pflege:'Den Pflegestandard zur Dekubitusprophylaxe Schritt für Schritt durchgehen und bei jedem Schritt erklären, warum er nötig ist.',
+  stolper:['Nur wiederholen, was im Text steht, ist noch kein Erklären. Frag nach dem Warum.'],
+  belege:[['bisra2018','Meta-Analyse über 64 Studien: Aufforderungen zum Selbsterklären verbesserten das Lernen im Mittel deutlich (g = 0,55).'],
+   ['dunlosky2013','Selbsterklären erhält die Bewertung „mittlerer Nutzen“.']]},
+ {id:'warum',name:'Elaboratives Fragen',alias:'Warum-Fragen stellen',ev:2,goals:['verstehen','behalten'],min:10,col:'gold',
+  kurz:'Zu jedem Fakt die Frage „Warum ist das so?“ stellen und beantworten.',
+  wie:['Nimm einen Fakt aus deinen Unterlagen.','Frag dich: „Warum ist das so?“ oder „Warum gilt das hier – und dort nicht?“','Antworte in eigenen Worten und prüfe die Antwort mit dem Lehrbuch.'],
+  wirk:'Die Warum-Frage zwingt dich, den Fakt mit deinem Vorwissen zu verbinden. Verknüpftes Wissen ist leichter wiederzufinden. Je mehr Vorwissen du hast, desto besser klappt es.',
+  pflege:'„Warum steigt bei Fieber die Herzfrequenz?“ – statt nur „Bei Fieber steigt die Herzfrequenz“ auswendig zu lernen.',
+  stolper:['Ohne Vorwissen entstehen leicht falsche Erklärungen. Antworten immer überprüfen.'],
+  belege:[['dunlosky2013','Elaboratives Fragen erhält die Bewertung „mittlerer Nutzen“, gut belegt vor allem für Faktenwissen.']]},
+ {id:'erklaeren',name:'Erklären & Lehren',alias:'„Erklär’s der Patientin“ · Feynman-Prinzip',ev:2,goals:['verstehen','behalten'],min:10,col:'lav',
+  kurz:'Den Stoff so erklären, dass ihn jemand ohne Vorwissen versteht – echt oder in Gedanken.',
+  wie:['Thema wählen und kurz vorbereiten.','Ohne Unterlagen erklären: einer Mitschülerin, einem Kuscheltier oder in eine Sprachnachricht.','Die Zuhörerin fragt zweimal „Warum?“.','Wo du ins Stocken kommst, nachlesen – und noch einmal erklären.'],
+  wirk:'Wer erklären will, muss ordnen, vereinfachen und Zusammenhänge herstellen. Das Erklären selbst ist zudem eine Form des Abrufens.',
+  pflege:'Einer (gedachten) Patientin erklären, warum sie nach der OP früh aufstehen soll – in einfachen Worten, ohne Fachbegriffe.',
+  stolper:['Der Name „Feynman-Technik“ ist populär, als eigenes Verfahren aber nicht untersucht. Belegt ist das Prinzip „Lernen durch Lehren“.','Erklären mit offenen Unterlagen ist eher Vorlesen. Erst ohne, dann prüfen.'],
+  belege:[['kobayashi2019','Meta-Analyse über 28 Studien: Schon die Vorbereitung aufs Lehren verbesserte das Lernen (g = 0,35), tatsächliches Lehren nach der Vorbereitung noch mehr (g = 0,56).'],
+   ['fiorella2016','Übersicht zu „generativem Lernen“: Lehren und Selbsterklären gehören zu den Strategien, bei denen Lernende selbst Sinn konstruieren und davon profitieren.']]},
+ {id:'map',name:'Concept-Map & Mind-Map',alias:'selbst erstellt – am besten aus dem Kopf',ev:2,goals:['ueberblick','verstehen'],min:20,col:'sage',
+  kurz:'Begriffe und ihre Verbindungen als Netz aufzeichnen – selbst gebaut, nicht abgezeichnet.',
+  wie:['Thema in die Mitte.','Ohne Unterlagen Äste und Begriffe ergänzen, so weit du kommst.','Unterlagen öffnen: Fehlendes in einer zweiten Farbe ergänzen.','Verbindungen zwischen Ästen einzeichnen und beschriften: Wie hängt das zusammen?'],
+  wirk:'Beim Erstellen musst du Wissen ordnen und Beziehungen benennen – das fördert Überblick und Verstehen. Baust du die Map aus dem Kopf, kommt die Wirkung des Abrufens dazu.',
+  pflege:'Concept-Map zum Thema Sturzprophylaxe: Risikofaktoren, Assessment, Maßnahmen – und Pfeile, die zeigen, welche Maßnahme welchen Risikofaktor betrifft.',
+  stolper:['Eine Concept-Map hat beschriftete Verbindungen, eine Mind-Map meist nur Äste. Die Studien beziehen sich vor allem auf Concept-Maps.','Schön gestalten kostet viel Zeit, bringt aber wenig. Inhalt vor Optik.'],
+  belege:[['schroeder2018','Meta-Analyse: Lernen mit Concept-Maps wirkt insgesamt mittel (g = 0,58). Selbst erstellen wirkt stärker (g = 0,72) als fertige Maps zu lernen (g = 0,43). Zahlen nach der deutschen Kurzfassung des Clearing House Unterricht (TU München).'],
+   ['karpicke2011','Abrufen war in einem späteren Test wirksamer als Concept-Mapping mit offenem Text. Deshalb: Map aus dem Kopf bauen.']]},
+ {id:'zeichnen',name:'Zeichnen & Sketchnotes',alias:'Wort und Bild verbinden',ev:2,goals:['behalten','ueberblick'],min:15,col:'peach',
+  kurz:'Inhalte als einfache Skizze, Symbol oder Bildnotiz festhalten – Schönheit egal.',
+  wie:['Grundformen nutzen: Kasten, Pfeil, Sprechblase, Strichmännchen.','Einen Abschnitt lesen, dann ohne Text eine Skizze dazu zeichnen.','Die Skizze jemandem erklären oder mit dem Text vergleichen.'],
+  wirk:'Beim Zeichnen verarbeitest du einen Inhalt auf mehreren Wegen: Du musst ihn verstehen, in ein Bild übersetzen und motorisch umsetzen. Dadurch entstehen mehr Abrufwege.',
+  pflege:'Den großen und kleinen Blutkreislauf als Skizze aus dem Kopf zeichnen und beschriften.',
+  stolper:['Abzeichnen aus dem Buch bringt wenig. Selbst übersetzen ist der Kern.','Bei sehr komplexen Inhalten braucht es Hilfen, z. B. vorgegebene Teilskizzen.'],
+  belege:[['wammes2016','In mehreren Experimenten wurden Begriffe, die gezeichnet wurden, später besser erinnert als Begriffe, die aufgeschrieben wurden.'],
+   ['fiorella2018','Überblicksarbeit: Zeichnen hilft beim Lernen aus Texten, vor allem im Vergleich zu bloßem Lesen. Die Wirkung hängt von Bedingungen wie Hilfen und Zeit ab.']]},
+ {id:'zusammenfassen',name:'Zusammenfassen',alias:'in eigenen Worten, aus dem Kopf',ev:1,goals:['ueberblick','verstehen'],min:15,col:'sky',
+  kurz:'Das Wichtigste eines Textes kurz in eigenen Worten festhalten.',
+  wie:['Abschnitt lesen.','Text umdrehen und höchstens 5–7 Stichworte oder 3 Sätze aus dem Kopf aufschreiben.','Mit dem Text vergleichen und ergänzen.'],
+  wirk:'Wer zusammenfasst, muss Wichtiges von Unwichtigem trennen. Allein bringt das aber wenig, vor allem wenn man abschreibt. Aus dem Kopf und in eigenen Worten wird es zur Abrufübung.',
+  pflege:'Einen Fachtext zur Sturzprophylaxe in fünf eigenen Sätzen zusammenfassen – ohne hinzuschauen.',
+  stolper:['Abschreiben oder Umformulieren mit offenem Text ist kaum wirksam.','Gute Zusammenfassungen brauchen Übung.'],
+  belege:[['dunlosky2013','Zusammenfassen erhält die Bewertung „geringer Nutzen“ – vor allem, weil viele Lernende es ohne Übung nicht gut umsetzen.'],
+   ['miyatsu2018','Zusammenfassen wirkt besser, wenn es in eigenen Worten, knapp und aus dem Gedächtnis geschieht.']]},
+ {id:'markieren',name:'Markieren',alias:'Textmarker & Unterstreichen',ev:1,goals:['ueberblick'],min:10,col:'gold',
+  kurz:'Wichtige Stellen hervorheben – sparsam und erst nach dem Lesen.',
+  wie:['Absatz erst ganz lesen, dann höchstens einen Satz markieren.','Nur Kernaussagen, Fachbegriffe in einer zweiten Farbe.','Aus jeder Markierung eine Frage machen – die beantwortest du später aus dem Kopf.'],
+  wirk:'Markieren lenkt die Aufmerksamkeit beim ersten Lesen. Der Nutzen entsteht beim Auswählen, nicht beim späteren Wiederlesen der bunten Stellen.',
+  pflege:'Im Fachtext zur Händedesinfektion nur die fünf Indikationen markieren – und daraus fünf Abruffragen formulieren.',
+  stolper:['Zu viel Markiertes wirkt wie nichts Markiertes.','Markierungen nur wiederlesen bringt kaum etwas.'],
+  belege:[['dunlosky2013','Markieren und Unterstreichen erhalten die Bewertung „geringer Nutzen“.'],
+   ['ponce2022','Meta-Analyse: Selbst markieren half Studierenden, nicht aber Schülerinnen und Schülern. Das spätere Wiederlesen der eigenen Markierungen brachte keinen zusätzlichen Vorteil. Training im sparsamen Markieren hilft.'],
+   ['miyatsu2018','Empfehlung: erst lesen, dann sparsam markieren.']]},
+ {id:'sq3r',name:'Fünf-Schritt-Lesemethode',alias:'SQ3R: Überblick – Fragen – Lesen – Wiedergeben – Rückblick',ev:0,goals:['verstehen','ueberblick'],min:30,col:'rose',
+  kurz:'Lange Fachtexte in fünf Schritten erarbeiten – mit Fragen vorher und Wiedergeben nachher.',
+  wie:['Überblick: Überschriften, Bilder, Fettgedrucktes überfliegen.','Fragen: Was will ich nach dem Lesen wissen? Auf Klebezettel notieren.','Lesen: Abschnitt für Abschnitt, sparsam markieren.','Wiedergeben: Text zu, Inhalt in eigenen Worten wiedergeben und Fragen beantworten.','Rückblick: Was fehlte? Lücken schließen.'],
+  wirk:'Die Methode bündelt mehrere Bausteine: Vorwissen aktivieren, mit Fragen lesen und – am wichtigsten – aus dem Kopf wiedergeben. Der Schritt „Wiedergeben“ ist aktives Abrufen.',
+  pflege:'Ein Kapitel zum Thema Diabetes mellitus aus dem Pflegelehrbuch mit den fünf Schritten erarbeiten.',
+  stolper:['Als Gesamtpaket ist die Methode kaum in guten Studien geprüft. Ihre Bausteine Fragen stellen und Wiedergeben sind dagegen gut belegt.','Wer den Schritt „Wiedergeben“ auslässt, verliert den wirksamsten Teil.'],
+  belege:[['dunlosky2013','Die wirksamen Bausteine – Selbsttesten (hoch) sowie elaboratives Fragen und Selbsterklären (mittel) – sind gut untersucht. Die Methode geht auf Robinson (1946) zurück.']]}
+];
+const ART={abruf:'Abruf & Wiederholung',verteilt:'Abruf & Wiederholung',karten:'Abruf & Wiederholung',mischen:'Üben organisieren',selbsterklaeren:'generative Strategie',warum:'generative Strategie',erklaeren:'generative Strategie',zeichnen:'generative Strategie',map:'strukturierend & generativ',zusammenfassen:'strukturierende Strategie',markieren:'strukturierende Strategie',sq3r:'strukturierend & Abruf'};
+M.forEach(m=>m.art=ART[m.id]);
+const MBY=Object.fromEntries(M.map(m=>[m.id,m]));
+const evBadge=e=>`<span class="ev e${e}"><i>${[1,2,3].map(k=>`<em class="${k<=e?'on':''}"></em>`).join('')}</i>${EVL[e]}</span>`;
+
+/* ---------- Navigation ---------- */
+const TABS=[['start','Start','home'],['finder','Finder','compass'],['methoden','Methoden','book'],['abruf','Abrufen','recall'],['timer','Timer','timer'],['anfangen','Anfangen','start'],['ki','KI','spark']];
+let view='start',param=null;
+function go(v,p){stopTimers();view=v;param=p||null;render();window.scrollTo({top:0})}
+$('#tabs').insertAdjacentHTML('beforeend',TABS.map(([k,l,i])=>`<button data-tab="${k}">${ic(i)}<span>${l}</span></button>`).join(''));
+function movePill(){const cur=document.querySelector('#tabs button[aria-current="page"]'),pill=$('#pill');if(!pill)return;if(!cur){pill.style.opacity='0';return}pill.style.opacity='1';pill.style.width=cur.offsetWidth+'px';pill.style.transform=`translateX(${cur.offsetLeft}px)`}
+window.addEventListener('resize',movePill);
+$('#tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(b)go(b.dataset.tab)});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b){e.preventDefault();go(b.dataset.go,b.dataset.p)}});
+
+function head(badge,title,lead,ill){return `<header class="top"><div class="txt"><span class="badge">${badge}</span><h1>${title}</h1>${FL}</div>${ill?`<div class="ill"><img src="img/${ill}.png" alt=""></div>`:''}${lead?`<p class="lead">${lead}</p>`:''}</header>`}
+const foot=`<footer>${FL.replace('class="flourish"','class="flourish" style="max-width:180px"')}<span>Jasmin Klug · Praxisanleiterin · Modul „Lernen lernen“</span><button class="link" data-go="quellen">Alle Quellen</button></footer>`;
+
+function render(){
+  document.querySelectorAll('#tabs button').forEach(b=>b.setAttribute('aria-current',(b.dataset.tab===view||(view==='methode'&&b.dataset.tab==='methoden'))?'page':'false'));
+  const R={start:vStart,finder:vFinder,methoden:vMethoden,methode:vMethode,abruf:vAbruf,timer:vTimer,anfangen:vAnfangen,ki:vKI,quellen:vQuellen}[view]||vStart;
+  const app=$('#app');app.classList.remove('enter');app.innerHTML=R()+foot;void app.offsetWidth;app.classList.add('enter');
+  (AFTER[view]||(()=>{}))();movePill();ftLive();
+}
+const AFTER={};
+
+/* ---------- Abruf-Speicher ---------- */
+const KEY='lernkompass-abruf-v1';
+const today0=()=>{const d=new Date();d.setHours(0,0,0,0);return d.getTime()};
+const addDays=(t,n)=>{const d=new Date(t);d.setDate(d.getDate()+n);d.setHours(0,0,0,0);return d.getTime()};
+const STEPS=[1,3,7];
+function entries(){return store.get(KEY,[])}
+function saveEntries(a){store.set(KEY,a)}
+function nextDue(e){const n=e.done||0;if(n>=STEPS.length)return null;return addDays(e.created,STEPS[n])}
+function dueList(){const t=today0();return entries().filter(e=>{const d=nextDue(e);return d!==null&&d<=t})}
+const dstr=t=>new Date(t).toLocaleDateString('de-DE',{weekday:'short',day:'numeric',month:'short'});
+
+/* ---------- Start ---------- */
+function vStart(){
+  const due=dueList().length;
+  const T=[['finder','Methoden-Finder','Ein paar Fragen – und du weißt, womit du heute lernst.','compass','lav'],
+   ['methoden','Methoden-Bibliothek','12 Lernmethoden: so geht’s, darum wirkt’s, das sagt die Forschung.','book','sage'],
+   ['abruf','Abrufen nach dem Unterricht','5–10 Minuten aus dem Kopf – mit Wiederholplan.','recall','peach'],
+   ['timer','Fokus-Timer','Eine Sache, volle Aufmerksamkeit – mit festen Pausen.','timer','lav'],
+   ['anfangen','Anfangen statt Aufschieben','Wenn es gerade schwerfällt: der passende kleine Schritt.','start','sky'],
+   ['ki','Probeklausur mit KI','Schritt für Schritt – passend zu den Taxonomiestufen eurer Schule.','spark','rose'],
+   ['quellen','Quellen','Alle Belege im APA-Format, mit geprüfter DOI.','src','gold']];
+  return head('Lernen lernen','Lernkompass','Finde die Lernmethode, die zu deinem Ziel passt – und fang gleich an.','winken')+
+ welcomeCard()+
+  `<div class="sec"><h2 style="font-size:1.15rem">Dein Weg in drei Schritten</h2><div class="steps3">
+   <button class="st3" data-go="finder" style="color:var(--lav)"><span class="n">1</span><b>Methode finden</b><span class="d">6 kurze Fragen im Finder</span></button>
+   <button class="st3" data-go="methoden" style="color:var(--sage)"><span class="n">2</span><b>Lernen</b><span class="d">Anleitung lesen, mit Timer loslegen</span></button>
+   <button class="st3" data-go="abruf" style="color:var(--peach)"><span class="n">3</span><b>Festigen</b><span class="d">Abrufen – die App plant die Wiederholungen</span></button>
+  </div></div>`+
+  (due?`<button class="due" data-go="abruf" style="font:inherit;border:0;text-align:left;cursor:pointer"><span class="n">${due}</span><span><b>Heute ${due===1?'ist eine Wiederholung':'sind '+due+' Wiederholungen'} fällig.</b><br><span class="note">Tippe, um sie aus dem Kopf zu beantworten.</span></span></button>`:'')+
+  `<h2 style="font-size:1.15rem">Alle Bereiche</h2><div class="tiles">${T.map(([k,t,d,i,c])=>`<button class="tile" data-go="${k}" style="--tc:var(--${c})"><span class="ic" style="background:var(--${c}-l);color:var(--${c})">${ic(i)}</span><b>${t}</b><span class="d">${d}</span></button>`).join('')}</div>`+
+  `<div class="box lav"><b>Kurz vorweg:</b> Es gibt keine „Lerntypen“, für die nur eine Methode passt. Dafür fehlen die Belege (Pashler et al., 2008). Welche Methode sinnvoll ist, hängt vor allem von deinem <b>Ziel</b> und deinem <b>Stoff</b> ab – und fast immer gehört Abrufen aus dem Kopf dazu.</div>`+
+  installBox();
+}
+const WKEY='lernkompass-willkommen-v1';
+function welcomeCard(){
+  if(store.get(WKEY,false))return `<div class="row" style="justify-content:flex-end;margin-top:-8px"><button class="link" id="w-show" style="font-size:.84rem">So funktioniert der Lernkompass</button></div>`;
+  return `<div class="card welcome" id="welcome"><h2>Willkommen! Schön, dass du da bist.</h2>
+   <p>Der Lernkompass hilft dir, <b>wirksam</b> zu lernen – nicht länger, sondern klüger. So nutzt du ihn:</p>
+   <ul class="intro-list">
+    <li><span class="ic" style="background:var(--lav-l);color:var(--lav)">${ic('compass')}</span><span><b>Unsicher, wie du lernen sollst?</b> Der Finder fragt dich kurz aus und schlägt dir passende Methoden vor.</span></li>
+    <li><span class="ic" style="background:var(--sage-l);color:var(--sage)">${ic('book')}</span><span><b>Neugierig, warum eine Methode wirkt?</b> In der Bibliothek steht zu jeder Methode, wie sie geht und was die Forschung sagt.</span></li>
+    <li><span class="ic" style="background:var(--peach-l);color:var(--peach)">${ic('recall')}</span><span><b>Gerade aus dem Unterricht?</b> Fünf Minuten abrufen – die App erinnert dich an die Wiederholungen.</span></li>
+    <li><span class="ic" style="background:var(--sky-l);color:var(--sky)">${ic('timer')}</span><span><b>Bereit loszulegen?</b> Der Fokus-Timer hält dich bei einer Sache. Fällt der Start schwer, hilft „Anfangen“.</span></li>
+    <li><span class="ic" style="background:var(--gold-l);color:var(--gold)">${ic('lock')}</span><span><b>Deine Daten bleiben bei dir.</b> Keine Anmeldung, nichts wird verschickt. Gespeichert wird nur auf deinem Gerät.</span></li>
+   </ul>
+   <div class="row"><button class="btn" data-go="finder" id="w-go">Mit dem Finder starten</button><button class="btn ghost" id="w-ok">Verstanden</button></div></div>`;
+}
+function installBox(){
+  const sa=window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+  if(sa)return '';
+  return `<div class="card" style="gap:8px"><h3>Als App auf dem Handy speichern</h3><p class="note" style="font-size:.86rem">iPhone: in Safari auf „Teilen“ und dann „Zum Home-Bildschirm“. Android: im Chrome-Menü (⋮) „App installieren“. Danach funktioniert der Lernkompass auch ohne Internet.</p><button class="btn small" id="inst-btn" hidden>App installieren</button></div>`;
+}
+let deferred=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;const b=$('#inst-btn');if(b)b.hidden=false});
+AFTER.start=()=>{const ok=$('#w-ok');if(ok)ok.onclick=()=>{store.set(WKEY,true);render()};const wg=$('#w-go');if(wg)wg.addEventListener('click',()=>store.set(WKEY,true));const ws=$('#w-show');if(ws)ws.onclick=()=>{store.set(WKEY,false);render()};const b=$('#inst-btn');if(b){b.hidden=!deferred;b.onclick=async()=>{if(!deferred)return;deferred.prompt();try{await deferred.userChoice}catch(e){}deferred=null;b.hidden=true}}};
+
+/* ---------- Finder ---------- */
+const FQ=[
+ {k:'ziel',why:'Je nach Ziel passen andere Methoden: Für den Überblick hilft eine Concept-Map, fürs dauerhafte Merken vor allem Abrufen und Wiederholen.',q:'Was ist dein Ziel für diese Lerneinheit?',o:[['ueberblick','Mir einen Überblick verschaffen','Was gehört alles zu diesem Thema?'],['verstehen','Etwas wirklich verstehen','Zusammenhänge, Warum-Fragen'],['behalten','Mir etwas dauerhaft merken','Fachbegriffe, Normwerte, Abläufe'],['anwenden','Wissen anwenden können','Fallaufgaben, Praxis, Taxonomiestufe 3'],['wiederholen','Stoff vor einer Prüfung wiederholen','Den ich eigentlich schon gelernt habe']]},
+ {k:'stoff',why:'Begriffe lernt man anders als Zusammenhänge oder lange Texte. Und leicht verwechselbare Themen profitieren vom gemischten Üben.',q:'Welche Art von Stoff hast du vor dir?',o:[['fakten','Fachbegriffe, Zahlen, Fakten','z. B. Normwerte, Anatomie'],['zusammenhang','Abläufe und Zusammenhänge','z. B. Krankheitsentstehung, Pflegeprozess'],['text','Einen langen Fachtext','z. B. Lehrbuchkapitel, Skript'],['faelle','Ähnliche Themen, die man verwechseln kann','z. B. Krankheitsbilder, Medikamentengruppen']]},
+ {k:'pruefung',why:'Kurz vor einer Prüfung lohnt es sich, zu prüfen, was sitzt. Mit mehr Zeit kannst du in mehreren kurzen Runden lernen – das hält länger.',q:'Wann ist die nächste Prüfung zu diesem Stoff?',o:[['offen','Noch keine bestimmt',''],['lang','In mehr als einer Woche',''],['kurz','In 2 bis 7 Tagen',''],['morgen','Morgen oder übermorgen','']]},
+ {k:'zeit',why:'Manche Methoden brauchen Anlauf. In 10 Minuten schlage ich dir nur Methoden vor, die auch in 10 Minuten funktionieren.',q:'Wie viel Zeit hast du jetzt?',o:[['10','Etwa 10 Minuten',''],['25','Etwa 25 Minuten',''],['45','45 Minuten oder mehr','']]},
+ {k:'wer',why:'Zu zweit kann man sich gegenseitig abfragen und erklären – Erklären ist selbst eine wirksame Lernmethode.',q:'Lernst du allein oder zu zweit?',o:[['allein','Allein',''],['zuzweit','Mit jemandem zusammen','Tandem, Lerngruppe, auch per Video']]},
+ {k:'gefuehl',why:'Wie es dir geht, beeinflusst, was jetzt realistisch ist. Bei Erschöpfung ist manchmal eine Pause klüger als jede Methode.',q:'Wie geht es dir gerade beim Gedanken ans Lernen?',o:[['ok','Ich bin bereit',''],['muede','Ich bin müde oder erschöpft','z. B. nach einem Dienst'],['unruhig','Ich bin angespannt oder unruhig',''],['schieben','Ich schiebe es schon länger vor mir her','']]}
+];
+let fState={i:-1,a:{}};
+function vFinder(){
+  if(fState.i<0)return vFinderIntro();
+  if(fState.i>=FQ.length)return vFinderResult();
+  const q=FQ[fState.i],sel=fState.a[q.k];
+  return head('Methoden-Finder',`Frage ${fState.i+1} von ${FQ.length}`)+
+  `<div class="card"><div class="prog">${FQ.map((_,i)=>`<i class="${i<=fState.i?'done':''}"></i>`).join('')}</div>
+  <h2>${q.q}</h2>
+  <details class="why"><summary>Warum frage ich das?</summary><p>${q.why}</p></details>
+  <div class="opts" role="radiogroup" aria-label="${esc(q.q)}">${q.o.map(([v,l,s])=>`<label class="opt ${sel===v?'sel':''}"><input type="radio" name="fq" value="${v}" ${sel===v?'checked':''}><span class="dot"></span><span>${l}${s?`<small>${s}</small>`:''}</span></label>`).join('')}</div>
+  <div class="row">${fState.i?'<button class="btn ghost" id="f-back">Zurück</button>':''}<button class="btn" id="f-next" ${sel?'':'disabled'}>${fState.i<FQ.length-1?'Weiter':'Ergebnis zeigen'}</button></div></div>`;
+}
+function vFinderIntro(){
+  return head('Methoden-Finder','Welche Lernmethode passt jetzt zu dir?','Bevor du loslegst, kurz erklärt, was dich erwartet.','winken')+
+  `<div class="card"><h2>So funktioniert der Finder</h2>
+   <ul class="intro-list">
+    <li><span class="ic" style="background:var(--lav-l);color:var(--lav)">${ic('compass')}</span><span><b>6 kurze Fragen, etwa eine Minute.</b> Zu deinem Ziel, deinem Stoff, deiner Zeit und dazu, wie es dir gerade geht. Es gibt keine falschen Antworten.</span></li>
+    <li><span class="ic" style="background:var(--sage-l);color:var(--sage)">${ic('book')}</span><span><b>Du bekommst drei passende Methoden</b> mit Begründung, warum sie zu dir passen, und einen Plan für die Zeit, die du hast.</span></li>
+    <li><span class="ic" style="background:var(--peach-l);color:var(--peach)">${ic('check')}</span><span><b>Grundlage ist die Lernforschung,</b> nicht ein „Lerntyp“. Entscheidend sind dein Ziel und dein Stoff – und wie gut eine Methode belegt ist.</span></li>
+    <li><span class="ic" style="background:var(--gold-l);color:var(--gold)">${ic('lock')}</span><span><b>Nichts wird gespeichert.</b> Deine Antworten bleiben auf diesem Bildschirm.</span></li>
+   </ul>
+   <div class="box lav"><b>Tipp:</b> Denk an eine konkrete Lerneinheit, die du heute oder morgen vorhast – zum Beispiel „Vitalzeichen wiederholen“. Dann wird die Empfehlung genauer.</div>
+   <div class="row"><button class="btn" id="f-start">Los geht’s</button><button class="btn ghost" data-go="methoden">Lieber direkt alle Methoden ansehen</button></div></div>
+  <p class="src">Die Empfehlung ist ein Vorschlag aus deinen Antworten und den Belegen zu jeder Methode – keine Diagnose. Du entscheidest selbst.</p>`;
+}
+AFTER.finder=()=>{
+  if(fState.i<0){$('#f-start').onclick=()=>{fState.i=0;render();window.scrollTo({top:0})};return}
+  if(fState.i>=FQ.length){const r=$('#f-again');if(r)r.onclick=()=>{fState={i:0,a:{}};render()};return}
+  const q=FQ[fState.i];
+  document.querySelectorAll('input[name=fq]').forEach(inp=>inp.onchange=()=>{fState.a[q.k]=inp.value;document.querySelectorAll('.opt').forEach(o=>o.classList.toggle('sel',o.querySelector('input').checked));$('#f-next').disabled=false});
+  $('#f-next').onclick=()=>{fState.i++;render();window.scrollTo({top:0})};
+  const b=$('#f-back');if(b)b.onclick=()=>{fState.i--;render()};
+};
+function scoreMethods(a){
+  const s={};M.forEach(m=>{let v=m.ev*1.2;if(m.goals.includes(a.ziel))v+=3;if(m.goals[0]===a.ziel)v+=1;s[m.id]=v});
+  const add=(id,n)=>{s[id]=(s[id]||0)+n};
+  ({fakten:()=>{add('karten',2.5);add('abruf',1.5);add('verteilt',1)},zusammenhang:()=>{add('map',2);add('selbsterklaeren',2);add('warum',1.5);add('erklaeren',1)},text:()=>{add('sq3r',2.5);add('zusammenfassen',1);add('markieren',.5);add('selbsterklaeren',1)},faelle:()=>{add('mischen',3);add('erklaeren',.5)}}[a.stoff]||(()=>{}))();
+  if(a.pruefung==='morgen'){add('abruf',3);add('karten',1);['map','zeichnen','sq3r','zusammenfassen'].forEach(i=>add(i,-2))}
+  if(a.pruefung==='kurz'){add('abruf',1.5);add('karten',1);add('verteilt',1)}
+  if(a.pruefung==='lang'||a.pruefung==='offen'){add('verteilt',1.5);add('karten',1)}
+  M.forEach(m=>{if(a.zeit==='10'&&m.min>15)add(m.id,-3);if(a.zeit==='25'&&m.min>25)add(m.id,-1.5)});
+  if(a.wer==='zuzweit'){add('erklaeren',2);add('karten',.5);add('abruf',.5)}
+  if(a.gefuehl==='muede'){add('abruf',.5);['sq3r','mischen','map'].forEach(i=>add(i,-1.5))}
+  if(a.gefuehl==='unruhig'){add('abruf',.5);add('karten',.5)}
+  return Object.entries(s).sort((x,y)=>y[1]-x[1]).map(x=>x[0]);
+}
+function whyFor(id,a){
+  const w=[],m=MBY[id];
+  if(m.goals.includes(a.ziel))w.push(`passt zu deinem Ziel „${GOALS[a.ziel]}“`);
+  if(id==='karten'&&a.stoff==='fakten')w.push('ideal für Begriffe und Zahlen');
+  if(id==='mischen'&&a.stoff==='faelle')w.push('hilft, Ähnliches auseinanderzuhalten');
+  if((id==='map'||id==='selbsterklaeren'||id==='warum')&&a.stoff==='zusammenhang')w.push('macht Zusammenhänge sichtbar');
+  if(id==='sq3r'&&a.stoff==='text')w.push('gemacht für lange Fachtexte');
+  if(id==='abruf'&&a.pruefung==='morgen')w.push('kurz vor der Prüfung das Wirksamste: prüfen, was sitzt');
+  if(id==='verteilt'&&(a.pruefung==='lang'||a.pruefung==='offen'))w.push('du hast Zeit – nutze sie für mehrere kurze Runden');
+  if(id==='erklaeren'&&a.wer==='zuzweit')w.push('ihr seid zu zweit – perfekt zum gegenseitigen Erklären');
+  if(m.min<=10&&a.zeit==='10')w.push('passt in 10 Minuten');
+  w.push(EVL[m.ev]);
+  return w;
+}
+function vFinderResult(){
+  const a=fState.a,top=scoreMethods(a).slice(0,3);
+  let pre='';
+  if(a.gefuehl==='schieben')pre=`<div class="box warm"><b>Erst anfangen, dann Methode.</b> Wenn du etwas schon länger vor dir herschiebst, hilft oft zuerst ein ganz kleiner Start. Schau in <button class="link" data-go="anfangen">Anfangen statt Aufschieben</button> – danach passt eine der Methoden unten.</div>`;
+  if(a.gefuehl==='muede')pre=`<div class="box warm"><b>Ehrlich prüfen:</b> Bist du müde oder erschöpft – etwa nach einem Dienst –, ist eine Pause manchmal die klügere Wahl. Wenn du lernen möchtest: kurz halten, mit etwas Leichtem aus dem Kopf beginnen, nichts Neues anfangen.</div>`;
+  if(a.gefuehl==='unruhig')pre=`<div class="box warm"><b>Bei Anspannung:</b> Beginne mit etwas, das du schon kannst. Ein kleiner Erfolg am Anfang beruhigt. Wenn du magst, geh vorher zwei Minuten ans Fenster oder trink etwas.</div>`;
+  let post='';
+  if(a.pruefung==='morgen')post=`<div class="box info"><b>Vor der Prüfung:</b> Lieber prüfen, was sitzt, und Lücken gezielt schließen, als Neues anzufangen. Und schlafen: Schlaf hilft beim Festigen des Gelernten (Diekelmann & Born, 2010). Eine durchgelernte Nacht ist meist ein schlechter Tausch.</div>`;
+  const plan={10:'10 Minuten: nur die erste Methode, am besten als Abruf aus dem Kopf.',25:'25 Minuten: Methode 1 (ca. 15 Min.), dann 5 Minuten aus dem Kopf abrufen, was hängen geblieben ist, und den nächsten Wiederholtermin festlegen.',45:'45 Minuten: Methode 1 (ca. 25 Min.), kurze Pause, Methode 2 oder 3 (ca. 15 Min.), zum Schluss 5 Minuten abrufen und Wiederholtermine planen.'}[a.zeit];
+  return head('Methoden-Finder','Deine Empfehlung','Die Empfehlung beruht auf deinen Antworten und auf dem, was die Lernforschung zu jeder Methode zeigt. Sie ist ein Vorschlag, keine Diagnose.','winken')+pre+
+  `<div class="mlist">${top.map((id,i)=>{const m=MBY[id];return `<div class="rec ${i===0?'first':''}"><span class="rank">${i===0?'Am besten passend':'Auch gut'}</span><div class="row" style="justify-content:space-between"><h2 style="font-size:1.2rem">${m.name}</h2>${evBadge(m.ev)}</div><p>${m.kurz}</p><ul>${whyFor(id,a).map(w=>`<li>${w}</li>`).join('')}</ul><div class="row"><button class="btn small" data-go="methode" data-p="${id}">So geht’s</button>${id==='abruf'?'<button class="btn small ghost" data-go="abruf">Gleich abrufen</button>':''}</div></div>`}).join('')}</div>`+
+  `<div class="box tip"><b class="k">Dein Plan für jetzt:</b> ${plan}</div>`+post+
+  `<div class="card"><h3>So geht es weiter</h3><ol class="steps"><li><span>Tippe bei der ersten Methode auf <b>„So geht’s“</b> und lies die Anleitung.</span></li><li><span>Starte den <button class="link" data-go="timer">Fokus-Timer</button> und lerne mit der Methode.</span></li><li><span>Zum Schluss: <button class="link" data-go="abruf">Abrufen</button> – die App plant deine Wiederholungen.</span></li></ol></div>`+
+  `<div class="row"><button class="btn ghost" id="f-again">Noch einmal beantworten</button><button class="btn ghost" data-go="methoden">Alle Methoden ansehen</button></div>`;
+}
+
+/* ---------- Methoden ---------- */
+let mFilter='alle';
+function vMethoden(){
+  const list=M.filter(m=>mFilter==='alle'||m.goals.includes(mFilter));
+  return head('Methoden-Bibliothek','Lernmethoden mit Belegen','Wie jede Methode funktioniert, warum sie wirkt und was die Forschung dazu sagt. Die Punkte zeigen, wie gut die Wirkung belegt ist.','ruhe')+
+  `<div class="chips" role="group" aria-label="Nach Ziel filtern"><button class="chip" data-f="alle" aria-pressed="${mFilter==='alle'}">Alle</button>${Object.entries(GOALS).map(([k,l])=>`<button class="chip" data-f="${k}" aria-pressed="${mFilter===k}">${l}</button>`).join('')}</div>
+  <div class="mlist">${list.map(m=>`<button class="mitem" data-go="methode" data-p="${m.id}"><b>${m.name}</b>${evBadge(m.ev)}<span class="d">${m.kurz}</span></button>`).join('')}</div>
+  <div class="card"><h2>Landkarte der Lernstrategien</h2>
+   <p>In der Pädagogischen Psychologie werden kognitive Lernstrategien danach geordnet, was sie mit dem Lernstoff tun (Hasselhorn & Gold, 2017). Dazu kommt eine zweite Ebene: die Steuerung des eigenen Lernens.</p>
+   <div class="map">
+    <div class="m"><b>Mnemonisch</b><span>Neues im Arbeitsgedächtnis halten, z. B. innerlich wiederholen, Eselsbrücken.</span><span class="note">kurzfristig hilfreich, für Klausuren allein zu wenig</span></div>
+    <div class="m"><b>Strukturierend</b><span>Wichtiges herausfiltern und ordnen: Markieren, Zusammenfassen, Concept-Map.</span><span class="note">gut für Überblick, wirksamer mit Abruf-Schritt</span></div>
+    <div class="m"><b>Generativ</b><span>Dem Stoff selbst etwas hinzufügen: erklären, Warum-Fragen, Beispiele, Skizzen.</span><span class="note">fördert Verstehen und Verknüpfen</span></div>
+    <div class="m"><b>Abruf & Wiederholung</b><span>Wissen aus dem Gedächtnis holen und verteilt wiederholen.</span><span class="note">am besten belegt für langfristiges Behalten</span></div>
+   </div>
+   <div class="sec"><h3><span class="bar"></span>Und darüber: dein Lernen steuern</h3>
+    <div class="cycle"><span>Planen</span>→<span>Überwachen</span>→<span>Bewerten</span>→<span>Nachsteuern</span></div>
+    <p class="note" style="font-size:.86rem">Diese metakognitiven Strategien – sich ein Ziel setzen, unterwegs prüfen „Verstehe ich das?“ und hinterher ehrlich bewerten – machen aus einzelnen Methoden ein Lernsystem (Hasselhorn & Gold, 2017). Das Abruf-Tool dieser App folgt genau diesem Kreislauf.</p></div>
+  </div>
+  <div class="card"><h3>So sind die Punkte zu lesen</h3><div class="sec">
+   <div class="row">${evBadge(3)}<span class="note">mehrere Meta-Analysen, auch in echten Lernsituationen</span></div>
+   <div class="row">${evBadge(2)}<span class="note">positive Befunde, aber mit Einschränkungen oder weniger Studien</span></div>
+   <div class="row">${evBadge(1)}<span class="note">allein kaum wirksam, mit guter Umsetzung besser</span></div>
+   <div class="row">${evBadge(0)}<span class="note">als Gesamtpaket wenig geprüft, einzelne Bausteine belegt</span></div></div>
+   <p class="note">Die Einstufung stützt sich vor allem auf Dunlosky et al. (2013) und neuere Meta-Analysen. Sie ist eine Einordnung für den Lernalltag, kein Messwert.</p>
+   <div class="sec"><h3><span class="bar"></span>Warum Meta-Analysen mehr zählen</h3>
+    <div class="pyr"><div style="width:52%">Systematische Übersichten &amp; Meta-Analysen</div><div style="width:70%">Einzelne kontrollierte Experimente</div><div style="width:86%">Beobachtungs- und Fallstudien</div><div style="width:100%">Meinungen von Expertinnen und Experten</div></div>
+    <p class="note" style="font-size:.86rem">In der evidenzbasierten Medizin werden Belege nach ihrem Studiendesign gestuft – oben steht, was viele gut kontrollierte Studien zusammenfasst. Diese Logik steckt auch hinter den Punkten: „gut belegt“ heißt, mehrere Meta-Analysen kommen zu einem ähnlichen Ergebnis.</p></div></div>
+  <div class="card"><h3>Was weniger bringt, als man denkt</h3><ul class="plain">
+   <li><b>Wiederlesen:</b> fühlt sich sicher an, bringt allein aber wenig (Dunlosky et al., 2013). Das Gefühl „Kenn ich“ ist kein verlässlicher Hinweis auf „Kann ich“ (Dunlosky & Rawson, 2012).</li>
+   <li><b>Nach „Lerntyp“ lernen:</b> Dass Unterricht besser wirkt, wenn er zum angeblichen Lernstil passt, ist nicht belegt (Pashler et al., 2008).</li>
+   <li><b>Alles in der letzten Nacht:</b> Verteiltes Lernen und Schlaf schlagen das Pauken am Stück (Cepeda et al., 2006; Diekelmann & Born, 2010).</li></ul></div>`;
+}
+AFTER.methoden=()=>{document.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{mFilter=b.dataset.f;render()})};
+function vMethode(){
+  const m=MBY[param]||M[0];
+  return `<button class="back" data-go="methoden">← Alle Methoden</button>`+head(m.alias,m.name)+
+  `<div class="row">${evBadge(m.ev)}<div class="tags"><span class="tag art">${m.art}</span>${m.goals.map(g=>`<span class="tag">${GOALS[g]}</span>`).join('')}<span class="tag" style="background:var(--line);color:var(--muted)">ab ${m.min} Min.</span></div></div>
+  <div class="card">
+   <p style="font-size:1rem;color:var(--ink)">${m.kurz}</p>
+   <div class="sec"><h3><span class="bar" style="background:var(--lav)"></span>So geht’s</h3><ol class="steps">${m.wie.map(s=>`<li><span>${s}</span></li>`).join('')}</ol></div>
+   <div class="sec"><h3><span class="bar" style="background:var(--sage)"></span>Darum wirkt es</h3><p>${m.wirk}</p></div>
+   <div class="box tip"><b class="k">Beispiel aus der Pflege:</b> ${m.pflege}</div>
+   <div class="sec"><h3><span class="bar" style="background:var(--rose)"></span>Stolpersteine</h3><ul class="plain">${m.stolper.map(s=>`<li>${s}</li>`).join('')}</ul></div>
+   <div class="sec"><h3><span class="bar" style="background:var(--gold)"></span>Das sagt die Forschung</h3>${m.belege.map(([id,t])=>`<div class="cite"><span>${t} <span class="note">(${REF[id].k})</span></span><span class="ref">${refHTML(id)}</span><button class="copyref" data-ref="${id}">Quelle kopieren</button></div>`).join('')}</div>
+  </div>
+  <div class="row"><button class="btn" data-go="abruf">Jetzt mit Abrufen festigen</button><button class="btn ghost" data-go="quellen">Alle Quellen</button></div>`;
+}
+AFTER.methode=()=>{document.querySelectorAll('[data-ref]').forEach(b=>b.onclick=()=>copy(refText(b.dataset.ref),'Quelle kopiert'))};
+
+/* ---------- Abrufen ---------- */
+let ab={step:0,thema:'',ziel:'',mode:'frei',dump:'',gaps:'',q:['','',''],conf:null,mins:3,review:null};
+const OPS=[['l1','Stufe 1 · Wissen','nennen, aufzählen, angeben, wiedergeben, bezeichnen'],['l2','Stufe 2 · Verständnis','erklären, begründen, erläutern, beschreiben, verdeutlichen'],['l3','Stufe 3 · Anwendung','anwenden, ermitteln, erarbeiten, herausfinden, entwickeln']];
+function vAbruf(){
+  if(ab.review)return vReview();
+  const fl=['Planen','Aus dem Kopf','Vergleichen','Fragen','Plan'];
+  const flow=`<div class="flow">${fl.map((f,i)=>`<span class="${i===ab.step?'on':i<ab.step?'done':''}">${i+1} ${f}</span>`).join('')}</div>`;
+  let body='';
+  if(ab.step===0){
+    body=`<div class="card"><h2>Worum ging es im Unterricht?</h2>
+    <label class="f">Thema<input type="text" id="ab-thema" maxlength="80" placeholder="z. B. Vitalzeichen: Puls und Blutdruck" value="${esc(ab.thema)}"></label>
+    <label class="f">Was willst du danach können? <span class="note" style="font-weight:400">(optional – das ist dein Plan)</span><input type="text" id="ab-ziel" maxlength="120" placeholder="z. B. Normwerte nennen und Abweichungen erkennen" value="${esc(ab.ziel)}"></label>
+    <div><div class="note" style="margin-bottom:6px">Wie willst du abrufen?</div><div class="modes" role="group" aria-label="Abrufform">
+     <button class="mode" data-mode="frei" aria-pressed="${ab.mode==='frei'}"><b>Frei aus dem Kopf</b><span class="note">Leeres Blatt, keine Hilfen. Am anstrengendsten – und am wirksamsten.</span></button>
+     <button class="mode" data-mode="hinweis" aria-pressed="${ab.mode==='hinweis'}"><b>Mit Hinweisen</b><span class="note">Erst Überschriften notieren, dann darunter ergänzen. Gut für den Einstieg.</span></button>
+     <div class="mode" style="cursor:default;opacity:.75"><b>Wiedererkennen</b><span class="note">Antworten auswählen (z. B. Multiple Choice) – am leichtesten, bringt fürs Behalten am wenigsten.</span></div></div>
+     <p class="src" style="margin-top:6px">Die Gedächtnisforschung unterscheidet freie Reproduktion, Reproduktion mit Hinweisreizen und Wiedererkennen (Horstmann & Dreisbach, 2012).</p></div>
+    <div><div class="note" style="margin-bottom:6px">Wie lange willst du aus dem Kopf schreiben?</div><div class="seg" role="group" aria-label="Dauer">${[2,3,5].map(n=>`<button data-min="${n}" aria-pressed="${ab.mins===n}">${n} Minuten</button>`).join('')}</div></div>
+    <div class="box info">Klapp deine Unterlagen jetzt zu. Du kannst auf Papier schreiben oder hier tippen.</div>
+    <button class="btn" id="ab-go" ${ab.thema.trim()?'':'disabled'}>Los geht’s</button></div>`;
+  } else if(ab.step===1){
+    body=`<div class="card"><h2>Alles, was du noch weißt</h2><p>Stichworte, Skizzen, Pfeile – alles zählt. Nicht nachschauen.</p>${ab.mode==='hinweis'?'<div class="box lav">Schreib zuerst 3–5 Überschriften aus dem Unterricht auf. Ergänze dann unter jeder Überschrift alles, was dir dazu einfällt.</div>':''}
+    <div class="stage"><div class="clock" id="ab-clock">${fmt(ab.mins*60)}</div><div class="ring"><span id="ab-ring"></span></div><button class="btn small" id="ab-start">Timer starten</button></div>
+    <label class="f">Deine Notizen (optional)<textarea id="ab-dump" placeholder="Was fällt dir ein?">${esc(ab.dump)}</textarea></label>
+    <div class="row"><button class="btn" id="ab-next">Fertig – jetzt vergleichen</button></div></div>`;
+  } else if(ab.step===2){
+    body=`<div class="card"><h2>Jetzt vergleichen</h2><p>Öffne deine Unterlagen. Was fehlte oder war falsch? Ergänze es in einer zweiten Farbe – oder notiere es hier.</p>
+    <label class="f">Meine Lücken<textarea id="ab-gaps" placeholder="z. B. Normwert Blutdruck vergessen, Unterschied Tachy- und Bradykardie unklar">${esc(ab.gaps)}</textarea></label>
+    <div class="box lav">Lücken sind kein Versagen, sondern dein wertvollstes Material. Genau dort lohnt sich die nächste Wiederholung.</div>
+    <div class="box info"><b>Warum vergleichen so wichtig ist:</b> Erinnern ist kein Abspielen, sondern ein Rekonstruieren. Schon Bartlett (1932) zeigte, dass Erinnerungen beim wiederholten Nacherzählen vereinfacht und an eigene Erwartungen angepasst werden. Der Abgleich mit den Unterlagen schützt davor, Fehler einzuprägen.</div>
+    <div class="row"><button class="btn ghost" id="ab-prev">Zurück</button><button class="btn" id="ab-next">Weiter zu den Fragen</button></div></div>`;
+  } else if(ab.step===3){
+    body=`<div class="card"><h2>Drei Fragen für dein zukünftiges Ich</h2><p>Schreib je eine Frage pro Taxonomiestufe. Die beantwortest du bei der nächsten Wiederholung aus dem Kopf.</p>
+    ${OPS.map(([c,l,v],i)=>`<div class="qrow"><span class="lvl ${c}">${i+1}</span><label class="f">${l}<input type="text" data-q="${i}" maxlength="200" placeholder="${v.split(',')[0][0].toUpperCase()+v.split(',')[0].slice(1)} …" value="${esc(ab.q[i])}"><span class="note">Operatoren: ${v}</span></label></div>`).join('')}
+    <div><div class="note" style="margin-bottom:6px">Wie sicher fühlst du dich jetzt mit dem Thema?</div><div class="conf">${['unsicher','teils','ziemlich sicher'].map((c,i)=>`<button data-conf="${i}" aria-pressed="${ab.conf===i}">${c}</button>`).join('')}</div></div>
+    <div class="row"><button class="btn ghost" id="ab-prev">Zurück</button><button class="btn" id="ab-save" ${ab.q.some(x=>x.trim())?'':'disabled'}>Speichern und Plan erstellen</button></div></div>`;
+  } else {
+    const c=Date.now();
+    body=`<div class="card"><h2>Gespeichert: dein Wiederholplan</h2>${ab.ziel?`<div class="box tip"><b class="k">Dein Ziel:</b> ${esc(ab.ziel)}<br><span class="note">Kurz bewerten: Wie nah bist du heute dran? Bei der Wiederholung prüfst du es erneut.</span></div>`:''}<p>Die App erinnert dich auf der Startseite, wenn eine Wiederholung fällig ist.</p>
+    <ul class="plain">${STEPS.map(d=>`<li><b>${dstr(addDays(today0(),d))}</b> – nach ${d} ${d===1?'Tag':'Tagen'}</li>`).join('')}</ul>
+    <div class="box info">Die Wiederholungen sind auf diesem Gerät gespeichert, nicht online. Wer die Browserdaten löscht, löscht auch den Plan.</div>
+    <div class="row"><button class="btn" id="ab-new">Neues Thema abrufen</button></div></div>`;
+  }
+  const list=entries().slice().sort((x,y)=>(nextDue(x)??9e15)-(nextDue(y)??9e15));
+  const t=today0();
+  const lst=list.length?`<div class="card"><h3>Meine Wiederholungen</h3>${list.map(e=>{const d=nextDue(e);const st=d===null?['fest','gefestigt']:d<=t?['today','heute fällig']:['later',dstr(d)];return `<div class="entry"><b>${esc(e.thema)}</b><span class="st ${st[0]}">${st[1]}</span><div class="acts">${d!==null?`<button class="btn small ${d<=t?'':'ghost'}" data-rev="${e.id}">Jetzt wiederholen</button>`:`<button class="btn small ghost" data-again="${e.id}">In 14 Tagen nochmal</button>`}<button class="btn small ghost" data-del="${e.id}">Löschen</button></div></div>`}).join('')}</div>`:'';
+  return head('Abrufen nach dem Unterricht','5 Minuten aus dem Kopf','Direkt nach dem Unterricht: planen, aufschreiben, was hängen geblieben ist, vergleichen, Fragen formulieren – und die App plant die Wiederholungen nach 1, 3 und 7 Tagen.','lernen')+flow+body+lst+
+  `<p class="src">Warum das wirkt: Abrufen festigt Gelerntes stärker als Wiederlesen (Roediger & Karpicke, 2006; Adesope et al., 2017), und verteilte Wiederholungen halten es länger (Cepeda et al., 2006).</p>`;
+}
+AFTER.abruf=()=>{
+  bindList();
+  if(ab.review){bindReview();return}
+  const zi=$('#ab-ziel');if(zi)zi.oninput=()=>ab.ziel=zi.value;
+  document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{ab.mode=b.dataset.mode;document.querySelectorAll('[data-mode]').forEach(x=>x.setAttribute('aria-pressed',x===b))});
+  const th=$('#ab-thema');if(th){th.oninput=()=>{ab.thema=th.value;$('#ab-go').disabled=!th.value.trim()};document.querySelectorAll('[data-min]').forEach(b=>b.onclick=()=>{ab.mins=+b.dataset.min;document.querySelectorAll('[data-min]').forEach(x=>x.setAttribute('aria-pressed',x===b))});$('#ab-go').onclick=()=>{unlock();ab.step=1;render();startDump()}}
+  const st=$('#ab-start');if(st)st.onclick=()=>{unlock();startDump()};
+  const dp=$('#ab-dump');if(dp)dp.oninput=()=>ab.dump=dp.value;
+  const gp=$('#ab-gaps');if(gp)gp.oninput=()=>ab.gaps=gp.value;
+  document.querySelectorAll('[data-q]').forEach(inp=>inp.oninput=()=>{ab.q[+inp.dataset.q]=inp.value;$('#ab-save').disabled=!ab.q.some(x=>x.trim())});
+  document.querySelectorAll('[data-conf]').forEach(b=>b.onclick=()=>{ab.conf=+b.dataset.conf;document.querySelectorAll('[data-conf]').forEach(x=>x.setAttribute('aria-pressed',x===b))});
+  const nx=$('#ab-next');if(nx)nx.onclick=()=>{stopTimers();ab.step++;render()};
+  const pv=$('#ab-prev');if(pv)pv.onclick=()=>{ab.step--;render()};
+  const sv=$('#ab-save');if(sv)sv.onclick=()=>{const a=entries();a.push({id:Date.now().toString(36),thema:ab.thema.trim(),ziel:ab.ziel.trim(),created:today0(),q:ab.q.map(s=>s.trim()).filter(Boolean),gaps:ab.gaps.trim(),conf:ab.conf,done:0});saveEntries(a);ab.step=4;render()};
+  const nw=$('#ab-new');if(nw)nw.onclick=()=>{ab={step:0,thema:'',ziel:'',mode:'frei',dump:'',gaps:'',q:['','',''],conf:null,mins:3,review:null};render()};
+};
+function startDump(){const t=Timer(ab.mins*60,(r,s)=>{const c=$('#ab-clock'),g=$('#ab-ring');if(c){c.textContent=fmt(r);c.classList.toggle('warn',r<=15)}if(g)g.style.width=(100*(1-r/s))+'%'},()=>{gong(1);toast('Zeit! Jetzt vergleichen.')});t.start();const b=$('#ab-start');if(b)b.textContent='Neu starten'}
+function bindList(){
+  document.querySelectorAll('[data-rev]').forEach(b=>b.onclick=()=>{ab.review={id:b.dataset.rev,show:false};render();window.scrollTo({top:0})});
+  document.querySelectorAll('[data-again]').forEach(b=>b.onclick=()=>{const a=entries();const e=a.find(x=>x.id===b.dataset.again);if(e){e.created=addDays(today0(),14-STEPS[STEPS.length-1]);e.done=STEPS.length-1;saveEntries(a);toast('Wiederholung in 14 Tagen geplant');render()}});
+  document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{if(b.dataset.sure){saveEntries(entries().filter(x=>x.id!==b.dataset.del));render()}else{b.dataset.sure='1';b.textContent='Wirklich löschen?';setTimeout(()=>{if(b.isConnected){delete b.dataset.sure;b.textContent='Löschen'}},3000)}});
+}
+function vReview(){
+  const e=entries().find(x=>x.id===ab.review.id);
+  if(!e){ab.review=null;return vAbruf()}
+  const n=(e.done||0)+1;
+  return `<button class="back" id="rv-back">← Zurück zu „Abrufen“</button>`+head(`Wiederholung ${n} von ${STEPS.length}`,esc(e.thema),'Beantworte jede Frage aus dem Kopf – laut oder auf Papier. Erst danach schaust du in deine Unterlagen.')+
+  `<div class="card">${e.ziel?`<div class="box tip"><b class="k">Dein Ziel:</b> ${esc(e.ziel)}</div>`:''}<div class="box lav"><b>Erst frei:</b> Schreib eine Minute lang alles auf, was du noch zu „${esc(e.thema)}“ weißt. Danach nutzt du deine Fragen als Hinweise.</div>${e.q.map((q,i)=>`<div class="qrow"><span class="lvl l${Math.min(3,i+1)}">${i+1}</span><p style="color:var(--ink);padding-top:4px">${esc(q)}</p></div>`).join('')}
+  ${e.gaps?`<div><button class="btn small ghost" id="rv-show">${ab.review.show?'Lücken vom letzten Mal ausblenden':'Lücken vom letzten Mal zeigen'}</button>${ab.review.show?`<div class="box warm" style="margin-top:8px">${esc(e.gaps)}</div>`:''}</div>`:''}
+  <div class="box info">Vergleiche jetzt mit deinen Unterlagen. Was du nicht wusstest, ist der Schwerpunkt fürs nächste Mal.</div>
+  <div class="row"><button class="btn" id="rv-done">Erledigt</button></div></div>`;
+}
+function bindReview(){
+  $('#rv-back').onclick=()=>{ab.review=null;render()};
+  const s=$('#rv-show');if(s)s.onclick=()=>{ab.review.show=!ab.review.show;render()};
+  $('#rv-done').onclick=()=>{const a=entries();const e=a.find(x=>x.id===ab.review.id);if(e){e.done=(e.done||0)+1;saveEntries(a);const d=nextDue(e);toast(d===null?'Gefestigt – stark!':'Nächste Wiederholung: '+dstr(d))}ab.review=null;render()};
+}
+
+/* ---------- Anfangen ---------- */
+let an={path:null,focus:25,brk:5,round:0,wenn:'',dann:'',wert:3,erw:3,konkret:2};
+const PILL={gross:'lernen',unangenehm:'winken',angst:'ruhe',erschoepft:'erschoepft',ablenkung:'handy'};
+const PATHS=[
+ ['gross','Die Aufgabe ist riesig. Ich weiß nicht, wo ich anfangen soll.','1','sky'],
+ ['unangenehm','Es ist langweilig oder unangenehm.','2','peach'],
+ ['angst','Ich habe Angst, es nicht gut genug zu machen.','3','rose'],
+ ['erschoepft','Ich bin erschöpft oder leer.','4','sage'],
+ ['ablenkung','Das Handy und alles andere sind gerade spannender.','5','gold']];
+const PATHTXT={
+ gross:{h:'Mach den ersten Schritt lächerlich klein',p:['Schreib den <b>allerkleinsten nächsten Schritt</b> auf – so klein, dass er fast albern wirkt: „Skript aufschlagen, Kapitel 3 finden.“','Plane nur diesen einen Schritt. Danach entscheidest du neu.','Große Aufgaben in Scheiben schneiden: Welche drei Teile hat das Thema? Heute nur Teil 1.','Mach dein Ziel <b>konkret</b>: statt „Ich lerne Anatomie“ lieber „Bis 18 Uhr beantworte ich 10 Karteikarten zum Herz“.'],e:'Konkrete, herausfordernde Ziele führten in vielen Studien zu besseren Leistungen als vage Vorsätze wie „Ich gebe mein Bestes“ (Latham & Locke, 1991). Konkrete Wenn-dann-Pläne helfen, Vorhaben umzusetzen (Gollwitzer & Sheeran, 2006). Dass der allererste Schritt klein sein sollte, ist Erfahrungswissen.'},
+ unangenehm:{h:'Der 10-Minuten-Deal',p:['Vereinbare mit dir: <b>nur 10 Minuten</b>. Danach darfst du aufhören – ohne schlechtes Gewissen.','Starte den Fokus-Timer mit 10 Minuten (Icon „Timer“ unten).','Oft ist das Anfangen das Schwerste. Wenn du nach 10 Minuten weitermachen willst: gern. Wenn nicht: Du hast trotzdem etwas geschafft.','Belohnung danach planen – etwas Kleines, auf das du dich freust.'],e:'Aufschieben ist oft ein Versuch, unangenehme Gefühle kurzfristig zu vermeiden – nicht Faulheit (Sirois & Pychyl, 2013). Ein kurzer, begrenzter Start macht das Gefühl aushaltbarer.'},
+ angst:{h:'Freundlich mit dir sein – gerade jetzt',p:['Sag dir einen Satz, den du einer Freundin sagen würdest: <i>„Es ist verständlich, dass ich unsicher bin. Ich darf es Schritt für Schritt versuchen.“</i>','Gib dir die Erlaubnis für einen <b>schlechten ersten Entwurf</b>. Verbessern kannst du später.','Fang mit etwas an, das dir sicher gelingt. Kleine Erfolge stärken das Vertrauen, es zu schaffen.','Erklär dir Rückschläge mit Dingen, die du ändern kannst: „Ich habe zu spät angefangen“ statt „Ich bin halt nicht schlau genug“.','Wenn du in der Vergangenheit aufgeschoben hast: Verzeih es dir. Das macht den nächsten Start leichter.'],e:'Selbstmitgefühl erhöhte in Studien die Motivation, sich zu verbessern (Breines & Chen, 2012); wer sich das Aufschieben verzieh, schob vor der nächsten Prüfung weniger auf (Wohl et al., 2010). Eigene Erfolgserlebnisse gelten als stärkste Quelle von Selbstwirksamkeit (Bandura, 1977). Wer Misserfolg auf veränderbare, beeinflussbare Ursachen wie Anstrengung oder Vorgehen zurückführt, bleibt eher zuversichtlich als bei Ursachen wie „Begabung“ (Weiner, 1979). Menschen mit starker Angst vor Misserfolg neigen dazu, Leistungssituationen zu meiden (Atkinson, 1957) – Aufschieben kann ein solcher Schutzversuch sein.'},
+ erschoepft:{h:'Vielleicht ist das gar kein Aufschieben',p:['Prüf ehrlich: Hast du genug geschlafen, gegessen, getrunken? Kommst du aus einem (Nacht-)Dienst?','Wenn ja: Eine <b>echte Pause</b> ist jetzt klüger als Lernen mit Druck. Plane einen konkreten Lerntermin für später.','Wenn du trotzdem etwas tun möchtest: höchstens 10 Minuten etwas Leichtes aus dem Kopf abrufen.','Hält die Erschöpfung über längere Zeit an, sprich mit einer Vertrauensperson, deiner Praxisanleitung oder deiner Hausärztin.'],e:'Erschöpfung und Aufschieben sehen von außen ähnlich aus, brauchen aber Unterschiedliches. Bei Erschöpfung hilft Erholung – nicht mehr Disziplin.'},
+ ablenkung:{h:'Die Umgebung arbeiten lassen',p:['Handy <b>in einen anderen Raum</b> oder in eine Tasche außer Sicht – nicht nur umdrehen.','Eine Aufgabe, ein Tab, ein Heft: die Ein-Ding-Regel.','Den Fokus-Timer starten (Icon „Timer“ unten). In der Pause darfst du kurz aufs Handy – aber nur in der Pause.','Schreib einen Wenn-dann-Plan: „Wenn ich zum Handy greifen will, dann trinke ich einen Schluck und lese den nächsten Absatz.“'],e:'Konkrete Wenn-dann-Pläne haben in einer Meta-Analyse die Umsetzung von Zielen deutlich verbessert (Gollwitzer & Sheeran, 2006). Feste Pausen nach der Pomodoro-Methode gingen in einer Studie mit weniger Ermüdung einher (Biwer et al., 2023).'}
+};
+function vAnfangen(){
+  const p=an.path?PATHTXT[an.path]:null;
+  return head('Anfangen statt Aufschieben','Was hält dich gerade ab?','Aufschieben ist menschlich. Meist geht es dabei um Gefühle, nicht um mangelnde Disziplin. Wähle, was am ehesten passt.','handy')+
+  `<div class="paths" role="group" aria-label="Was hält dich ab">${PATHS.map(([k,l,n,c])=>`<button class="pathbtn" data-path="${k}" aria-pressed="${an.path===k}"><span class="e" style="background:var(--${c}-l);color:var(--${c})">${n}</span><span>${l}</span></button>`).join('')}</div>`+
+  (p?`<div class="card" id="an-res"><div class="res"><h2>${p.h}</h2><div class="ill"><img src="img/${PILL[an.path]}.png" alt=""></div></div><ol class="steps">${p.p.map(s=>`<li><span>${s}</span></li>`).join('')}</ol><p class="src">${p.e}</p></div>`:'')+
+  `<div class="card"><h2>Motivations-Check</h2><p>Motivation hängt davon ab, wie wichtig dir etwas ist und wie sehr du dir zutraust, es zu schaffen. Schieb die Regler so, wie es gerade für dich stimmt.</p>
+   ${[['wert','Wie wichtig ist mir diese Aufgabe?','unwichtig','sehr wichtig'],['erw','Wie sehr traue ich mir zu, sie zu schaffen?','gar nicht','voll und ganz'],['konkret','Wie konkret ist mein Ziel?','ganz vage','ganz konkret']].map(([k,l,a,b])=>`<div class="slider"><label for="mv-${k}">${l}<output id="mv-${k}-o">${an[k]} / 5</output></label><input type="range" id="mv-${k}" min="1" max="5" step="1" value="${an[k]}"><div class="scale"><span>${a}</span><span>${b}</span></div></div>`).join('')}
+   <div class="box lav" id="mv-out"></div>
+   <p class="src">Nach Erwartung-mal-Wert-Modellen ist Motivation am stärksten, wenn Wert und Erfolgserwartung beide hoch sind (Atkinson, 1957). Konkrete Ziele wirken stärker als vage (Latham & Locke, 1991). Selbstbestimmung, Kompetenzerleben und Verbundenheit fördern Motivation, die von innen kommt (Deci & Ryan, 1993).</p></div>`+
+  `<button class="tile" data-go="timer" style="--tc:var(--lav);min-height:0;flex-direction:row;align-items:center;gap:14px"><span class="ic" style="background:var(--lav-l);color:var(--lav)">${ic('timer')}</span><span style="display:flex;flex-direction:column;gap:2px"><b>Zum Fokus-Timer</b><span class="d">Der nächste Schritt steht? Dann mit festen Pausen loslegen.</span></span></button>
+  <div class="card"><h2>Mein Wenn-dann-Plan</h2>
+  <div class="grid2"><label class="f">Wenn …<input type="text" id="wd-w" maxlength="120" placeholder="ich nach dem Dienst nach Hause komme" value="${esc(an.wenn)}"></label><label class="f">… dann …<input type="text" id="wd-d" maxlength="120" placeholder="lege ich mein Handy weg und rufe 5 Minuten ab" value="${esc(an.dann)}"></label></div>
+  <div class="box lav" id="wd-out">${an.wenn&&an.dann?`<b>Wenn</b> ${esc(an.wenn)}, <b>dann</b> ${esc(an.dann)}.`:'Dein Plan erscheint hier.'}</div>
+  <div class="row"><button class="btn small" id="wd-copy">Plan kopieren</button></div>
+  <p class="src">Wenn-dann-Pläne („Implementation Intentions“) verbessern die Umsetzung von Vorhaben in vielen Studien (Gollwitzer & Sheeran, 2006).</p></div>
+  <div class="box info"><b>Wenn Aufschieben dich stark belastet:</b> Hilfe zu holen ist ein Zeichen von Stärke. Interventionen können Aufschieben deutlich verringern, besonders kognitiv-verhaltenstherapeutische Ansätze (van Eerde & Klingsieck, 2018). Ansprechpartnerinnen: Lehrkräfte, Praxisanleitung, Beratungsstellen.</div>`;
+}
+AFTER.anfangen=()=>{
+  document.querySelectorAll('[data-path]').forEach(b=>b.onclick=()=>{an.path=b.dataset.path;render();const r=$('#an-res');if(r)r.scrollIntoView({behavior:'smooth',block:'start'})});
+  const mv=()=>{const W=an.wert,E=an.erw,K=an.konkret;let t;
+   if(W<=2&&E<=2)t='<b>Wenig Wert, wenig Zutrauen:</b> Kein Wunder, dass der Start schwerfällt. Frag dich: Wofür brauche ich das später in der Pflege? Und such dir einen Einstieg, der sicher klappt.';
+   else if(W<=2)t='<b>Der Sinn fehlt gerade:</b> Verbinde die Aufgabe mit etwas, das dir wichtig ist – einer Patientensituation, deinem Examen, deinem Wunsch, sicher zu handeln. Auch eine kleine Belohnung danach darf sein.';
+   else if(E<=2)t='<b>Wichtig, aber du traust es dir wenig zu:</b> Mach den ersten Schritt kleiner, bis du denkst „Das schaffe ich“. Jeder kleine Erfolg stärkt das Zutrauen. Lernen mit einer Mitschülerin hilft zusätzlich.';
+   else t='<b>Gute Ausgangslage:</b> Dir ist es wichtig und du traust es dir zu. Starte jetzt den Fokus-Timer.';
+   if(K<=2)t+='<br><b>Tipp:</b> Formuliere dein Ziel konkreter – was genau, wie viel, bis wann?';
+   $('#mv-out').innerHTML=t};
+  ['wert','erw','konkret'].forEach(k=>{const el=$('#mv-'+k);el.oninput=()=>{an[k]=+el.value;$('#mv-'+k+'-o').textContent=el.value+' / 5';mv()}});mv();
+  const w=$('#wd-w'),d=$('#wd-d'),out=()=>{an.wenn=w.value.trim();an.dann=d.value.trim();$('#wd-out').innerHTML=an.wenn&&an.dann?`<b>Wenn</b> ${esc(an.wenn)}, <b>dann</b> ${esc(an.dann)}.`:'Dein Plan erscheint hier.'};
+  w.oninput=out;d.oninput=out;
+  $('#wd-copy').onclick=()=>{if(an.wenn&&an.dann)copy(`Wenn ${an.wenn}, dann ${an.dann}.`,'Plan kopiert');else toast('Bitte beide Felder ausfüllen')};
+};
+
+/* ---------- Fokus-Timer (läuft auch beim Wechseln weiter) ---------- */
+const FT={focus:25,brk:5,phase:'idle',end:0,sec:1,round:0,id:null,task:''};
+const CIRC=2*Math.PI*54;
+function ftLive(){const b=document.querySelector('#tabs [data-tab=timer]');if(b)b.classList.toggle('live',FT.phase!=='idle')}
+function ftPaint(r){const c=$('#ft-clock');if(!c)return;c.textContent=fmt(FT.phase==='idle'?FT.focus*60:r);
+  const bar=$('#ft-bar');if(bar)bar.style.strokeDashoffset=FT.phase==='idle'?CIRC:CIRC*(Math.max(0,r)/FT.sec);
+  const L=$('#ft-label');if(L)L.textContent=FT.phase==='focus'?(FT.task?'Fokus: '+FT.task:'Fokus – eine Sache'):FT.phase==='break'?'Pause – aufstehen, trinken, Blick in die Ferne':'Bereit';
+  const im=$('#ft-img');if(im)im.hidden=FT.phase!=='break';c.hidden=FT.phase==='break'&&false;
+  const n=$('#ft-round');if(n)n.textContent=FT.round?`${FT.round} ${FT.round===1?'Runde':'Runden'} geschafft`:'Noch keine Runde';
+  const sb=$('#ft-start');if(sb)sb.textContent=FT.phase==='idle'?'Fokus starten':'Neu starten';
+  c.classList.toggle('warn',FT.phase==='focus'&&r<=10)}
+function ftTick(){const r=(FT.end-Date.now())/1000;ftPaint(r);if(r<=0){if(FT.phase==='focus'){FT.round++;gong(1);toast('Pause! Kurz aufstehen.');ftStart('break')}else{gong(2);toast('Weiter geht’s – nächste Runde.');ftStart('focus')}}}
+function ftStart(ph){FT.phase=ph;FT.sec=(ph==='focus'?FT.focus:FT.brk)*60;FT.end=Date.now()+FT.sec*1000;clearInterval(FT.id);FT.id=setInterval(ftTick,250);wake(true);ftLive();ftTick()}
+function ftStop(){clearInterval(FT.id);FT.id=null;FT.phase='idle';wake(false);ftLive();ftPaint(0)}
+function vTimer(){
+  return head('Fokus-Timer','Eine Sache. Volle Aufmerksamkeit.','Arbeiten und Pause im festen Wechsel. Der Timer läuft weiter, auch wenn du zwischendurch etwas anderes in der App anschaust – der rote Punkt am Icon zeigt es dir.','lernen')+
+  `<div class="card" style="align-items:center;text-align:center">
+   <label class="f" style="width:100%;text-align:left">Worauf konzentrierst du dich? <span class="note" style="font-weight:400">(optional)</span><input type="text" id="ft-task" maxlength="60" placeholder="z. B. 10 Karteikarten zum Herz" value="${esc(FT.task)}"></label>
+   <div class="seg" role="group" aria-label="Rhythmus">${[[10,2],[15,3],[25,5],[45,10]].map(([f,b])=>`<button data-rh="${f}-${b}" aria-pressed="${FT.focus===f}">${f} / ${b}</button>`).join('')}</div>
+   <span class="note" style="margin-top:-6px">Minuten Fokus / Minuten Pause</span>
+   <div class="ringwrap"><svg viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--lav)"/><stop offset="1" stop-color="var(--rose)"/></linearGradient></defs><circle class="trk" cx="60" cy="60" r="54"/><circle class="bar" id="ft-bar" cx="60" cy="60" r="54" stroke-dasharray="${CIRC}" stroke-dashoffset="${CIRC}"/></svg>
+    <div class="mid"><img id="ft-img" src="img/pause.png" alt="" hidden><div class="clock" id="ft-clock" role="timer" aria-live="off">${fmt(FT.focus*60)}</div><div class="note" id="ft-label">Bereit</div></div></div>
+   <div class="row" style="justify-content:center"><button class="btn" id="ft-start">Fokus starten</button><button class="btn ghost" id="ft-stop">Stopp</button></div>
+   <div class="note" id="ft-round">Noch keine Runde</div></div>
+  <div class="card"><h3>So nutzt du den Timer</h3><ol class="steps"><li><span><b>Handy weg</b> – in einen anderen Raum oder außer Sicht, nicht nur umdrehen.</span></li><li><span><b>Eine Sache.</b> Schreib oben hin, woran du arbeitest, und bleib dabei.</span></li><li><span><b>Pause ist Pause:</b> aufstehen, trinken, aus dem Fenster schauen. Nach vier Runden eine längere Pause.</span></li></ol>
+   <p class="src">Feste Pausen nach der Pomodoro-Methode gingen im Vergleich zu selbst gewählten Pausen mit weniger Ermüdung und mehr Konzentration einher (Biwer et al., 2023). Wie lange ein Fokusblock idealerweise dauert, ist nicht eindeutig geklärt – probier aus, was zu dir passt.</p></div>
+  <button class="tile" data-go="anfangen" style="--tc:var(--sky);min-height:0;flex-direction:row;align-items:center;gap:14px"><span class="ic" style="background:var(--sky-l);color:var(--sky)">${ic('start')}</span><span style="display:flex;flex-direction:column;gap:2px"><b>Fällt der Start schwer?</b><span class="d">„Anfangen statt Aufschieben“ hilft, den ersten Schritt zu finden.</span></span></button>`;
+}
+AFTER.timer=()=>{
+  const t=$('#ft-task');t.oninput=()=>{FT.task=t.value.trim()};
+  document.querySelectorAll('[data-rh]').forEach(b=>b.onclick=()=>{const [f,k]=b.dataset.rh.split('-').map(Number);FT.focus=f;FT.brk=k;FT.round=0;ftStop();document.querySelectorAll('[data-rh]').forEach(x=>x.setAttribute('aria-pressed',x===b))});
+  $('#ft-start').onclick=()=>{unlock();ftStart('focus')};
+  $('#ft-stop').onclick=()=>{ftStop();toast('Timer gestoppt')};
+  if(FT.phase!=='idle')ftTick();else ftPaint(0);
+};
+
+/* ---------- KI-Probeklausur ---------- */
+let ki={thema:'',n:9,mix:'ausgewogen',zeit:45,fall:true};
+const OPTAB=[['1 · Wissen','Gelerntes wiedergeben: Fakten, Begriffe, Methoden','nennen, angeben, aufzählen, wiedergeben, bezeichnen, vervollständigen, aufschreiben','Stichpunkte'],
+ ['2 · Verständnis','Sachverhalte erfassen und mit eigenen Worten erklären','erklären, begründen, erläutern, beschreiben, umschreiben, schildern, präzisieren, verdeutlichen','ganze Sätze'],
+ ['3 · Anwendung','Gelerntes in einer neuen Situation anwenden, z. B. an einem Fall aus der Praxis','anwenden, ermitteln, erarbeiten, herausfinden, entwickeln, ausführen','ganze Sätze']];
+function split(n,mix){if(mix==='anwendung'){const a=Math.round(n*.25),c=Math.round(n*.4);return [a,n-a-c,c]}const a=Math.round(n/3),b=Math.round(n/3);return [a,b,n-a-b]}
+function prompt1(){
+  const [a,b,c]=split(ki.n,ki.mix),th=ki.thema.trim()||'[THEMA EINTRAGEN]';
+  return `Du bist eine erfahrene Lehrkraft an einer Pflegeschule in Deutschland. Erstelle mir eine Probeklausur zum Thema „${th}“ für Auszubildende in der generalistischen Pflegeausbildung.
+
+Verwende AUSSCHLIESSLICH die Inhalte aus meinem Lernmaterial weiter unten. Erfinde keine Fakten. Wenn mein Material für eine Aufgabe nicht ausreicht, schreib das offen dazu, statt etwas zu ergänzen.
+
+Unsere Schule formuliert Aufgaben nach drei Taxonomiestufen (nach Bloom). Nutze genau diese Operatoren:
+- Stufe 1 – Wissen (Antwort in Stichpunkten): nennen, angeben, aufzählen, wiedergeben, bezeichnen, vervollständigen, aufschreiben
+- Stufe 2 – Verständnis (Antwort in ganzen Sätzen): erklären, begründen, erläutern, beschreiben, umschreiben, schildern, präzisieren, verdeutlichen
+- Stufe 3 – Anwendung (Antwort in ganzen Sätzen): anwenden, ermitteln, erarbeiten, herausfinden, entwickeln, ausführen
+
+Anforderungen:
+- ${ki.n} Aufgaben: ${a} × Stufe 1, ${b} × Stufe 2, ${c} × Stufe 3.
+- Bearbeitungszeit insgesamt: ${ki.zeit} Minuten.
+- Jede Aufgabe beginnt mit einem Operator. Kennzeichne hinter jeder Aufgabe die Stufe und eine Punktzahl zur Orientierung, z. B. „(Stufe 2 · 4 Punkte)“.
+- Gib bei Aufzählungen an, wie viele Aspekte erwartet werden, z. B. „Nennen Sie drei …“.${ki.fall?`
+- Baue die Aufgaben der Stufe 3 auf einer kurzen, realistischen Fallsituation aus der Pflege auf. Verwende einen erfundenen Namen und keine echten Patientendaten.`:''}
+- Formuliere klar und eindeutig, ohne Fangfragen.
+- Gib noch KEINE Lösungen aus. Warte, bis ich „Lösung“ schreibe.
+
+Mein Lernmaterial:
+[HIER DEINE MITSCHRIFT ODER DEN SKRIPT-ABSCHNITT EINFÜGEN]`;
+}
+function prompt2(){
+  return `Lösung
+
+Erstelle jetzt einen Erwartungshorizont zu jeder Aufgabe:
+- Was muss eine vollständige Antwort enthalten? Nenne die erwarteten Aspekte.
+- Wie verteilen sich die Punkte?
+- Woran erkennt man, ob die Antwortform zur Taxonomiestufe passt (Stichpunkte bei Stufe 1, ganze Sätze bei Stufe 2 und 3)?
+
+Hier sind meine Antworten. Gib mir zu jeder Aufgabe eine freundliche, konkrete Rückmeldung: Was ist schon richtig? Was fehlt? Was ist fachlich falsch? Beziehe dich nur auf mein Lernmaterial. Wenn du dir bei einer Aussage nicht sicher bist, kennzeichne das.
+
+Meine Antworten:
+[HIER DEINE ANTWORTEN EINFÜGEN]`;
+}
+function vKI(){
+  return head('Probeklausur mit KI','Probeklausur in 7 Schritten','Mit einem KI-Chat (z. B. Claude oder ChatGPT) kannst du aus deinen eigenen Unterlagen eine Probeklausur machen – passend zu den Taxonomiestufen eurer Schule. Die Klausur ist dann eine Abrufübung.','lernen')+
+  `<div class="card"><h2>Die Taxonomiestufen eurer Schule</h2><div class="tw"><table class="optable"><thead><tr><th>Stufe</th><th>Was verlangt ist</th><th>Operatoren</th><th>Antwort</th></tr></thead><tbody>${OPTAB.map(r=>`<tr>${r.map((c,i)=>`<td>${i===0?'<b>'+c+'</b>':c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
+  <p class="src">Nach dem Taxonomie-Blatt eurer Pflegeschule (nach Bloom, 1956; Schewior-Popp, 2005). Zur überarbeiteten Taxonomie siehe Anderson & Krathwohl (2001).</p></div>
+  <div class="card"><h2>So gehst du vor</h2><ol class="steps">
+   <li><span><b>Regeln klären.</b> Frag nach, ob und wie eure Schule KI-Werkzeuge erlaubt. Zum Üben zu Hause ist das meist unproblematisch – in Prüfungen nicht.</span></li>
+   <li><span><b>Datenschutz beachten.</b> Lade <b>keine Patientendaten</b>, keine echten Namen und nichts aus der Pflegedokumentation hoch. Am sichersten ist deine eigene Mitschrift. Bei Skripten von Lehrkräften kurz fragen, ob du sie in eine KI kopieren darfst.</span></li>
+   <li><span><b>Material vorbereiten.</b> Wähle ein abgegrenztes Thema und kopiere deine Mitschrift oder den passenden Skript-Abschnitt.</span></li>
+   <li><span><b>Prompt 1 erstellen und kopieren</b> (unten). Ersetze im KI-Chat die Platzhalter in eckigen Klammern durch dein Material und schick ihn ab.</span></li>
+   <li><span><b>Klausur ohne Hilfe schreiben.</b> Unterlagen weg, Timer stellen, auf Papier antworten – wie in echt.</span></li>
+   <li><span><b>Prompt 2 schicken:</b> Erwartungshorizont und Rückmeldung zu deinen Antworten anfordern.</span></li>
+   <li><span><b>Alles prüfen und nutzen.</b> KI kann überzeugend klingende Fehler machen. Vergleiche Aufgaben und Lösungen mit Skript und Lehrbuch. Was du nicht wusstest, kommt ins <button class="link" data-go="abruf">Abruf-Tool</button> oder auf Karteikarten – in drei Tagen noch einmal.</span></li></ol></div>
+  <div class="card"><h2>Prompt 1 · Probeklausur erstellen</h2>
+   <label class="f">Thema<input type="text" id="ki-thema" maxlength="100" placeholder="z. B. Dekubitusprophylaxe" value="${esc(ki.thema)}"></label>
+   <div class="grid2">
+    <label class="f">Anzahl Aufgaben<select id="ki-n">${[6,9,12].map(n=>`<option value="${n}" ${ki.n===n?'selected':''}>${n} Aufgaben</option>`).join('')}</select></label>
+    <label class="f">Bearbeitungszeit<select id="ki-zeit">${[30,45,60,90].map(n=>`<option value="${n}" ${ki.zeit===n?'selected':''}>${n} Minuten</option>`).join('')}</select></label>
+    <label class="f">Verteilung der Stufen<select id="ki-mix"><option value="ausgewogen" ${ki.mix==='ausgewogen'?'selected':''}>gleichmäßig auf alle drei Stufen</option><option value="anwendung" ${ki.mix==='anwendung'?'selected':''}>Schwerpunkt Anwendung</option></select></label>
+    <label class="f" style="flex-direction:row;align-items:center;gap:8px;padding-top:24px"><input type="checkbox" id="ki-fall" ${ki.fall?'checked':''}> Stufe 3 mit Fallsituation</label>
+   </div>
+   <div class="prompt" id="ki-p1"></div>
+   <div class="row"><button class="btn" id="ki-c1">Prompt 1 kopieren</button></div></div>
+  <div class="card"><h2>Prompt 2 · Lösung und Rückmeldung</h2><p>Erst schicken, wenn du die Klausur ohne Hilfe geschrieben hast.</p>
+   <div class="prompt" id="ki-p2"></div>
+   <div class="row"><button class="btn" id="ki-c2">Prompt 2 kopieren</button></div></div>
+  <div class="card"><h3>Qualitäts-Check für die KI-Klausur</h3><ul class="plain">
+   <li>Beginnt jede Aufgabe mit einem Operator aus der Liste?</li>
+   <li>Passt die Stufe zum Operator – und zur verlangten Antwortform?</li>
+   <li>Stehen alle Inhalte wirklich in deinem Material?</li>
+   <li>Ist klar, wie viele Aspekte erwartet werden?</li>
+   <li>Stimmen die Lösungen mit Skript und Lehrbuch überein?</li></ul>
+   <p class="src">KI-Sprachmodelle bieten Chancen fürs Lernen, können aber falsche Inhalte erzeugen. Kritisches Prüfen bleibt nötig (Kasneci et al., 2023).</p></div>`;
+}
+AFTER.ki=()=>{
+  const upd=()=>{$('#ki-p1').textContent=prompt1();$('#ki-p2').textContent=prompt2()};upd();
+  $('#ki-thema').oninput=e=>{ki.thema=e.target.value;upd()};
+  $('#ki-n').onchange=e=>{ki.n=+e.target.value;upd()};
+  $('#ki-zeit').onchange=e=>{ki.zeit=+e.target.value;upd()};
+  $('#ki-mix').onchange=e=>{ki.mix=e.target.value;upd()};
+  $('#ki-fall').onchange=e=>{ki.fall=e.target.checked;upd()};
+  $('#ki-c1').onclick=()=>copy(prompt1(),'Prompt 1 kopiert');
+  $('#ki-c2').onclick=()=>copy(prompt2(),'Prompt 2 kopiert');
+};
+
+/* ---------- Quellen ---------- */
+function vQuellen(){
+  const ids=Object.keys(REF).sort((x,y)=>REF[x].a.localeCompare(REF[y].a,'de'));
+  return `<button class="back" data-go="start">← Zur Startseite</button>`+head('Quellen','Literatur','Alle Quellen im APA-Format (7. Auflage). Bei Zeitschriftenartikeln wurden Autorinnen, Jahr, Titel, Band, Seiten und DOI am 25.10.2026 über die Datenbank Crossref geprüft.')+
+  `<div class="card"><div class="reflist">${ids.map(id=>`<p>${refHTML(id)}${REF[id].doi?'<span class="chk">✓ DOI geprüft</span>':'<span class="chk" style="color:var(--muted)">Buch, ohne DOI</span>'}</p>`).join('')}
+  <p>Robinson, F. P. (1946). <i>Effective study.</i> Harper & Brothers. <span class="chk" style="color:var(--muted)">Buch, ohne DOI</span></p>
+  <p>Schewior-Popp, S. (2005). <i>Lernsituationen planen und gestalten: Handlungsorientierter Unterricht im Lernfeldkontext.</i> Thieme. <span class="chk" style="color:var(--muted)">laut Taxonomie-Blatt der Schule</span></p></div></div>
+  <div class="box tip"><b class="k">Für eine wissenschaftliche Arbeit:</b> Die Effektgrößen in dieser App stammen aus den Zusammenfassungen der Artikel bzw. aus den deutschsprachigen Kurzfassungen des Clearing House Unterricht der TU München. Lies für eine Arbeit bitte immer das Original. Bei Büchern Auflage und Seitenzahlen am Exemplar prüfen.</div>
+  <div class="row"><button class="btn small" id="q-copy">Alle Quellen kopieren</button><a class="btn small ghost" href="https://www.clearinghouse.edu.tum.de/" target="_blank" rel="noopener">Clearing House Unterricht</a></div>`;
+}
+AFTER.quellen=()=>{$('#q-copy').onclick=()=>{const ids=Object.keys(REF).sort((x,y)=>REF[x].a.localeCompare(REF[y].a,'de'));copy(ids.map(refText).join('\n\n'),'Alle Quellen kopiert')}};
+
+/* ---------- Start ---------- */
+function fromHash(){const h=location.hash.replace('#','');
+ if(h.startsWith('methode-')&&MBY[h.slice(8)])return ['methode',h.slice(8)];
+ if(['start','finder','methoden','abruf','timer','anfangen','ki','quellen'].includes(h))return [h,null];
+ return null}
+const fh=fromHash();if(fh){view=fh[0];param=fh[1]}
+render();
+window.addEventListener('hashchange',()=>{const f=fromHash();if(f&&(f[0]!==view||f[1]!==param))go(f[0],f[1])});
+document.addEventListener('pointerdown',unlock,{once:true});
+if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost')){navigator.serviceWorker.register('sw.js').catch(()=>{})}
+})();
+</script>
+</body>
+</html>

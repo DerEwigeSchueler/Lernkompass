@@ -1,0 +1,23 @@
+{
+  "name": "Lernkompass · Lernen lernen",
+  "short_name": "Lernkompass",
+  "description": "Die passende Lernmethode finden, Methoden mit Belegen nachlesen, nach dem Unterricht abrufen, Aufschieben überwinden und mit KI eine Probeklausur erstellen.",
+  "lang": "de",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f8f7fb",
+  "theme_color": "#f8f7fb",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Abrufen nach dem Unterricht", "url": "./#abruf", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Methoden-Finder", "url": "./#finder", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Anfangen statt Aufschieben", "url": "./#anfangen", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

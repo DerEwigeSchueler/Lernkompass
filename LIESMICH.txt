@@ -1,0 +1,22 @@
+Lernkompass – App zum Modul „Lernen lernen“
+============================================
+
+Inhalt
+- index.html ............ die App (Finder, Methoden, Abrufen, Anfangen, KI-Klausur, Quellen)
+- manifest.webmanifest .. Name, Farben, Symbol
+- sw.js ................. Offline-Funktion
+- fonts/, icons/ ........ Schriften und App-Symbole
+
+Veröffentlichen: genauso wie die erste App – den INHALT dieses Ordners in ein
+neues GitHub-Repository (z. B. „lernkompass“) hochladen, dann Settings → Pages →
+Deploy from a branch → main → / (root) → Save.
+
+Direktlinks: <Adresse>/#finder · #methoden · #abruf · #anfangen · #ki · #quellen
+Einzelne Methode: #methode-abruf, #methode-verteilt, #methode-karten …
+
+Später etwas geändert? In sw.js  const VERSION = 'lk-v3';  hochzählen und neu hochladen.
+
+Datenschutz: Die App hat keine Anmeldung und sendet nichts. Die Wiederholungen
+im Abruf-Tool werden nur auf dem jeweiligen Handy gespeichert.
+
+Jasmin Klug · Praxisanleiterin
