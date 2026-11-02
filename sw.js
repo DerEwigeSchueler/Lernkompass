@@ -1,8 +1,8 @@
 // Offline-Speicher für die App. Bei jeder Änderung der App VERSION erhöhen.
-const VERSION = 'lk-v3';
+const VERSION = 'lk-v9';
 const FILES = [
-  './', './index.html', './manifest.webmanifest',
-  './fonts/lora.woff', './fonts/lora-italic.woff',
+  './', './index.html', './manifest.webmanifest', './qr.js',
+  './fonts/kompass-serif.woff', './fonts/kompass-serif-italic.woff', './fonts/OFL.txt',
   './fonts/poppins-400.woff', './fonts/poppins-500.woff', './fonts/poppins-700.woff',
   './icons/icon-192.png', './icons/icon-512.png', './icons/maskable-192.png', './icons/maskable-512.png',
   './icons/apple-touch-icon.png', './icons/favicon-32.png',

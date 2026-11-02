@@ -14,8 +14,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Lernkompass">
 <style>
-@font-face{font-family:"Lora";src:url(fonts/lora.woff) format("woff");font-weight:400 700;font-style:normal;font-display:swap}
-@font-face{font-family:"Lora";src:url(fonts/lora-italic.woff) format("woff");font-weight:400 700;font-style:italic;font-display:swap}
+@font-face{font-family:"Kompass Serif";src:url(fonts/kompass-serif.woff) format("woff");font-weight:400 700;font-style:normal;font-display:swap}
+@font-face{font-family:"Kompass Serif";src:url(fonts/kompass-serif-italic.woff) format("woff");font-weight:400 700;font-style:italic;font-display:swap}
 @font-face{font-family:"Poppins";src:url(fonts/poppins-400.woff) format("woff");font-weight:400;font-display:swap}
 @font-face{font-family:"Poppins";src:url(fonts/poppins-500.woff) format("woff");font-weight:500;font-display:swap}
 @font-face{font-family:"Poppins";src:url(fonts/poppins-700.woff) format("woff");font-weight:600 700;font-display:swap}
@@ -29,7 +29,7 @@
   --sh-2:0 1px 2px rgba(60,48,96,.04),0 6px 18px -6px rgba(90,72,150,.14),0 18px 40px -24px rgba(90,72,150,.22);
   --sh-3:0 2px 4px rgba(60,48,96,.05),0 12px 28px -10px rgba(90,72,150,.22),0 30px 60px -30px rgba(90,72,150,.30);
   --orn:#b9acd9; --orn2:#e2b79a; --orn3:#9cc7ad;
-  --serif:"Lora",Georgia,"Times New Roman",serif; --sans:"Poppins",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --serif:"Kompass Serif",Georgia,"Times New Roman",serif; --sans:"Poppins",system-ui,-apple-system,"Segoe UI",sans-serif;
   --navh:66px; --ease:cubic-bezier(.22,.8,.3,1);
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
@@ -92,8 +92,8 @@ header.top .ill img{width:100%;height:100%;object-fit:contain;filter:drop-shadow
 .link{font:inherit;background:none;border:0;padding:0;color:var(--lav);font-weight:600;cursor:pointer;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
 button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,label.opt:focus-within{outline:2px solid var(--lav);outline-offset:3px}
 .back{font:inherit;font-size:.86rem;background:transparent;border:0;color:var(--muted);cursor:pointer;padding:0;width:fit-content}
-input[type=text],textarea,select{font:inherit;font-size:.95rem;color:var(--ink);background:var(--bg);border:1px solid var(--line2);border-radius:14px;padding:11px 13px;width:100%;transition:border-color .2s,box-shadow .2s,background .2s}
-input[type=text]:focus,textarea:focus,select:focus{outline:none;border-color:var(--lav);background:var(--paper);box-shadow:0 0 0 4px var(--lav-l)}
+input[type=text],input[type=date],textarea,select{font:inherit;font-size:.95rem;color:var(--ink);background:var(--bg);border:1px solid var(--line2);border-radius:14px;padding:11px 13px;width:100%;transition:border-color .2s,box-shadow .2s,background .2s}
+input[type=text]:focus,input[type=date]:focus,textarea:focus,select:focus{outline:none;border-color:var(--lav);background:var(--paper);box-shadow:0 0 0 4px var(--lav-l)}
 textarea{min-height:110px;resize:vertical;line-height:1.5}
 label.f{display:flex;flex-direction:column;gap:6px;font-size:.86rem;font-weight:500;color:var(--ink)}
 
@@ -155,6 +155,100 @@ label.f{display:flex;flex-direction:column;gap:6px;font-size:.86rem;font-weight:
 ol.steps{margin:0;padding:0;list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:9px}
 ol.steps li{counter-increment:s;display:grid;grid-template-columns:28px minmax(0,1fr);gap:11px;font-size:.93rem}
 ol.steps li::before{content:counter(s);width:28px;height:28px;border-radius:50%;background:var(--paper);border:1px solid color-mix(in srgb,var(--lav) 40%,transparent);color:var(--lav);font-weight:600;display:grid;place-items:center;font-size:.8rem;box-shadow:var(--sh-1)}
+.lv{display:inline-block;font-size:.66rem;font-weight:600;letter-spacing:.02em;border-radius:99px;padding:1px 8px;margin-right:4px;vertical-align:1px;white-space:nowrap}
+.lv-ok{background:var(--ok-l);color:var(--ok)} .lv-gold{background:var(--gold-l);color:var(--gold)} .lv-muted{background:var(--bg2);color:var(--muted)}
+ul.stips{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+ul.stips li{font-size:.92rem;line-height:1.55;padding:12px 14px;border:1px solid var(--line);border-radius:16px;background:var(--bg)}
+ul.stips li b{color:var(--ink)}
+.band{position:relative;height:34px;border-radius:12px;background:repeating-linear-gradient(90deg,var(--bg2) 0 calc(25% - 1px),var(--line2) calc(25% - 1px) 25%);overflow:hidden;box-shadow:inset 0 1px 3px rgba(60,48,96,.08)}
+.band span{position:absolute;top:0;bottom:0;display:flex;align-items:center;justify-content:center;transition:left .5s var(--ease),width .5s var(--ease)}
+.band em{font-style:normal;font-size:.7rem;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden}
+.seg-d{background:color-mix(in srgb,var(--rose) 38%,transparent);z-index:2}
+.seg-s{background:color-mix(in srgb,var(--lav) 45%,transparent);z-index:3}
+.seg-k{background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--gold) 30%,transparent) 0 6px,transparent 6px 10px);z-index:1}
+.band .seg-k{top:auto;height:8px}
+.band-ax{display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-top:-8px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.78rem;color:var(--muted)}
+.legend i{display:inline-block;width:14px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+input[type=time]{font:inherit;font-size:.95rem;color:var(--ink);background:var(--bg);border:1px solid var(--line2);border-radius:14px;padding:10px 13px;width:100%;min-height:44px}
+input[type=time]:focus{outline:none;border-color:var(--lav);background:var(--paper);box-shadow:0 0 0 4px var(--lav-l)}
+.napout{font-size:1.05rem;color:var(--ink);padding:14px 16px;border-radius:16px;background:var(--lav-l);text-align:center}
+.napout b{font-family:var(--serif);font-size:1.5rem;color:var(--lav)}
+.calm.kt{background:linear-gradient(120deg,var(--rose-l),var(--paper))}
+.calm .ic{width:44px;height:44px;border-radius:14px;display:grid;place-items:center}
+.calm .ic svg{width:24px;height:24px}
+.checks{display:flex;flex-direction:column;gap:8px}
+.ck{display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;align-items:center;font-size:.92rem;padding:10px 12px;border:1px solid var(--line);border-radius:14px;background:var(--bg);cursor:pointer;transition:background .25s,border-color .25s}
+.ck input{position:absolute;opacity:0;pointer-events:none}
+.ck .bx{width:26px;height:26px;border-radius:8px;border:1.5px solid var(--line2);display:grid;place-items:center;color:transparent;background:var(--paper);transition:all .25s var(--ease)}
+.ck .bx svg{width:16px;height:16px}
+.ck.on{background:var(--ok-l);border-color:color-mix(in srgb,var(--ok) 20%,transparent)}
+.ck.on .bx{background:var(--ok);border-color:var(--ok);color:#fff;transform:scale(1.05)}
+.ck.on span:last-child{color:var(--muted);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--ok) 50%,transparent)}
+.ck:has(input:focus-visible){outline:2px solid var(--lav);outline-offset:2px}
+.card.sos{background:linear-gradient(160deg,var(--paper),var(--sky-l));border-color:color-mix(in srgb,var(--sky) 25%,transparent)}
+details.card summary{cursor:pointer;list-style:none;font-size:.95rem;color:var(--ink)}
+details.card summary::-webkit-details-marker{display:none}
+details.card summary::after{content:"+";float:right;color:var(--lav);font-weight:600}
+details.card[open] summary::after{content:"–"}
+.attrfb{display:flex;flex-direction:column;gap:8px}
+.attrfb:empty{display:none}
+.attrfb .box{animation:rise .35s var(--ease) both}
+.pakbar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:420px){.pakbar{grid-template-columns:1fr}}
+.pakb{font:inherit;text-align:left;cursor:pointer;display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:center;padding:12px 14px;border-radius:18px;border:1px solid var(--line);background:var(--paper);color:var(--body);box-shadow:var(--sh-1);transition:transform .2s var(--ease),box-shadow .2s}
+.pakb:hover{transform:translateY(-2px);box-shadow:var(--sh-2)}
+.pakb .ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center}.pakb .ic svg{width:22px;height:22px}
+.pakb b{display:block;color:var(--ink);font-size:.92rem}
+.paks{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,150px),1fr));gap:10px}
+.pak{font:inherit;text-align:left;cursor:pointer;border-radius:20px;padding:14px 16px;border:1px solid var(--line);background:linear-gradient(160deg,var(--paper),color-mix(in srgb,var(--tc,var(--lav)) 8%,var(--paper)));color:var(--body);display:flex;flex-direction:column;gap:4px;box-shadow:var(--sh-1);transition:transform .25s var(--ease),box-shadow .25s}
+.pak:hover:not(:disabled){transform:translateY(-2px);box-shadow:var(--sh-2)}
+.pak:disabled{opacity:.45;cursor:default}
+.pak .pn{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-weight:600;color:var(--tc,var(--lav));border:1px solid currentColor;margin-bottom:4px}
+.pak .pn svg{width:18px;height:18px}
+.pak b{font-family:var(--serif);color:var(--ink);font-size:1.02rem;line-height:1.25;hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word}
+.pak{min-width:0}
+.pak .d{font-size:.8rem;color:var(--muted)}
+.pak.mix{grid-column:1/-1;--tc:var(--lav);background:linear-gradient(120deg,var(--lav-l),var(--paper) 70%)}
+.qq{color:var(--ink);font-size:1.08rem;line-height:1.5;font-weight:500;margin:0}
+.reveal{animation:rise .35s var(--ease) both}
+.ghostbox{background:var(--bg);border-color:var(--line)}
+.score{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.score span{display:flex;flex-direction:column;align-items:center;min-width:84px;padding:10px 12px;border-radius:16px;font-size:.78rem;color:var(--muted)}
+.score b{font-family:var(--serif);font-size:1.7rem;line-height:1.1}
+.score .s2{background:var(--ok-l)}.score .s2 b{color:var(--ok)} .score .s1{background:var(--gold-l)}.score .s1 b{color:var(--gold)} .score .s0{background:var(--rose-l)}.score .s0 b{color:var(--rose)}
+.tdq{display:flex;flex-direction:column;gap:12px}
+.tdrow{display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--line);border-radius:16px;background:var(--bg)}
+.seg.sm button{font-size:.76rem;padding:5px 10px}
+.share{display:flex;flex-direction:column;gap:10px;align-items:center;padding:16px;border-radius:20px;background:linear-gradient(160deg,var(--lav-l),var(--paper));animation:rise .4s var(--ease) both}
+.linkbox{font-size:.75rem!important;color:var(--muted)!important;padding:8px 10px!important}
+.qr{width:min(260px,72vw);height:auto;border-radius:14px;box-shadow:var(--sh-2);background:#fff}
+.card.incoming{background:linear-gradient(140deg,var(--peach-l),var(--paper) 70%);border-color:color-mix(in srgb,var(--peach) 25%,transparent)}
+.calm.wk{background:linear-gradient(120deg,var(--gold-l),var(--paper))}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:480px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{display:flex;flex-direction:column;align-items:center;text-align:center;padding:14px 8px;border-radius:18px;background:linear-gradient(160deg,var(--lav-l),var(--paper));border:1px solid var(--line);animation:rise .5s var(--ease) both;animation-delay:var(--d)}
+.stat b{font-family:var(--serif);font-size:1.9rem;line-height:1;color:var(--lav)}
+.stat span{font-size:.82rem;font-weight:600;color:var(--ink);margin-top:4px}
+.stat small{font-size:.72rem;color:var(--muted)}
+.card.lastplan .tag{align-self:flex-start}
+.card.lastplan{background:linear-gradient(140deg,var(--gold-l),var(--paper) 70%)}
+.weeks{display:flex;gap:10px;align-items:flex-end;min-height:92px;overflow-x:auto;padding-top:6px}
+.wk1{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:34px}
+.wk1 .bar{width:22px;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,var(--gold),color-mix(in srgb,var(--gold) 45%,var(--paper)));animation:rise .5s var(--ease) both}
+.wk1 small{font-size:.68rem;color:var(--muted)}
+.wk1 i{width:8px;height:8px;border-radius:50%} .wk1 .d2{background:var(--ok)} .wk1 .d1{background:var(--gold)} .wk1 .d0{background:var(--rose)} .wk1 .dx{background:var(--line2)}
+.kigate{border:1.5px solid color-mix(in srgb,var(--rose) 35%,transparent);background:linear-gradient(160deg,var(--paper),var(--rose-l))}
+.gate-ic{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:var(--rose-l);color:var(--rose);flex:none}
+.gate-ic svg{width:22px;height:22px}
+.kichecks{display:flex;flex-direction:column;gap:8px}
+.kichecks .ck.on span:last-child{text-decoration:none;color:var(--ink)}
+.box.stop{background:var(--no-l);border-color:color-mix(in srgb,var(--no) 25%,transparent)}
+.box.stop b{color:var(--no)}
+.kilocked{flex-direction:row;align-items:center;gap:12px;opacity:.85;border-style:dashed}
+.kiok{background:linear-gradient(140deg,var(--ok-l),var(--paper) 70%);border-color:color-mix(in srgb,var(--ok) 25%,transparent)}
+ol.steps li.must{background:var(--rose-l);border-radius:14px;padding:10px 12px}
+ol.steps li.must::before{border-color:var(--rose);color:var(--rose)}
 ul.plain{margin:0;padding-left:18px;font-size:.93rem;display:flex;flex-direction:column;gap:4px}
 .cite{border-left:1px solid var(--line2);padding:2px 0 2px 14px;font-size:.88rem;display:flex;flex-direction:column;gap:3px}
 .cite .ref{font-size:.79rem;color:var(--muted)}
@@ -213,7 +307,8 @@ ul.plain{margin:0;padding-left:18px;font-size:.93rem;display:flex;flex-direction
 .res .ill img{width:100%;filter:drop-shadow(0 8px 12px rgba(90,72,150,.14))}
 .slider{display:flex;flex-direction:column;gap:4px}
 .slider label{font-size:.86rem;font-weight:500;color:var(--ink);display:flex;justify-content:space-between;gap:8px}
-.slider output{font-weight:600;color:var(--lav);font-size:.82rem}
+.slider output{font-weight:600;color:var(--lav);font-size:.82rem;white-space:nowrap;flex:0 0 auto}
+.btn svg{width:16px;height:16px;flex:0 0 16px}
 input[type=range]{width:100%;accent-color:var(--lav)}
 .scale{display:flex;justify-content:space-between;font-size:.72rem;color:var(--muted)}
 
@@ -259,6 +354,62 @@ nav.tabs button.live::after{content:"";position:absolute;top:5px;right:calc(50% 
 .intro-list li{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:start;font-size:.92rem}
 .intro-list .ic{width:36px;height:36px;border-radius:12px}
 .intro-list .ic svg{width:19px;height:19px}
+.steps3.four{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (min-width:700px){.steps3.four{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:380px){.steps3.four{grid-template-columns:1fr}}
+.pbar{display:flex;height:9px;border-radius:6px;background:var(--line);overflow:hidden;box-shadow:inset 0 1px 2px rgba(60,48,96,.08)}
+.pbar span{display:block;height:100%;transition:width .6s var(--ease)}
+.pbar .s2{background:linear-gradient(90deg,var(--sage),color-mix(in srgb,var(--sage) 70%,#fff))}
+.pbar .s1{background:linear-gradient(90deg,var(--gold),color-mix(in srgb,var(--gold) 60%,#fff))}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:.78rem;color:var(--muted)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+.exhead{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:start}
+.cd{font-family:var(--serif);font-weight:600;color:var(--lav);font-size:1.6rem;line-height:1;text-align:right}
+.cd small{display:block;font-family:var(--sans);font-size:.7rem;font-weight:500;color:var(--muted)}
+.topic{border:1px solid var(--line);border-radius:18px;padding:12px 13px;display:flex;flex-direction:column;gap:8px;background:linear-gradient(180deg,var(--paper),var(--bg))}
+.topic h3{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:1rem}
+.topic h3 .cnt{font-family:var(--sans);font-size:.74rem;font-weight:600;color:var(--muted)}
+.sub{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:8px;align-items:center;font-size:.9rem;color:var(--ink)}
+.sub .nm{overflow-wrap:anywhere}
+.stat{font:inherit;font-size:.72rem;font-weight:600;border-radius:99px;padding:3px 10px;border:1px solid transparent;cursor:pointer;white-space:nowrap;min-width:82px;transition:all .2s var(--ease)}
+.stat.s0{background:var(--paper);border-color:var(--line2);color:var(--muted)}
+.stat.s1{background:var(--gold-l);color:var(--gold)}
+.stat.s2{background:var(--ok-l);color:var(--ok)}
+.mini{font:inherit;font-size:.74rem;border:1px solid var(--line2);background:var(--paper);border-radius:99px;padding:3px 9px;color:var(--body);cursor:pointer}
+.mini.x{border:0;background:transparent;color:var(--muted);font-size:1rem;padding:0 4px}
+.addrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
+.addrow input{padding:8px 11px;font-size:.88rem}
+.today{display:flex;flex-direction:column;gap:8px}
+.today .it{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:9px 12px;background:var(--paper);font-size:.9rem;color:var(--ink)}
+.today .it small{display:block;color:var(--muted);font-size:.76rem}
+.mbar{display:grid;grid-template-columns:minmax(0,1fr);gap:4px;border:1px solid var(--line);border-radius:16px;padding:11px 13px;background:var(--paper)}
+.mbar .t{display:flex;justify-content:space-between;gap:8px;font-size:.88rem;color:var(--ink)}
+.mbar .t b{font-family:var(--serif)}
+.mbar .ln{display:grid;grid-template-columns:86px minmax(0,1fr) 34px;gap:8px;align-items:center;font-size:.74rem;color:var(--muted)}
+.mbar .ln .tr{height:7px;border-radius:4px;background:var(--line);overflow:hidden}
+.mbar .ln .tr span{display:block;height:100%;border-radius:4px}
+.hist{display:flex;flex-direction:column;gap:8px}
+.hist .h{border:1px solid var(--line);border-radius:14px;padding:10px 12px;font-size:.86rem;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;background:var(--paper)}
+.hist .h b{color:var(--ink);overflow-wrap:anywhere}
+.dots5{letter-spacing:1px;color:var(--lav);font-size:.8rem;white-space:nowrap}
+.bwrap{position:relative;width:min(260px,70vw);aspect-ratio:1;display:grid;place-items:center;max-width:100%}
+.bwrap::before,.bwrap::after{content:"";position:absolute;inset:0;border-radius:50%;border:1px solid var(--orn)}
+.bwrap::after{inset:14%;border-style:dashed;opacity:.6}
+.bc{width:86%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;text-align:center;padding:12%;font-family:var(--serif);font-size:1.15rem;color:var(--ink);
+  background:radial-gradient(circle at 35% 30%,var(--paper),var(--sky-l) 55%,var(--lav-l));box-shadow:var(--sh-3),inset 0 0 0 1px rgba(255,255,255,.6);transform:scale(.7);transition:transform 2s ease-in-out;will-change:transform}
+.grd{display:grid;grid-template-columns:40px minmax(0,1fr);gap:4px 12px;align-items:center;border:1px solid var(--line);border-radius:18px;padding:12px 14px;background:var(--paper);transition:background .3s,border-color .3s}
+.grd.ok{background:var(--ok-l);border-color:color-mix(in srgb,var(--ok) 30%,transparent)}
+.grd .num{grid-row:span 2;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-weight:600;font-size:1.2rem;color:var(--lav);border:1px solid color-mix(in srgb,var(--lav) 40%,transparent);background:var(--paper)}
+.grd b{color:var(--ink);display:block}
+.gdots{grid-column:2;display:flex;gap:8px;flex-wrap:wrap}
+.gd{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line2);background:var(--paper);cursor:pointer;transition:all .25s var(--ease)}
+.gd.on{background:var(--lav);border-color:var(--lav);transform:scale(1.05)}
+.kind{font-family:var(--serif);font-size:clamp(1.2rem,3.6vw,1.5rem);line-height:1.45;color:var(--ink);padding:18px 20px;border-radius:20px;background:linear-gradient(150deg,var(--paper),var(--rose-l));border:1px solid var(--line);box-shadow:var(--sh-1)}
+.help{display:flex;flex-direction:column;gap:4px;border:1px solid var(--line);border-radius:16px;padding:12px 14px;background:var(--paper)}
+.help a{font-family:var(--serif);font-weight:600;font-size:1.25rem;color:var(--lav);text-decoration:none}
+.calm{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;border-radius:20px;padding:12px 14px;background:linear-gradient(120deg,var(--sky-l),var(--paper));border:1px solid var(--line);box-shadow:var(--sh-1);font:inherit;text-align:left;cursor:pointer;color:var(--ink)}
+.calm img{width:56px;height:56px;object-fit:contain}
+@media (prefers-reduced-motion:no-preference){.kind.swap{animation:rise .5s var(--ease) both}}
 nav.tabs button{font:inherit;font-size:.64rem;font-weight:500;background:transparent;border:0;border-radius:18px;padding:7px 2px;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1.2;position:relative;z-index:1;transition:color .25s}
 nav.tabs svg{width:22px;height:22px;transition:transform .3s var(--ease)}
 nav.tabs button[aria-current="page"]{color:var(--lav);font-weight:600}
@@ -289,6 +440,7 @@ footer{font-size:.76rem;color:var(--muted);text-align:center;display:flex;flex-d
   @keyframes pop2{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
 }
 </style>
+<script src="qr.js"></script>
 </head>
 <body>
 <div class="orn" aria-hidden="true">
@@ -321,6 +473,9 @@ function Timer(sec,tick,end){let e=0,id=null;const t={start(){e=Date.now()+sec*1
 
 /* ---------- Icons ---------- */
 const I={
+ week:'<rect x="4" y="5.5" width="16" height="14" rx="3"/><path d="M8 3.5v4M16 3.5v4M4 10h16"/><path d="m9.5 14.5 2 2 3.5-3.5"/>',
+ flag:'<path d="M5.5 20.5V4"/><path d="M5.5 4.5h11.5l-2.4 3.8 2.4 3.7H5.5"/>',
+ moon:'<path d="M19 14.6A7.6 7.6 0 0 1 9.4 5a7.6 7.6 0 1 0 9.6 9.6z"/><path d="M16.5 3.5v3M15 5h3"/>',
  home:'<path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/>',
  compass:'<circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
  book:'<path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5C4.7 19 4 19.7 4 20.5z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5.7 1.5 1.5z"/>',
@@ -329,14 +484,41 @@ const I={
  spark:'<path d="M12 3.5 13.8 9l5.7 1.8-5.7 1.9L12 18.5l-1.8-5.8L4.5 10.8 10.2 9z"/><path d="M18.5 16v4M16.5 18h4"/>',
  src:'<path d="M7 4h8l4 4v12H7z"/><path d="M15 4v4h4M10 12h6M10 15.5h6"/>',
  timer:'<circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.6 1.8M9.5 3.5h5M12 3.5V6M18.5 6.5l1.2-1.2"/>',
+ breath:'<path d="M4 9.5h9.5a2.5 2.5 0 1 0-2.5-2.5"/><path d="M4 13h13a2.5 2.5 0 1 1-2.5 2.5"/><path d="M4 16.5h5"/>',
+ plan:'<rect x="4" y="5.5" width="16" height="14" rx="3"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4M8 14h3M8 16.8h6"/>',
+ more:'<circle cx="6" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="18" cy="12" r="1.4"/>',
+ eval:'<path d="M6.5 4h9.5a2 2 0 0 1 2 2v14l-2.7-1.8L12.6 20l-2.7-1.8L7.2 20 4.5 18.2V6a2 2 0 0 1 2-2z"/><path d="M8.5 9h6M8.5 12.5h4"/>',
+ data:'<ellipse cx="12" cy="6.5" rx="7" ry="2.5"/><path d="M5 6.5v11c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-11M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/>',
  check:'<circle cx="12" cy="12" r="8.5"/><path d="m8.5 12.2 2.4 2.4 4.6-4.8"/>',
  lock:'<rect x="5.5" y="10.5" width="13" height="9" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/>'
 };
 const ic=(k,c)=>`<svg viewBox="0 0 24 24" fill="none" stroke="${c||'currentColor'}" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[k]}</svg>`;
 
-/* ---------- Quellen (DOIs am 25.10.2026 über Crossref geprüft) ---------- */
+/* ---------- Quellen (DOIs am 25./26.10.2026 über Crossref geprüft) ---------- */
 const REF={
+ harkin2016:{a:'Harkin, B., Webb, T. L., Chang, B. P. I., Prestwich, A., Conner, M., Kellar, I., Benn, Y., & Sheeran, P. (2016).',t:'Does monitoring goal progress promote goal attainment? A meta-analysis of the experimental evidence.',j:'Psychological Bulletin, 142',v:'(2), 198–229.',doi:'10.1037/bul0000025',k:'Harkin et al., 2016'},
+ bosshard2024:{a:'Bosshard, M., & Gomez, P. (2024).',t:'Effectiveness of stress arousal reappraisal and stress-is-enhancing mindset interventions on task performance outcomes: A meta-analysis of randomized controlled trials.',j:'Scientific Reports, 14',v:', Artikel 7923.',doi:'10.1038/s41598-024-58408-w',k:'Bosshard & Gomez, 2024'},
+ camerer2018:{a:'Camerer, C. F., Dreber, A., Holzmeister, F., Ho, T.-H., Huber, J., Johannesson, M., Kirchler, M., Nave, G., Nosek, B. A., Pfeiffer, T., Altmejd, A., Buttrick, N., Chan, T., Chen, Y., Forsell, E., Gampa, A., Heikensten, E., Hummer, L., Imai, T., … Wu, H. (2018).',t:'Evaluating the replicability of social science experiments in Nature and Science between 2010 and 2015.',j:'Nature Human Behaviour, 2',v:'(9), 637–644.',doi:'10.1038/s41562-018-0399-z',k:'Camerer et al., 2018'},
+ ramirez2011:{a:'Ramirez, G., & Beilock, S. L. (2011).',t:'Writing about testing worries boosts exam performance in the classroom.',j:'Science, 331',v:'(6014), 211–213.',doi:'10.1126/science.1199427',k:'Ramirez & Beilock, 2011'},
+ smith2016:{a:'Smith, A. M., Floerke, V. A., & Thomas, A. K. (2016).',t:'Retrieval practice protects memory against acute stress.',j:'Science, 354',v:'(6315), 1046–1048.',doi:'10.1126/science.aah5067',k:'Smith et al., 2016'},
+ soicher2017:{a:'Soicher, R. N., & Gurung, R. A. R. (2017).',t:'Do exam wrappers increase metacognition and performance? A single course intervention.',j:'Psychology Learning & Teaching, 16',v:'(1), 64–73.',doi:'10.1177/1475725716661872',k:'Soicher & Gurung, 2017'},
+ vonderembse2018:{a:'von der Embse, N., Jester, D., Roy, D., & Post, J. (2018).',t:'Test anxiety effects, predictors, and correlates: A 30-year meta-analytic review.',j:'Journal of Affective Disorders, 227',v:', 483–493.',doi:'10.1016/j.jad.2017.11.048',k:'von der Embse et al., 2018'},
+ drake2013:{a:'Drake, C., Roehrs, T., Shambroom, J., & Roth, T. (2013).',t:'Caffeine effects on sleep taken 0, 3, or 6 hours before going to bed.',j:'Journal of Clinical Sleep Medicine, 9',v:'(11), 1195–1200.',doi:'10.5664/jcsm.3170',k:'Drake et al., 2013'},
+ ebrahim2013:{a:'Ebrahim, I. O., Shapiro, C. M., Williams, A. J., & Fenwick, P. B. (2013).',t:'Alcohol and sleep I: Effects on normal sleep.',j:'Alcoholism: Clinical and Experimental Research, 37',v:'(4), 539–549.',doi:'10.1111/acer.12006',k:'Ebrahim et al., 2013'},
+ irish2015:{a:'Irish, L. A., Kline, C. E., Gunn, H. E., Buysse, D. J., & Hall, M. H. (2015).',t:'The role of sleep hygiene in promoting public health: A review of empirical evidence.',j:'Sleep Medicine Reviews, 22',v:', 23–36.',doi:'10.1016/j.smrv.2014.10.001',k:'Irish et al., 2015'},
+ lovato2010:{a:'Lovato, N., & Lack, L. (2010).',t:'The effects of napping on cognitive functioning.',j:'Progress in Brain Research, 185',v:', 155–166.',doi:'10.1016/B978-0-444-53702-7.00009-9',k:'Lovato & Lack, 2010'},
+ riemann2017:{a:'Riemann, D., Baglioni, C., Bassetti, C., Bjorvatn, B., Dolenc Groselj, L., Ellis, J. G., Espie, C. A., Garcia-Borreguero, D., Gjerstad, M., Gonçalves, M., Hertenstein, E., Jansson-Fröjmark, M., Jennum, P. J., Leger, D., Nissen, C., Parrino, L., Paunio, T., Pevernagie, D., Verbraecken, J., … Spiegelhalder, K. (2017).',t:'European guideline for the diagnosis and treatment of insomnia.',j:'Journal of Sleep Research, 26',v:'(6), 675–700.',doi:'10.1111/jsr.12594',k:'Riemann et al., 2017'},
+ ruggiero2014:{a:'Ruggiero, J. S., & Redeker, N. S. (2014).',t:'Effects of napping on sleepiness and sleep-related performance deficits in night-shift workers: A systematic review.',j:'Biological Research for Nursing, 16',v:'(2), 134–142.',doi:'10.1177/1099800413476571',k:'Ruggiero & Redeker, 2014'},
+ scullin2018:{a:'Scullin, M. K., Krueger, M. L., Ballard, H. K., Pruett, N., & Bliwise, D. L. (2018).',t:'The effects of bedtime writing on difficulty falling asleep: A polysomnographic study comparing to-do lists and completed activity lists.',j:'Journal of Experimental Psychology: General, 147',v:'(1), 139–146.',doi:'10.1037/xge0000374',k:'Scullin et al., 2018'},
+ slanger2016:{a:'Slanger, T. E., Gross, J. V., Pinger, A., Morfeld, P., Bellinger, M., Duhme, A.-L., Reichardt Ortega, R. A., Costa, G., Driscoll, T. R., Foster, R. G., Fritschi, L., Sallinen, M., Liira, J., & Erren, T. C. (2016).',t:'Person-directed, non-pharmacological interventions for sleepiness at work and sleep disturbances caused by shift work.',j:'Cochrane Database of Systematic Reviews',v:', Ausgabe 8, Artikel CD010641.',doi:'10.1002/14651858.CD010641.pub2',k:'Slanger et al., 2016'},
+ tassi2000:{a:'Tassi, P., & Muzet, A. (2000).',t:'Sleep inertia.',j:'Sleep Medicine Reviews, 4',v:'(4), 341–353.',doi:'10.1053/smrv.2000.0098',k:'Tassi & Muzet, 2000'},
+ watson2015:{a:'Watson, N. F., Badr, M. S., Belenky, G., Bliwise, D. L., Buxton, O. M., Buysse, D., Dinges, D. F., Gangwisch, J., Grandner, M. A., Kushida, C., Malhotra, R. K., Martin, J. L., Patel, S. R., Quan, S. F., Tasali, E., Twery, M., Croft, J. B., Maher, E., Barrett, J. A., … Heald, J. L. (2015).',t:'Recommended amount of sleep for a healthy adult: A joint consensus statement of the American Academy of Sleep Medicine and Sleep Research Society.',j:'Journal of Clinical Sleep Medicine, 11',v:'(6), 591–592.',doi:'10.5664/jcsm.4758',k:'Watson et al., 2015'},
+ yoo2007:{a:'Yoo, S.-S., Hu, P. T., Gujar, N., Jolesz, F. A., & Walker, M. P. (2007).',t:'A deficit in the ability to form new human memories without sleep.',j:'Nature Neuroscience, 10',v:'(3), 385–392.',doi:'10.1038/nn1851',k:'Yoo et al., 2007'},
  adesope2017:{a:'Adesope, O. O., Trevisan, D. A., & Sundararajan, N. (2017).',t:'Rethinking the use of tests: A meta-analysis of practice testing.',j:'Review of Educational Research, 87',v:'(3), 659–701.',doi:'10.3102/0034654316689306',k:'Adesope et al., 2017'},
+ balban2023:{a:'Balban, M. Y., Neri, E., Kogon, M. M., Weed, L., Nouriani, B., Jo, B., Holl, G., Zeitzer, J. M., Spiegel, D., & Huberman, A. D. (2023).',t:'Brief structured respiration practices enhance mood and reduce physiological arousal.',j:'Cell Reports Medicine, 4',v:'(1), Artikel 100895.',doi:'10.1016/j.xcrm.2022.100895',k:'Balban et al., 2023'},
+ chang2012:{a:'Chang, Y. K., Labban, J. D., Gapin, J. I., & Etnier, J. L. (2012).',t:'The effects of acute exercise on cognitive performance: A meta-analysis.',j:'Brain Research, 1453',v:', 87–101.',doi:'10.1016/j.brainres.2012.02.068',k:'Chang et al., 2012'},
+ lieberman2007:{a:'Lieberman, M. D., Eisenberger, N. I., Crockett, M. J., Tom, S. M., Pfeifer, J. H., & Way, B. M. (2007).',t:'Putting feelings into words: Affect labeling disrupts amygdala activity in response to affective stimuli.',j:'Psychological Science, 18',v:'(5), 421–428.',doi:'10.1111/j.1467-9280.2007.01916.x',k:'Lieberman et al., 2007'},
+ zaccaro2018:{a:'Zaccaro, A., Piarulli, A., Laurino, M., Garbella, E., Menicucci, D., Neri, B., & Gemignani, A. (2018).',t:'How breath-control can change your life: A systematic review on psycho-physiological correlates of slow breathing.',j:'Frontiers in Human Neuroscience, 12',v:', Artikel 353.',doi:'10.3389/fnhum.2018.00353',k:'Zaccaro et al., 2018'},
  atkinson1957:{a:'Atkinson, J. W. (1957).',t:'Motivational determinants of risk-taking behavior.',j:'Psychological Review, 64',v:'(6), 359–372.',doi:'10.1037/h0043445',k:'Atkinson, 1957'},
  bandura1977:{a:'Bandura, A. (1977).',t:'Self-efficacy: Toward a unifying theory of behavioral change.',j:'Psychological Review, 84',v:'(2), 191–215.',doi:'10.1037/0033-295X.84.2.191',k:'Bandura, 1977'},
  bartlett1932:{a:'Bartlett, F. C. (1932).',t:'Remembering: A study in experimental and social psychology.',j:'Cambridge University Press.',v:'',k:'Bartlett, 1932',book:1},
@@ -493,7 +675,8 @@ const MBY=Object.fromEntries(M.map(m=>[m.id,m]));
 const evBadge=e=>`<span class="ev e${e}"><i>${[1,2,3].map(k=>`<em class="${k<=e?'on':''}"></em>`).join('')}</i>${EVL[e]}</span>`;
 
 /* ---------- Navigation ---------- */
-const TABS=[['start','Start','home'],['finder','Finder','compass'],['methoden','Methoden','book'],['abruf','Abrufen','recall'],['timer','Timer','timer'],['anfangen','Anfangen','start'],['ki','KI','spark']];
+const TABS=[['start','Start','home'],['plan','Plan','plan'],['finder','Finder','compass'],['methoden','Methoden','book'],['abruf','Abrufen','recall'],['timer','Timer','timer'],['mehr','Mehr','more']];
+const MEHR=['mehr','anfangen','ki','auswerten','quellen','durchatmen','schlaf','klausurtag','woche'];
 let view='start',param=null;
 function go(v,p){stopTimers();view=v;param=p||null;render();window.scrollTo({top:0})}
 $('#tabs').insertAdjacentHTML('beforeend',TABS.map(([k,l,i])=>`<button data-tab="${k}">${ic(i)}<span>${l}</span></button>`).join(''));
@@ -506,8 +689,8 @@ function head(badge,title,lead,ill){return `<header class="top"><div class="txt"
 const foot=`<footer>${FL.replace('class="flourish"','class="flourish" style="max-width:180px"')}<span>Jasmin Klug · Praxisanleiterin · Modul „Lernen lernen“</span><button class="link" data-go="quellen">Alle Quellen</button></footer>`;
 
 function render(){
-  document.querySelectorAll('#tabs button').forEach(b=>b.setAttribute('aria-current',(b.dataset.tab===view||(view==='methode'&&b.dataset.tab==='methoden'))?'page':'false'));
-  const R={start:vStart,finder:vFinder,methoden:vMethoden,methode:vMethode,abruf:vAbruf,timer:vTimer,anfangen:vAnfangen,ki:vKI,quellen:vQuellen}[view]||vStart;
+  document.querySelectorAll('#tabs button').forEach(b=>b.setAttribute('aria-current',(b.dataset.tab===view||(view==='methode'&&b.dataset.tab==='methoden')||(view==='pakete'&&b.dataset.tab==='abruf')||(b.dataset.tab==='mehr'&&MEHR.includes(view)))?'page':'false'));
+  const R={start:vStart,plan:vPlan,finder:vFinder,methoden:vMethoden,methode:vMethode,abruf:vAbruf,timer:vTimer,mehr:vMehr,auswerten:vEval,durchatmen:vDurch,schlaf:vSchlaf,klausurtag:vKlausur,pakete:vPakete,woche:vWoche,anfangen:vAnfangen,ki:vKI,quellen:vQuellen}[view]||vStart;
   const app=$('#app');app.classList.remove('enter');app.innerHTML=R()+foot;void app.offsetWidth;app.classList.add('enter');
   (AFTER[view]||(()=>{}))();movePill();ftLive();
 }
@@ -527,20 +710,22 @@ const dstr=t=>new Date(t).toLocaleDateString('de-DE',{weekday:'short',day:'numer
 /* ---------- Start ---------- */
 function vStart(){
   const due=dueList().length;
-  const T=[['finder','Methoden-Finder','Ein paar Fragen – und du weißt, womit du heute lernst.','compass','lav'],
+  const T=[['plan','Lernplan','Klausuren, Themen und Unterthemen – und was du schon geschafft hast.','plan','rose'],
+   ['finder','Methoden-Finder','Ein paar Fragen – und du weißt, womit du heute lernst.','compass','lav'],
    ['methoden','Methoden-Bibliothek','12 Lernmethoden: so geht’s, darum wirkt’s, das sagt die Forschung.','book','sage'],
    ['abruf','Abrufen nach dem Unterricht','5–10 Minuten aus dem Kopf – mit Wiederholplan.','recall','peach'],
    ['timer','Fokus-Timer','Eine Sache, volle Aufmerksamkeit – mit festen Pausen.','timer','lav'],
    ['anfangen','Anfangen statt Aufschieben','Wenn es gerade schwerfällt: der passende kleine Schritt.','start','sky'],
-   ['ki','Probeklausur mit KI','Schritt für Schritt – passend zu den Taxonomiestufen eurer Schule.','spark','rose'],
-   ['quellen','Quellen','Alle Belege im APA-Format, mit geprüfter DOI.','src','gold']];
+   ['auswerten','Lerntagebuch','Nach dem Lernen auswerten – und herausfinden, was bei dir wirkt.','eval','gold'],
+   ['ki','Probeklausur mit KI','Schritt für Schritt – passend zu den Taxonomiestufen eurer Schule.','spark','rose']];
   return head('Lernen lernen','Lernkompass','Finde die Lernmethode, die zu deinem Ziel passt – und fang gleich an.','winken')+
- welcomeCard()+
-  `<div class="sec"><h2 style="font-size:1.15rem">Dein Weg in drei Schritten</h2><div class="steps3">
-   <button class="st3" data-go="finder" style="color:var(--lav)"><span class="n">1</span><b>Methode finden</b><span class="d">6 kurze Fragen im Finder</span></button>
-   <button class="st3" data-go="methoden" style="color:var(--sage)"><span class="n">2</span><b>Lernen</b><span class="d">Anleitung lesen, mit Timer loslegen</span></button>
-   <button class="st3" data-go="abruf" style="color:var(--peach)"><span class="n">3</span><b>Festigen</b><span class="d">Abrufen – die App plant die Wiederholungen</span></button>
-  </div></div>`+
+ welcomeCard()+ktCard()+wrCard()+
+  `<div class="sec"><h2 style="font-size:1.15rem">Dein Weg in vier Schritten</h2><div class="steps3 four">
+   <button class="st3" data-go="plan" style="color:var(--rose)"><span class="n">1</span><b>Planen</b><span class="d">Klausur und Themen eintragen</span></button>
+   <button class="st3" data-go="finder" style="color:var(--lav)"><span class="n">2</span><b>Methode finden</b><span class="d">6 kurze Fragen im Finder</span></button>
+   <button class="st3" data-go="timer" style="color:var(--sage)"><span class="n">3</span><b>Lernen</b><span class="d">mit Methode und Fokus-Timer</span></button>
+   <button class="st3" data-go="abruf" style="color:var(--peach)"><span class="n">4</span><b>Festigen & auswerten</b><span class="d">abrufen, Lerntagebuch führen</span></button>
+  </div></div>`+todayCard(3,true)+`<button class="calm" data-go="durchatmen"><img src="img/ruhe.png" alt=""><span><b>Lernen geht gerade nicht?</b><br><span class="note">Durchatmen: kleine Werkzeuge gegen Unruhe, Überforderung und Erschöpfung.</span></span><span style="color:var(--lav)">${ic('breath')}</span></button>`+
   (due?`<button class="due" data-go="abruf" style="font:inherit;border:0;text-align:left;cursor:pointer"><span class="n">${due}</span><span><b>Heute ${due===1?'ist eine Wiederholung':'sind '+due+' Wiederholungen'} fällig.</b><br><span class="note">Tippe, um sie aus dem Kopf zu beantworten.</span></span></button>`:'')+
   `<h2 style="font-size:1.15rem">Alle Bereiche</h2><div class="tiles">${T.map(([k,t,d,i,c])=>`<button class="tile" data-go="${k}" style="--tc:var(--${c})"><span class="ic" style="background:var(--${c}-l);color:var(--${c})">${ic(i)}</span><b>${t}</b><span class="d">${d}</span></button>`).join('')}</div>`+
   `<div class="box lav"><b>Kurz vorweg:</b> Es gibt keine „Lerntypen“, für die nur eine Methode passt. Dafür fehlen die Belege (Pashler et al., 2008). Welche Methode sinnvoll ist, hängt vor allem von deinem <b>Ziel</b> und deinem <b>Stoff</b> ab – und fast immer gehört Abrufen aus dem Kopf dazu.</div>`+
@@ -552,11 +737,15 @@ function welcomeCard(){
   return `<div class="card welcome" id="welcome"><h2>Willkommen! Schön, dass du da bist.</h2>
    <p>Der Lernkompass hilft dir, <b>wirksam</b> zu lernen – nicht länger, sondern klüger. So nutzt du ihn:</p>
    <ul class="intro-list">
+    <li><span class="ic" style="background:var(--rose-l);color:var(--rose)">${ic('plan')}</span><span><b>Klausur in Sicht?</b> Im Lernplan trägst du Termin, Themen und Unterthemen ein – und siehst, was du schon geschafft hast.</span></li>
     <li><span class="ic" style="background:var(--lav-l);color:var(--lav)">${ic('compass')}</span><span><b>Unsicher, wie du lernen sollst?</b> Der Finder fragt dich kurz aus und schlägt dir passende Methoden vor.</span></li>
     <li><span class="ic" style="background:var(--sage-l);color:var(--sage)">${ic('book')}</span><span><b>Neugierig, warum eine Methode wirkt?</b> In der Bibliothek steht zu jeder Methode, wie sie geht und was die Forschung sagt.</span></li>
-    <li><span class="ic" style="background:var(--peach-l);color:var(--peach)">${ic('recall')}</span><span><b>Gerade aus dem Unterricht?</b> Fünf Minuten abrufen – die App erinnert dich an die Wiederholungen.</span></li>
+    <li><span class="ic" style="background:var(--peach-l);color:var(--peach)">${ic('recall')}</span><span><b>Gerade aus dem Unterricht?</b> Fünf Minuten abrufen – die App erinnert dich an die Wiederholungen. Fertige Fragen zu jedem Block und den Fragen-Tausch mit deinem Tandem findest du dort auch.</span></li>
     <li><span class="ic" style="background:var(--sky-l);color:var(--sky)">${ic('timer')}</span><span><b>Bereit loszulegen?</b> Der Fokus-Timer hält dich bei einer Sache. Fällt der Start schwer, hilft „Anfangen“.</span></li>
-    <li><span class="ic" style="background:var(--gold-l);color:var(--gold)">${ic('lock')}</span><span><b>Deine Daten bleiben bei dir.</b> Keine Anmeldung, nichts wird verschickt. Gespeichert wird nur auf deinem Gerät.</span></li>
+    <li><span class="ic" style="background:var(--gold-l);color:var(--gold)">${ic('eval')}</span><span><b>Fertig mit Lernen?</b> Im Lerntagebuch bewertest du kurz, wie es lief. So lernt der Lernkompass, welche Methoden bei dir wirken.</span></li>
+    <li><span class="ic" style="background:var(--sky-l);color:var(--sky)">${ic('breath')}</span><span><b>Kopf zu voll, Herz zu schwer?</b> Unter „Durchatmen“ findest du Atem-, Bewegungs- und Erdungsübungen – und Hilfe, wenn es dir richtig schlecht geht.</span></li>
+    <li><span class="ic" style="background:var(--rose-l);color:var(--rose)">${ic('flag')}</span><span><b>Klausur morgen, Nachtdienst gestern?</b> Unter „Mehr“ begleiten dich der Klausurtag-Begleiter, der Schlaf-Kompass für den Schichtdienst und ein Wochenrückblick.</span></li>
+    <li><span class="ic" style="background:var(--bg2);color:var(--muted)">${ic('lock')}</span><span><b>Deine Daten bleiben bei dir.</b> Keine Anmeldung, nichts wird verschickt. Gespeichert wird nur auf deinem Gerät.</span></li>
    </ul>
    <div class="row"><button class="btn" data-go="finder" id="w-go">Mit dem Finder starten</button><button class="btn ghost" id="w-ok">Verstanden</button></div></div>`;
 }
@@ -622,6 +811,7 @@ function scoreMethods(a){
   if(a.wer==='zuzweit'){add('erklaeren',2);add('karten',.5);add('abruf',.5)}
   if(a.gefuehl==='muede'){add('abruf',.5);['sq3r','mischen','map'].forEach(i=>add(i,-1.5))}
   if(a.gefuehl==='unruhig'){add('abruf',.5);add('karten',.5)}
+  M.forEach(m=>{const pr=personal(m.id);if(pr.n>=2)add(m.id,(pr.eff-3)*0.9)});
   return Object.entries(s).sort((x,y)=>y[1]-x[1]).map(x=>x[0]);
 }
 function whyFor(id,a){
@@ -635,6 +825,7 @@ function whyFor(id,a){
   if(id==='verteilt'&&(a.pruefung==='lang'||a.pruefung==='offen'))w.push('du hast Zeit – nutze sie für mehrere kurze Runden');
   if(id==='erklaeren'&&a.wer==='zuzweit')w.push('ihr seid zu zweit – perfekt zum gegenseitigen Erklären');
   if(m.min<=10&&a.zeit==='10')w.push('passt in 10 Minuten');
+  const pr=personal(id);if(pr.n>=2&&pr.eff>=3.5)w.push(`hat bei dir gut funktioniert (Ø ${pr.eff.toFixed(1).replace('.',',')} von 5 aus ${pr.n} Einheiten)`);
   w.push(EVL[m.ev]);
   return w;
 }
@@ -642,14 +833,15 @@ function vFinderResult(){
   const a=fState.a,top=scoreMethods(a).slice(0,3);
   let pre='';
   if(a.gefuehl==='schieben')pre=`<div class="box warm"><b>Erst anfangen, dann Methode.</b> Wenn du etwas schon länger vor dir herschiebst, hilft oft zuerst ein ganz kleiner Start. Schau in <button class="link" data-go="anfangen">Anfangen statt Aufschieben</button> – danach passt eine der Methoden unten.</div>`;
-  if(a.gefuehl==='muede')pre=`<div class="box warm"><b>Ehrlich prüfen:</b> Bist du müde oder erschöpft – etwa nach einem Dienst –, ist eine Pause manchmal die klügere Wahl. Wenn du lernen möchtest: kurz halten, mit etwas Leichtem aus dem Kopf beginnen, nichts Neues anfangen.</div>`;
-  if(a.gefuehl==='unruhig')pre=`<div class="box warm"><b>Bei Anspannung:</b> Beginne mit etwas, das du schon kannst. Ein kleiner Erfolg am Anfang beruhigt. Wenn du magst, geh vorher zwei Minuten ans Fenster oder trink etwas.</div>`;
+  if(a.gefuehl==='muede')pre=`<div class="box warm"><b>Ehrlich prüfen:</b> Bist du müde oder erschöpft – etwa nach einem Dienst –, ist eine Pause manchmal die klügere Wahl. Wenn du lernen möchtest: kurz halten, mit etwas Leichtem aus dem Kopf beginnen, nichts Neues anfangen. <button class="link" data-go="durchatmen">Zum Durchatmen</button></div>`;
+  if(a.gefuehl==='unruhig')pre=`<div class="box warm"><b>Bei Anspannung:</b> Beginne mit etwas, das du schon kannst. Ein kleiner Erfolg am Anfang beruhigt. Wenn du magst, nimm dir vorher zwei Minuten zum <button class="link" data-dtab="atem">Durchatmen</button> oder <button class="link" data-dtab="bewegung">Bewegen</button>.</div>`;
   let post='';
   if(a.pruefung==='morgen')post=`<div class="box info"><b>Vor der Prüfung:</b> Lieber prüfen, was sitzt, und Lücken gezielt schließen, als Neues anzufangen. Und schlafen: Schlaf hilft beim Festigen des Gelernten (Diekelmann & Born, 2010). Eine durchgelernte Nacht ist meist ein schlechter Tausch.</div>`;
   const plan={10:'10 Minuten: nur die erste Methode, am besten als Abruf aus dem Kopf.',25:'25 Minuten: Methode 1 (ca. 15 Min.), dann 5 Minuten aus dem Kopf abrufen, was hängen geblieben ist, und den nächsten Wiederholtermin festlegen.',45:'45 Minuten: Methode 1 (ca. 25 Min.), kurze Pause, Methode 2 oder 3 (ca. 15 Min.), zum Schluss 5 Minuten abrufen und Wiederholtermine planen.'}[a.zeit];
   return head('Methoden-Finder','Deine Empfehlung','Die Empfehlung beruht auf deinen Antworten und auf dem, was die Lernforschung zu jeder Methode zeigt. Sie ist ein Vorschlag, keine Diagnose.','winken')+pre+
   `<div class="mlist">${top.map((id,i)=>{const m=MBY[id];return `<div class="rec ${i===0?'first':''}"><span class="rank">${i===0?'Am besten passend':'Auch gut'}</span><div class="row" style="justify-content:space-between"><h2 style="font-size:1.2rem">${m.name}</h2>${evBadge(m.ev)}</div><p>${m.kurz}</p><ul>${whyFor(id,a).map(w=>`<li>${w}</li>`).join('')}</ul><div class="row"><button class="btn small" data-go="methode" data-p="${id}">So geht’s</button>${id==='abruf'?'<button class="btn small ghost" data-go="abruf">Gleich abrufen</button>':''}</div></div>`}).join('')}</div>`+
   `<div class="box tip"><b class="k">Dein Plan für jetzt:</b> ${plan}</div>`+post+
+  (evals().length?`<div class="box lav"><b>Persönlich angepasst:</b> Deine Einträge aus dem <button class="link" data-go="auswerten">Lerntagebuch</button> fließen mit ein. Grundlage bleibt aber die Forschungslage – eigene Eindrücke können täuschen.</div>`:'')+
   `<div class="card"><h3>So geht es weiter</h3><ol class="steps"><li><span>Tippe bei der ersten Methode auf <b>„So geht’s“</b> und lies die Anleitung.</span></li><li><span>Starte den <button class="link" data-go="timer">Fokus-Timer</button> und lerne mit der Methode.</span></li><li><span>Zum Schluss: <button class="link" data-go="abruf">Abrufen</button> – die App plant deine Wiederholungen.</span></li></ol></div>`+
   `<div class="row"><button class="btn ghost" id="f-again">Noch einmal beantworten</button><button class="btn ghost" data-go="methoden">Alle Methoden ansehen</button></div>`;
 }
@@ -700,12 +892,13 @@ function vMethode(){
    <div class="sec"><h3><span class="bar" style="background:var(--rose)"></span>Stolpersteine</h3><ul class="plain">${m.stolper.map(s=>`<li>${s}</li>`).join('')}</ul></div>
    <div class="sec"><h3><span class="bar" style="background:var(--gold)"></span>Das sagt die Forschung</h3>${m.belege.map(([id,t])=>`<div class="cite"><span>${t} <span class="note">(${REF[id].k})</span></span><span class="ref">${refHTML(id)}</span><button class="copyref" data-ref="${id}">Quelle kopieren</button></div>`).join('')}</div>
   </div>
-  <div class="row"><button class="btn" data-go="abruf">Jetzt mit Abrufen festigen</button><button class="btn ghost" data-go="quellen">Alle Quellen</button></div>`;
+  <div class="row"><button class="btn" data-go="abruf">Jetzt mit Abrufen festigen</button><button class="btn ghost" data-go="auswerten" data-p="${m.id}">Nach dem Lernen auswerten</button></div>
+  ${(()=>{const pr=personal(m.id);return pr.n?`<div class="box lav"><b>Deine Erfahrung:</b> ${pr.n} ${pr.n===1?'Einheit':'Einheiten'} im Lerntagebuch · Wirkung Ø ${pr.eff.toFixed(1).replace('.',',')} · Empfinden Ø ${pr.feel.toFixed(1).replace('.',',')} (von 5)</div>`:''})()}`;
 }
 AFTER.methode=()=>{document.querySelectorAll('[data-ref]').forEach(b=>b.onclick=()=>copy(refText(b.dataset.ref),'Quelle kopiert'))};
 
 /* ---------- Abrufen ---------- */
-let ab={step:0,thema:'',ziel:'',mode:'frei',dump:'',gaps:'',q:['','',''],conf:null,mins:3,review:null};
+let ab={step:0,thema:'',sub:'',ziel:'',mode:'frei',dump:'',gaps:'',q:['','',''],conf:null,mins:3,review:null};
 const OPS=[['l1','Stufe 1 · Wissen','nennen, aufzählen, angeben, wiedergeben, bezeichnen'],['l2','Stufe 2 · Verständnis','erklären, begründen, erläutern, beschreiben, verdeutlichen'],['l3','Stufe 3 · Anwendung','anwenden, ermitteln, erarbeiten, herausfinden, entwickeln']];
 function vAbruf(){
   if(ab.review)return vReview();
@@ -714,6 +907,7 @@ function vAbruf(){
   let body='';
   if(ab.step===0){
     body=`<div class="card"><h2>Worum ging es im Unterricht?</h2>
+    ${subSelect('ab-sub',ab.sub)}
     <label class="f">Thema<input type="text" id="ab-thema" maxlength="80" placeholder="z. B. Vitalzeichen: Puls und Blutdruck" value="${esc(ab.thema)}"></label>
     <label class="f">Was willst du danach können? <span class="note" style="font-weight:400">(optional – das ist dein Plan)</span><input type="text" id="ab-ziel" maxlength="120" placeholder="z. B. Normwerte nennen und Abweichungen erkennen" value="${esc(ab.ziel)}"></label>
     <div><div class="note" style="margin-bottom:6px">Wie willst du abrufen?</div><div class="modes" role="group" aria-label="Abrufform">
@@ -750,13 +944,14 @@ function vAbruf(){
   const list=entries().slice().sort((x,y)=>(nextDue(x)??9e15)-(nextDue(y)??9e15));
   const t=today0();
   const lst=list.length?`<div class="card"><h3>Meine Wiederholungen</h3>${list.map(e=>{const d=nextDue(e);const st=d===null?['fest','gefestigt']:d<=t?['today','heute fällig']:['later',dstr(d)];return `<div class="entry"><b>${esc(e.thema)}</b><span class="st ${st[0]}">${st[1]}</span><div class="acts">${d!==null?`<button class="btn small ${d<=t?'':'ghost'}" data-rev="${e.id}">Jetzt wiederholen</button>`:`<button class="btn small ghost" data-again="${e.id}">In 14 Tagen nochmal</button>`}<button class="btn small ghost" data-del="${e.id}">Löschen</button></div></div>`}).join('')}</div>`:'';
-  return head('Abrufen nach dem Unterricht','5 Minuten aus dem Kopf','Direkt nach dem Unterricht: planen, aufschreiben, was hängen geblieben ist, vergleichen, Fragen formulieren – und die App plant die Wiederholungen nach 1, 3 und 7 Tagen.','lernen')+flow+body+lst+
+  return head('Abrufen nach dem Unterricht','5 Minuten aus dem Kopf','Direkt nach dem Unterricht: planen, aufschreiben, was hängen geblieben ist, vergleichen, Fragen formulieren – und die App plant die Wiederholungen nach 1, 3 und 7 Tagen.','lernen')+(ab.step===0?`<div class="pakbar"><button class="pakb" data-pktab="pakete"><span class="ic" style="background:var(--peach-l);color:var(--peach)">${ic('book')}</span><span><b>Fertige Fragen-Pakete</b><span class="note">zu allen 8 Blöcken des Moduls</span></span></button><button class="pakb" data-pktab="tandem"><span class="ic" style="background:var(--lav-l);color:var(--lav)">${ic('spark')}</span><span><b>Tandem</b><span class="note">Fragen tauschen per Link oder QR</span></span></button></div>`:'')+flow+body+lst+
   `<p class="src">Warum das wirkt: Abrufen festigt Gelerntes stärker als Wiederlesen (Roediger & Karpicke, 2006; Adesope et al., 2017), und verteilte Wiederholungen halten es länger (Cepeda et al., 2006).</p>`;
 }
 AFTER.abruf=()=>{
   bindList();
   if(ab.review){bindReview();return}
   const zi=$('#ab-ziel');if(zi)zi.oninput=()=>ab.ziel=zi.value;
+  const asb=$('#ab-sub');if(asb)asb.onchange=()=>{ab.sub=asb.value;const f=findSub(ab.sub);if(f){ab.thema=f.s.name;const t=$('#ab-thema');t.value=ab.thema;$('#ab-go').disabled=false}};
   document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{ab.mode=b.dataset.mode;document.querySelectorAll('[data-mode]').forEach(x=>x.setAttribute('aria-pressed',x===b))});
   const th=$('#ab-thema');if(th){th.oninput=()=>{ab.thema=th.value;$('#ab-go').disabled=!th.value.trim()};document.querySelectorAll('[data-min]').forEach(b=>b.onclick=()=>{ab.mins=+b.dataset.min;document.querySelectorAll('[data-min]').forEach(x=>x.setAttribute('aria-pressed',x===b))});$('#ab-go').onclick=()=>{unlock();ab.step=1;render();startDump()}}
   const st=$('#ab-start');if(st)st.onclick=()=>{unlock();startDump()};
@@ -766,8 +961,8 @@ AFTER.abruf=()=>{
   document.querySelectorAll('[data-conf]').forEach(b=>b.onclick=()=>{ab.conf=+b.dataset.conf;document.querySelectorAll('[data-conf]').forEach(x=>x.setAttribute('aria-pressed',x===b))});
   const nx=$('#ab-next');if(nx)nx.onclick=()=>{stopTimers();ab.step++;render()};
   const pv=$('#ab-prev');if(pv)pv.onclick=()=>{ab.step--;render()};
-  const sv=$('#ab-save');if(sv)sv.onclick=()=>{const a=entries();a.push({id:Date.now().toString(36),thema:ab.thema.trim(),ziel:ab.ziel.trim(),created:today0(),q:ab.q.map(s=>s.trim()).filter(Boolean),gaps:ab.gaps.trim(),conf:ab.conf,done:0});saveEntries(a);ab.step=4;render()};
-  const nw=$('#ab-new');if(nw)nw.onclick=()=>{ab={step:0,thema:'',ziel:'',mode:'frei',dump:'',gaps:'',q:['','',''],conf:null,mins:3,review:null};render()};
+  const sv=$('#ab-save');if(sv)sv.onclick=()=>{const a=entries();if(ab.sub)setSub(ab.sub,1);a.push({id:Date.now().toString(36),sub:ab.sub,thema:ab.thema.trim(),ziel:ab.ziel.trim(),created:today0(),q:ab.q.map(s=>s.trim()).filter(Boolean),gaps:ab.gaps.trim(),conf:ab.conf,done:0});saveEntries(a);ab.step=4;render()};
+  const nw=$('#ab-new');if(nw)nw.onclick=()=>{ab={step:0,thema:'',sub:'',ziel:'',mode:'frei',dump:'',gaps:'',q:['','',''],conf:null,mins:3,review:null};render()};
 };
 function startDump(){const t=Timer(ab.mins*60,(r,s)=>{const c=$('#ab-clock'),g=$('#ab-ring');if(c){c.textContent=fmt(r);c.classList.toggle('warn',r<=15)}if(g)g.style.width=(100*(1-r/s))+'%'},()=>{gong(1);toast('Zeit! Jetzt vergleichen.')});t.start();const b=$('#ab-start');if(b)b.textContent='Neu starten'}
 function bindList(){
@@ -788,7 +983,7 @@ function vReview(){
 function bindReview(){
   $('#rv-back').onclick=()=>{ab.review=null;render()};
   const s=$('#rv-show');if(s)s.onclick=()=>{ab.review.show=!ab.review.show;render()};
-  $('#rv-done').onclick=()=>{const a=entries();const e=a.find(x=>x.id===ab.review.id);if(e){e.done=(e.done||0)+1;saveEntries(a);const d=nextDue(e);toast(d===null?'Gefestigt – stark!':'Nächste Wiederholung: '+dstr(d))}ab.review=null;render()};
+  $('#rv-done').onclick=()=>{const a=entries();const e=a.find(x=>x.id===ab.review.id);if(e){e.done=(e.done||0)+1;e.hist=(e.hist||[]).concat(Date.now());saveEntries(a);if(e.sub)setSub(e.sub,e.done>=STEPS.length?2:1);const d=nextDue(e);toast(d===null?'Gefestigt – stark!':'Nächste Wiederholung: '+dstr(d))}ab.review=null;render()};
 }
 
 /* ---------- Anfangen ---------- */
@@ -804,7 +999,7 @@ const PATHTXT={
  gross:{h:'Mach den ersten Schritt lächerlich klein',p:['Schreib den <b>allerkleinsten nächsten Schritt</b> auf – so klein, dass er fast albern wirkt: „Skript aufschlagen, Kapitel 3 finden.“','Plane nur diesen einen Schritt. Danach entscheidest du neu.','Große Aufgaben in Scheiben schneiden: Welche drei Teile hat das Thema? Heute nur Teil 1.','Mach dein Ziel <b>konkret</b>: statt „Ich lerne Anatomie“ lieber „Bis 18 Uhr beantworte ich 10 Karteikarten zum Herz“.'],e:'Konkrete, herausfordernde Ziele führten in vielen Studien zu besseren Leistungen als vage Vorsätze wie „Ich gebe mein Bestes“ (Latham & Locke, 1991). Konkrete Wenn-dann-Pläne helfen, Vorhaben umzusetzen (Gollwitzer & Sheeran, 2006). Dass der allererste Schritt klein sein sollte, ist Erfahrungswissen.'},
  unangenehm:{h:'Der 10-Minuten-Deal',p:['Vereinbare mit dir: <b>nur 10 Minuten</b>. Danach darfst du aufhören – ohne schlechtes Gewissen.','Starte den Fokus-Timer mit 10 Minuten (Icon „Timer“ unten).','Oft ist das Anfangen das Schwerste. Wenn du nach 10 Minuten weitermachen willst: gern. Wenn nicht: Du hast trotzdem etwas geschafft.','Belohnung danach planen – etwas Kleines, auf das du dich freust.'],e:'Aufschieben ist oft ein Versuch, unangenehme Gefühle kurzfristig zu vermeiden – nicht Faulheit (Sirois & Pychyl, 2013). Ein kurzer, begrenzter Start macht das Gefühl aushaltbarer.'},
  angst:{h:'Freundlich mit dir sein – gerade jetzt',p:['Sag dir einen Satz, den du einer Freundin sagen würdest: <i>„Es ist verständlich, dass ich unsicher bin. Ich darf es Schritt für Schritt versuchen.“</i>','Gib dir die Erlaubnis für einen <b>schlechten ersten Entwurf</b>. Verbessern kannst du später.','Fang mit etwas an, das dir sicher gelingt. Kleine Erfolge stärken das Vertrauen, es zu schaffen.','Erklär dir Rückschläge mit Dingen, die du ändern kannst: „Ich habe zu spät angefangen“ statt „Ich bin halt nicht schlau genug“.','Wenn du in der Vergangenheit aufgeschoben hast: Verzeih es dir. Das macht den nächsten Start leichter.'],e:'Selbstmitgefühl erhöhte in Studien die Motivation, sich zu verbessern (Breines & Chen, 2012); wer sich das Aufschieben verzieh, schob vor der nächsten Prüfung weniger auf (Wohl et al., 2010). Eigene Erfolgserlebnisse gelten als stärkste Quelle von Selbstwirksamkeit (Bandura, 1977). Wer Misserfolg auf veränderbare, beeinflussbare Ursachen wie Anstrengung oder Vorgehen zurückführt, bleibt eher zuversichtlich als bei Ursachen wie „Begabung“ (Weiner, 1979). Menschen mit starker Angst vor Misserfolg neigen dazu, Leistungssituationen zu meiden (Atkinson, 1957) – Aufschieben kann ein solcher Schutzversuch sein.'},
- erschoepft:{h:'Vielleicht ist das gar kein Aufschieben',p:['Prüf ehrlich: Hast du genug geschlafen, gegessen, getrunken? Kommst du aus einem (Nacht-)Dienst?','Wenn ja: Eine <b>echte Pause</b> ist jetzt klüger als Lernen mit Druck. Plane einen konkreten Lerntermin für später.','Wenn du trotzdem etwas tun möchtest: höchstens 10 Minuten etwas Leichtes aus dem Kopf abrufen.','Hält die Erschöpfung über längere Zeit an, sprich mit einer Vertrauensperson, deiner Praxisanleitung oder deiner Hausärztin.'],e:'Erschöpfung und Aufschieben sehen von außen ähnlich aus, brauchen aber Unterschiedliches. Bei Erschöpfung hilft Erholung – nicht mehr Disziplin.'},
+ erschoepft:{h:'Vielleicht ist das gar kein Aufschieben',p:['Prüf ehrlich: Hast du genug geschlafen, gegessen, getrunken? Kommst du aus einem (Nacht-)Dienst?','Zum Runterkommen helfen kleine Werkzeuge unter <button class="link" data-go="durchatmen">Durchatmen</button>: bewegen, atmen oder erden.','Wenn ja: Eine <b>echte Pause</b> ist jetzt klüger als Lernen mit Druck. Plane einen konkreten Lerntermin für später.','Wenn du trotzdem etwas tun möchtest: höchstens 10 Minuten etwas Leichtes aus dem Kopf abrufen.','Hält die Erschöpfung über längere Zeit an, sprich mit einer Vertrauensperson, deiner Praxisanleitung oder deiner Hausärztin.'],e:'Erschöpfung und Aufschieben sehen von außen ähnlich aus, brauchen aber Unterschiedliches. Bei Erschöpfung hilft Erholung – nicht mehr Disziplin.'},
  ablenkung:{h:'Die Umgebung arbeiten lassen',p:['Handy <b>in einen anderen Raum</b> oder in eine Tasche außer Sicht – nicht nur umdrehen.','Eine Aufgabe, ein Tab, ein Heft: die Ein-Ding-Regel.','Den Fokus-Timer starten (Icon „Timer“ unten). In der Pause darfst du kurz aufs Handy – aber nur in der Pause.','Schreib einen Wenn-dann-Plan: „Wenn ich zum Handy greifen will, dann trinke ich einen Schluck und lese den nächsten Absatz.“'],e:'Konkrete Wenn-dann-Pläne haben in einer Meta-Analyse die Umsetzung von Zielen deutlich verbessert (Gollwitzer & Sheeran, 2006). Feste Pausen nach der Pomodoro-Methode gingen in einer Studie mit weniger Ermüdung einher (Biwer et al., 2023).'}
 };
 function vAnfangen(){
@@ -839,6 +1034,719 @@ AFTER.anfangen=()=>{
   $('#wd-copy').onclick=()=>{if(an.wenn&&an.dann)copy(`Wenn ${an.wenn}, dann ${an.dann}.`,'Plan kopiert');else toast('Bitte beide Felder ausfüllen')};
 };
 
+/* ---------- Lernplan ---------- */
+const PKEY='lernkompass-plan-v1';
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+function plan(){const p=store.get(PKEY,null);return p&&Array.isArray(p.exams)?p:{exams:[]}}
+function savePlan(p){store.set(PKEY,p)}
+const dateMs=d=>{const [y,m,t]=String(d).split('-').map(Number);return new Date(y,(m||1)-1,t||1).getTime()};
+const daysTo=d=>Math.round((dateMs(d)-today0())/864e5);
+const STAT=['offen','bearbeitet','sicher'];
+function allSubs(p){const out=[];(p||plan()).exams.forEach(e=>e.topics.forEach(t=>t.subs.forEach(s=>out.push({e,t,s}))));return out}
+function findSub(id){return allSubs().find(x=>x.s.id===id)||null}
+function setSub(id,st){const p=plan();allSubs(p).forEach(x=>{if(x.s.id===id){x.s.status=Math.max(x.s.status||0,st);x.s.last=Date.now()}});savePlan(p)}
+function counts(e){let c=[0,0,0];e.topics.forEach(t=>t.subs.forEach(s=>c[s.status||0]++));return c}
+function subSelect(id,val){const subs=allSubs().filter(x=>daysTo(x.e.date)>=0);if(!subs.length)return '';
+  return `<label class="f">Aus deinem Lernplan <span class="note" style="font-weight:400">(optional)</span><select id="${id}"><option value="">– eigenes Thema eintragen –</option>${subs.map(x=>`<option value="${x.s.id}" ${val===x.s.id?'selected':''}>${esc(x.e.name)} › ${esc(x.t.name)} › ${esc(x.s.name)} (${STAT[x.s.status||0]})</option>`).join('')}</select></label>`}
+function suggestions(n){
+  const t0=Date.now(),list=[];
+  plan().exams.filter(e=>daysTo(e.date)>=0).forEach(e=>{const d=daysTo(e.date);e.topics.forEach(t=>t.subs.forEach(s=>{const st=s.status||0;if(st===2)return;
+    const age=s.last?(t0-s.last)/864e5:99;if(st===1&&age<2)return;
+    list.push({e,t,s,score:(st===0?0:1)*10+d+(st===1?-Math.min(age,6):0)})}))});
+  return list.sort((a,b)=>a.score-b.score).slice(0,n);
+}
+function todayCard(n,compact){
+  const sg=suggestions(n);if(!sg.length)return '';
+  return `<div class="card" style="gap:10px"><div class="row" style="justify-content:space-between"><h2 style="font-size:1.15rem">Heute dran</h2>${compact?'<button class="link" data-go="plan" style="font-size:.84rem">Zum Lernplan</button>':''}</div>
+   <div class="today">${sg.map(x=>`<div class="it"><span>${esc(x.s.name)}<small>${esc(x.e.name)} · ${esc(x.t.name)} · ${(x.s.status||0)===0?'noch offen':'wiederholen'} · ${daysTo(x.e.date)===0?'Klausur heute':'noch '+daysTo(x.e.date)+' '+(daysTo(x.e.date)===1?'Tag':'Tage')}</small></span><button class="mini" data-abr="${x.s.id}">Abrufen</button></div>`).join('')}</div>
+   <p class="note">Offene Unterthemen der nächsten Klausur zuerst, danach Wiederholungen. Abrufen markiert ein Unterthema als „bearbeitet“, nach drei Wiederholungen wird es „sicher“.</p></div>`;
+}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-abr]');if(!b)return;const f=findSub(b.dataset.abr);if(!f)return;
+  ab={step:0,thema:f.s.name,sub:f.s.id,ziel:'',mode:'frei',dump:'',gaps:'',q:['','',''],conf:null,mins:3,review:null};go('abruf')});
+let planOpen=new Set(),planAdd=null;
+function vPlan(){
+  const P=plan(),ex=P.exams.slice().sort((a,b)=>a.date.localeCompare(b.date));
+  const up=ex.filter(e=>daysTo(e.date)>=0),past=ex.filter(e=>daysTo(e.date)<0);
+  if(up.length&&!planOpen.size)planOpen.add(up[0].id);
+  const tot=[0,0,0];up.forEach(e=>{const c=counts(e);c.forEach((v,i)=>tot[i]+=v)});const all=tot[0]+tot[1]+tot[2];
+  const card=e=>{const c=counts(e),n=c[0]+c[1]+c[2],d=daysTo(e.date),open=planOpen.has(e.id),notSafe=c[0]+c[1];
+    const days=Math.max(1,d-1),per=Math.ceil(notSafe/days);
+    return `<div class="card"><div class="exhead"><div style="display:flex;flex-direction:column;gap:4px;min-width:0"><span class="note">${new Date(dateMs(e.date)).toLocaleDateString('de-DE',{weekday:'long',day:'numeric',month:'long'})}</span><h2 style="overflow-wrap:anywhere">${esc(e.name)}</h2></div>
+     <div class="cd">${d<0?'vorbei':d===0?'heute':d}<small>${d>0?(d===1?'Tag':'Tage'):''}</small></div></div>
+     <div class="pbar" role="img" aria-label="${c[2]} sicher, ${c[1]} bearbeitet, ${c[0]} offen"><span class="s2" style="width:${n?100*c[2]/n:0}%"></span><span class="s1" style="width:${n?100*c[1]/n:0}%"></span></div>
+     <div class="legend"><span><i style="background:var(--sage)"></i>${c[2]} sicher</span><span><i style="background:var(--gold)"></i>${c[1]} bearbeitet</span><span><i style="background:var(--line2)"></i>${c[0]} offen</span></div>
+     ${d>=0&&notSafe?`<div class="box tip">Noch ${notSafe} ${notSafe===1?'Unterthema':'Unterthemen'} bis „sicher“ – das sind etwa <b>${per} pro Tag</b>, wenn der letzte Tag fürs Wiederholen frei bleibt.</div>`:''}
+     ${d>=0&&n&&!notSafe?`<div class="box ok">Alles auf „sicher“ – stark! Jetzt nur noch locker wiederholen und gut schlafen.</div>`:''}
+     <div class="row"><button class="btn small ghost" data-xt="${e.id}">${open?'Themen zuklappen':'Themen anzeigen ('+e.topics.length+')'}</button>${d>=0&&d<=3?`<button class="btn small" data-kt="${e.id}">${ic('flag')} Klausurtag-Begleiter</button>`:''}</div>
+     ${open?`<div style="display:flex;flex-direction:column;gap:10px">${e.topics.map(t=>{const tn=t.subs.length,ts=t.subs.filter(s=>(s.status||0)===2).length;return `<div class="topic"><h3><span style="overflow-wrap:anywhere">${esc(t.name)}</span><span class="cnt">${ts}/${tn} sicher <button class="mini x" data-deltopic="${e.id}|${t.id}" aria-label="Thema löschen">×</button></span></h3>
+       ${t.subs.map(s=>`<div class="sub"><button class="stat s${s.status||0}" data-st="${s.id}" title="Tippen zum Ändern">${STAT[s.status||0]}</button><span class="nm">${esc(s.name)}</span><button class="mini" data-abr="${s.id}">Abrufen</button><button class="mini x" data-delsub="${s.id}" aria-label="Unterthema löschen">×</button></div>`).join('')}
+       <div class="addrow"><input type="text" data-subin="${e.id}|${t.id}" maxlength="200" placeholder="Unterthemen, mit Komma getrennt"><button class="btn small" data-addsub="${e.id}|${t.id}">+</button></div></div>`}).join('')}
+      <div class="addrow"><input type="text" data-topin="${e.id}" maxlength="80" placeholder="Neues Thema, z. B. Herz-Kreislauf"><button class="btn small" data-addtop="${e.id}">Thema +</button></div>
+      <div class="row"><button class="btn small ghost" data-kiex="${e.id}">${ic('spark')} Probeklausur mit KI</button><button class="btn small ghost" data-delex="${e.id}">Klausur löschen</button></div></div>`:''}
+    </div>`};
+  return head('Lernplan','Deine Klausuren im Blick','Trag ein, wann welche Klausur ist und welche Themen dazugehören. Teile große Themen in kleine Unterthemen – so wird der Berg kleiner, und du siehst, was du schon geschafft hast.','lernen')+
+   (all?`<div class="card" style="gap:10px"><h3>Alles im Blick</h3><div class="pbar"><span class="s2" style="width:${100*tot[2]/all}%"></span><span class="s1" style="width:${100*tot[1]/all}%"></span></div><div class="legend"><span><i style="background:var(--sage)"></i>${tot[2]} sicher</span><span><i style="background:var(--gold)"></i>${tot[1]} bearbeitet</span><span><i style="background:var(--line2)"></i>${tot[0]} offen</span><span>· ${up.length} ${up.length===1?'Klausur':'Klausuren'}</span></div></div>`:'')+
+   todayCard(3,false)+
+   up.map(card).join('')+
+   `<div class="card"><h2>${up.length?'Weitere Klausur eintragen':'Deine erste Klausur eintragen'}</h2>
+    <div class="grid2"><label class="f">Fach oder Klausur<input type="text" id="pl-name" maxlength="80" placeholder="z. B. Anatomie & Physiologie"></label><label class="f">Datum<input type="date" id="pl-date"></label></div>
+    <label class="f">Themen <span class="note" style="font-weight:400">(optional, eins pro Zeile – Unterthemen nach einem Doppelpunkt, mit Komma getrennt)</span><textarea id="pl-topics" placeholder="Herz-Kreislauf: Aufbau des Herzens, Blutkreislauf, Blutdruck&#10;Atmung: Atemwege, Gasaustausch, Atemfrequenz"></textarea></label>
+    <div class="row"><button class="btn" id="pl-add">Klausur anlegen</button></div>
+    <div class="box lav"><b>So geht’s:</b> Status-Knopf antippen wechselt zwischen <i>offen</i> → <i>bearbeitet</i> → <i>sicher</i>. Mit „Abrufen“ startest du direkt eine Abrufübung zum Unterthema – danach setzt die App den Status selbst.</div></div>`+
+   (past.length?`<div class="card"><h3>Vergangene Klausuren</h3>${past.map(e=>{const c=counts(e);return `<div class="row" style="justify-content:space-between"><span>${esc(e.name)} <span class="note">· ${c[2]}/${c[0]+c[1]+c[2]} sicher</span></span><span class="row" style="gap:6px"><button class="mini" data-kt="${e.id}">Rückblick</button><button class="mini" data-delex="${e.id}">Löschen</button></span></div>`}).join('')}</div>`:'')+
+   `<p class="src">Warum kleine Unterthemen und ein verteilter Plan? Konkrete Teilziele wirken stärker als vage Vorsätze (Latham & Locke, 1991), und über mehrere Tage verteiltes Lernen hält länger als Lernen am Stück (Cepeda et al., 2006). Gespeichert wird nur auf diesem Gerät.</p>`;
+}
+function parseDate(v){v=v.trim();let m=v.match(/^(\d{1,2})\.(\d{1,2})\.(\d{2,4})$/);if(m){let y=+m[3];if(y<100)y+=2000;return `${y}-${String(m[2]).padStart(2,'0')}-${String(m[1]).padStart(2,'0')}`}m=v.match(/^(\d{4})-(\d{2})-(\d{2})$/);return m?v:null}
+const splitList=v=>v.split(/[,;\n]/).map(x=>x.trim()).filter(Boolean).slice(0,40);
+AFTER.plan=()=>{
+  const mut=f=>{const p=plan();f(p);savePlan(p);render()};
+  $('#pl-add').onclick=()=>{const name=$('#pl-name').value.trim(),date=parseDate($('#pl-date').value);
+    if(!name){toast('Bitte einen Namen eintragen');return}if(!date||isNaN(dateMs(date))){toast('Datum bitte als TT.MM.JJJJ eintragen');return}
+    const topics=$('#pl-topics').value.split('\n').map(l=>l.trim()).filter(Boolean).slice(0,30).map(l=>{const [a,...r]=l.split(':');return {id:uid(),name:a.trim(),subs:splitList(r.join(':')).map(n=>({id:uid(),name:n,status:0}))}});
+    const id=uid();mut(p=>p.exams.push({id,name,date,topics}));planOpen=new Set([id]);render();toast('Klausur angelegt')};
+  document.querySelectorAll('[data-xt]').forEach(b=>b.onclick=()=>{const id=b.dataset.xt;planOpen.has(id)?planOpen.delete(id):planOpen.add(id);render()});
+  document.querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>mut(p=>allSubs(p).forEach(x=>{if(x.s.id===b.dataset.st){x.s.status=((x.s.status||0)+1)%3;x.s.last=Date.now()}})));
+  const addSubs=k=>{const [eid,tid]=k.split('|'),inp=document.querySelector(`[data-subin="${k}"]`),names=splitList(inp.value);if(!names.length)return;mut(p=>{const t=p.exams.find(e=>e.id===eid).topics.find(t=>t.id===tid);names.forEach(n=>t.subs.push({id:uid(),name:n,status:0}))})};
+  document.querySelectorAll('[data-addsub]').forEach(b=>b.onclick=()=>addSubs(b.dataset.addsub));
+  document.querySelectorAll('[data-subin]').forEach(i=>i.onkeydown=e=>{if(e.key==='Enter')addSubs(i.dataset.subin)});
+  const addTop=eid=>{const inp=document.querySelector(`[data-topin="${eid}"]`),v=inp.value.trim();if(!v)return;const [a,...r]=v.split(':');mut(p=>p.exams.find(e=>e.id===eid).topics.push({id:uid(),name:a.trim(),subs:splitList(r.join(':')).map(n=>({id:uid(),name:n,status:0}))}))};
+  document.querySelectorAll('[data-addtop]').forEach(b=>b.onclick=()=>addTop(b.dataset.addtop));
+  document.querySelectorAll('[data-topin]').forEach(i=>i.onkeydown=e=>{if(e.key==='Enter')addTop(i.dataset.topin)});
+  document.querySelectorAll('[data-delsub]').forEach(b=>b.onclick=()=>mut(p=>p.exams.forEach(e=>e.topics.forEach(t=>t.subs=t.subs.filter(s=>s.id!==b.dataset.delsub)))));
+  const sure=(b,fn)=>{if(b.dataset.sure){fn()}else{b.dataset.sure='1';const o=b.textContent;b.textContent='Wirklich löschen?';setTimeout(()=>{if(b.isConnected){delete b.dataset.sure;b.textContent=o}},3000)}};
+  document.querySelectorAll('[data-deltopic]').forEach(b=>b.onclick=()=>sure(b,()=>{const [eid,tid]=b.dataset.deltopic.split('|');mut(p=>{const e=p.exams.find(e=>e.id===eid);e.topics=e.topics.filter(t=>t.id!==tid)})}));
+  document.querySelectorAll('[data-delex]').forEach(b=>b.onclick=()=>sure(b,()=>mut(p=>p.exams=p.exams.filter(e=>e.id!==b.dataset.delex))));
+  document.querySelectorAll('[data-kiex]').forEach(b=>b.onclick=()=>{const e=plan().exams.find(e=>e.id===b.dataset.kiex);if(!e)return;ki.thema=e.name+(e.topics.length?' – '+e.topics.map(t=>t.name+(t.subs.length?' ('+t.subs.map(s=>s.name).join(', ')+')':'')).join('; '):'');go('ki')});
+};
+
+/* ---------- Lerntagebuch (Evaluation) ---------- */
+const EKEY='lernkompass-tagebuch-v1';
+function evals(){return store.get(EKEY,[])}
+function personal(id){const l=evals().filter(e=>e.method===id);if(!l.length)return {n:0,eff:0,feel:0,konz:0};const av=k=>l.reduce((a,e)=>a+e[k],0)/l.length;return {n:l.length,eff:av('eff'),feel:av('feel'),konz:av('konz')}}
+let evf={thema:'',sub:'',method:'',dauer:25,eff:3,feel:3,konz:3,next:''};
+const SL=[['eff','Wie viel konntest du danach ohne Unterlagen wiedergeben?','fast nichts','fast alles'],['feel','Wie hast du die Methode empfunden?','unangenehm','angenehm'],['konz','Wie gut konntest du dich konzentrieren?','kaum','sehr gut']];
+const f1=x=>x.toFixed(1).replace('.',',');
+function insights(){
+  const by={};evals().forEach(e=>{if(!e.method)return;(by[e.method]=by[e.method]||[]).push(e)});
+  const rows=Object.entries(by).map(([id,l])=>({id,n:l.length,...personal(id)})).sort((a,b)=>b.eff-a.eff);
+  if(!rows.length)return `<p class="note">Sobald du Einheiten mit Methode einträgst, siehst du hier, was bei dir wirkt.</p>`;
+  const sure=rows.filter(r=>r.n>=2),msgs=[];
+  if(sure.length){const b=sure[0];msgs.push(`<b>Bei dir bisher am wirksamsten:</b> ${MBY[b.id]?MBY[b.id].name:b.id} – Ø ${f1(b.eff)} von 5 aus ${b.n} Einheiten.`)}
+  sure.forEach(r=>{const nm=MBY[r.id]?MBY[r.id].name:r.id;
+    if(r.eff>=3.5&&r.feel<=2.5)msgs.push(`<b>${nm}</b> fühlt sich für dich anstrengend an, bringt aber viel. Das ist typisch für „erwünschte Schwierigkeiten“ – die Mühe gehört zum Lernen (Bjork & Bjork, 2011).`);
+    if(r.feel>=3.5&&r.eff<=2.5)msgs.push(`<b>${nm}</b> ist für dich angenehm, aber es bleibt wenig hängen. Kombiniere die Methode mit einem Abruf-Schritt aus dem Kopf.`)});
+  if(!sure.length)msgs.push('Ab zwei Einheiten pro Methode zeige ich dir Muster. Bis dahin: weiter eintragen!');
+  return `<div class="box lav" style="display:flex;flex-direction:column;gap:6px">${msgs.map(m=>`<span>${m}</span>`).join('')}</div>
+   <div style="display:flex;flex-direction:column;gap:8px">${rows.map(r=>`<div class="mbar"><div class="t"><b>${MBY[r.id]?MBY[r.id].name:esc(r.id)}</b><span class="note">${r.n} ${r.n===1?'Einheit':'Einheiten'}</span></div>
+    ${[['Wirkung',r.eff,'var(--sage)'],['Empfinden',r.feel,'var(--rose)'],['Konzentration',r.konz,'var(--sky)']].map(([l,v,c])=>`<div class="ln"><span>${l}</span><span class="tr"><span style="width:${v/5*100}%;background:${c}"></span></span><span>${f1(v)}</span></div>`).join('')}</div>`).join('')}</div>
+   <p class="src">Ehrlich gesagt: Eigene Einschätzungen sind ein wertvoller Hinweis, aber kein Beweis. Lernende halten oft das für wirksamer, was sich leichter anfühlt (Kornell & Bjork, 2008; Dunlosky & Rawson, 2012). Darum fragt die App nach dem, was du <i>wiedergeben</i> konntest – nicht nur nach dem Gefühl.</p>`;
+}
+function vEval(){
+  if(param&&MBY[param]){evf.method=param;param=null}
+  const l=evals().slice().reverse();
+  return head('Lerntagebuch','Wie lief deine Lerneinheit?','Zwei Minuten nach dem Lernen: Was hast du gelernt, wie gut hat die Methode funktioniert, wie hat sie sich angefühlt? Aus deinen Einträgen lernt der Lernkompass, was bei dir wirkt.','ruhe')+
+  `<div class="card"><h2>Neuer Eintrag</h2>
+   ${subSelect('ev-sub',evf.sub)}
+   <label class="f">Was hast du gelernt?<input type="text" id="ev-thema" maxlength="100" placeholder="z. B. Blutkreislauf" value="${esc(evf.thema)}"></label>
+   <div class="grid2"><label class="f">Mit welcher Methode?<select id="ev-method"><option value="">– bitte wählen –</option>${M.map(m=>`<option value="${m.id}" ${evf.method===m.id?'selected':''}>${m.name}</option>`).join('')}<option value="andere" ${evf.method==='andere'?'selected':''}>andere Methode</option></select></label>
+   <label class="f">Wie lange?<select id="ev-dauer">${[10,15,25,45,60,90].map(n=>`<option value="${n}" ${evf.dauer===n?'selected':''}>${n} Minuten</option>`).join('')}</select></label></div>
+   <div class="box tip"><b class="k">Kurzer Test vorher:</b> Unterlagen zu, eine Minute lang aufschreiben, was du noch weißt. Dann beantwortest du die erste Frage ehrlicher.</div>
+   ${SL.map(([k,q,a,b])=>`<div class="slider"><label for="ev-${k}">${q}<output id="ev-${k}-o">${evf[k]} / 5</output></label><input type="range" id="ev-${k}" min="1" max="5" step="1" value="${evf[k]}"><div class="scale"><span>${a}</span><span>${b}</span></div></div>`).join('')}
+   <label class="f">Was machst du beim nächsten Mal anders oder genauso? <span class="note" style="font-weight:400">(optional)</span><input type="text" id="ev-next" maxlength="160" placeholder="z. B. früher anfangen, Handy weglegen" value="${esc(evf.next)}"></label>
+   <div class="row"><button class="btn" id="ev-save">Eintrag speichern</button></div></div>
+  <div class="card"><h2>Was bei dir wirkt</h2>${insights()}</div>
+  ${l.length?`<div class="card"><h3>Deine Einträge</h3><div class="hist">${l.slice(0,12).map(e=>`<div class="h"><b>${esc(e.thema||'ohne Thema')}</b><span class="note">${new Date(e.ts).toLocaleDateString('de-DE',{day:'numeric',month:'short'})}</span><span class="note">${e.method?(MBY[e.method]?MBY[e.method].name:'andere Methode'):'ohne Methode'} · ${e.dauer} Min.${e.next?' · „'+esc(e.next)+'“':''}</span><span class="dots5" title="Wirkung">${'●'.repeat(e.eff)}${'○'.repeat(5-e.eff)}</span></div>`).join('')}</div>
+   <div class="row"><button class="btn small ghost" id="ev-share">Anonyme Zusammenfassung kopieren</button></div>
+   <p class="note">Die Zusammenfassung enthält nur Methoden und Durchschnittswerte – keine Themen, keine Namen. Du kannst sie freiwillig mit deiner Lehrkraft teilen.</p></div>`:''}
+  <p class="src">Nach dem Lernen zu bewerten und daraus fürs nächste Mal abzuleiten, gehört zu den metakognitiven Lernstrategien – Bewerten und Nachsteuern (Hasselhorn & Gold, 2017).</p>`;
+}
+AFTER.auswerten=()=>{
+  const th=$('#ev-thema');th.oninput=()=>evf.thema=th.value;
+  const es=$('#ev-sub');if(es)es.onchange=()=>{evf.sub=es.value;const f=findSub(evf.sub);if(f){evf.thema=f.s.name;th.value=evf.thema}};
+  $('#ev-method').onchange=e=>evf.method=e.target.value;$('#ev-dauer').onchange=e=>evf.dauer=+e.target.value;
+  $('#ev-next').oninput=e=>evf.next=e.target.value;
+  SL.forEach(([k])=>{const el=$('#ev-'+k);el.oninput=()=>{evf[k]=+el.value;$('#ev-'+k+'-o').textContent=el.value+' / 5'}});
+  $('#ev-save').onclick=()=>{if(!evf.thema.trim()&&!evf.method){toast('Bitte Thema oder Methode eintragen');return}
+    const a=evals();a.push({id:uid(),ts:Date.now(),thema:evf.thema.trim(),sub:evf.sub,method:evf.method,dauer:evf.dauer,eff:evf.eff,feel:evf.feel,konz:evf.konz,next:evf.next.trim()});store.set(EKEY,a.slice(-400));
+    if(evf.sub)setSub(evf.sub,1);evf={thema:'',sub:'',method:'',dauer:25,eff:3,feel:3,konz:3,next:''};toast('Gespeichert – danke!');render()};
+  const sh=$('#ev-share');if(sh)sh.onclick=()=>{const by={};evals().forEach(e=>{const k=e.method?(MBY[e.method]?MBY[e.method].name:'andere Methode'):'ohne Methode';(by[k]=by[k]||[]).push(e)});
+    const lines=Object.entries(by).map(([k,l])=>{const av=f=>f1(l.reduce((a,e)=>a+e[f],0)/l.length);return `${k}: ${l.length} Einheiten · Wirkung ${av('eff')} · Empfinden ${av('feel')} · Konzentration ${av('konz')} (je von 5)`});
+    copy('Lernkompass – meine Methoden-Auswertung (anonym)\n'+lines.join('\n'),'Zusammenfassung kopiert')};
+};
+
+/* ---------- Mehr & Datensicherung ---------- */
+function vMehr(){
+  const T=[['durchatmen','Durchatmen','Atmen, bewegen, erden – wenn Lernen gerade nicht geht.','breath','sky'],['woche','Wochenrückblick','Fünf Minuten pro Woche: zurückschauen, Bremsen erkennen, nachsteuern.','week','gold'],['klausurtag','Klausurtag-Begleiter','Vom Abend davor bis zum Rückblick danach – mit Notfallkarte für den Blackout.','flag','rose'],['schlaf','Schlaf-Kompass','Gut schlafen bei Früh-, Spät- und Nachtdienst – und warum Schlaf zum Lernen gehört.','moon','lav'],['anfangen','Anfangen statt Aufschieben','Wenn es gerade schwerfällt: der passende kleine Schritt.','start','lav'],['auswerten','Lerntagebuch','Lerneinheiten auswerten – sehen, was bei dir wirkt.','eval','gold'],['ki','Probeklausur mit KI','Schritt für Schritt – passend zu den Taxonomiestufen eurer Schule.','spark','rose'],['quellen','Quellen','Alle Belege im APA-Format, mit geprüfter DOI.','src','sage']];
+  return head('Mehr','Weitere Bereiche','Alles, was nicht in die Leiste unten gepasst hat – und die Sicherung deiner Daten.')+
+  `<div class="tiles">${T.map(([k,t,d,i,c])=>`<button class="tile" data-go="${k}" style="--tc:var(--${c})"><span class="ic" style="background:var(--${c}-l);color:var(--${c})">${ic(i)}</span><b>${t}</b><span class="d">${d}</span></button>`).join('')}</div>
+  <div class="card"><div class="row"><span class="ic" style="background:var(--lav-l);color:var(--lav)">${ic('data')}</span><h2>Deine Daten sichern</h2></div>
+   <p>Lernplan, Wiederholungen und Lerntagebuch sind nur auf diesem Gerät gespeichert. Wenn du das Handy wechselst oder die Browserdaten löschst, sind sie weg – sichere sie deshalb ab und zu.</p>
+   <div class="row"><button class="btn small" id="bk-copy">Sicherung kopieren</button><button class="btn small ghost" id="bk-file">Als Datei speichern</button></div>
+   <label class="f">Sicherung wiederherstellen<textarea id="bk-in" placeholder="Hier die kopierte Sicherung einfügen" style="min-height:80px"></textarea></label>
+   <div class="row"><button class="btn small ghost" id="bk-load">Wiederherstellen</button><button class="btn small ghost" id="bk-del">Alle Daten löschen</button></div>
+   <p class="note">Tipp: Die kopierte Sicherung kannst du dir z. B. als Notiz oder E-Mail an dich selbst schicken.</p></div>
+  <div class="row" style="justify-content:center"><button class="link" id="mh-welcome">Einführung noch einmal zeigen</button></div>`;
+}
+const SKEY='lernkompass-schlaf-v1',KKEY='lernkompass-klausur-v1';
+const BKEYS=[KEY,PKEY,EKEY,SKEY,KKEY,'lernkompass-tandem-v1','lernkompass-woche-v1'];
+AFTER.mehr=()=>{
+  const dump=()=>JSON.stringify({app:'lernkompass',v:1,ts:new Date().toISOString(),data:Object.fromEntries(BKEYS.map(k=>[k,store.get(k,null)]))});
+  $('#bk-copy').onclick=()=>copy(dump(),'Sicherung kopiert');
+  if(/claudeusercontent|claude\.ai/.test(location.hostname))$('#bk-file').hidden=true;
+  $('#bk-file').onclick=()=>{try{const b=new Blob([dump()],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='lernkompass-sicherung-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();toast('Datei wird gespeichert')}catch(e){toast('Speichern nicht möglich – bitte „Sicherung kopieren“ nutzen')}};
+  $('#bk-load').onclick=()=>{try{const o=JSON.parse($('#bk-in').value);if(o.app!=='lernkompass')throw 0;BKEYS.forEach(k=>{if(o.data&&o.data[k]!=null)store.set(k,o.data[k])});toast('Daten wiederhergestellt');go('start')}catch(e){toast('Das sieht nicht nach einer Lernkompass-Sicherung aus')}};
+  const del=$('#bk-del');del.onclick=()=>{if(del.dataset.sure){BKEYS.forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});toast('Alle Daten gelöscht');go('start')}else{del.dataset.sure='1';del.textContent='Wirklich alles löschen?';setTimeout(()=>{if(del.isConnected){delete del.dataset.sure;del.textContent='Alle Daten löschen'}},3000)}};
+  $('#mh-welcome').onclick=()=>{store.set(WKEY,false);go('start')};
+};
+
+/* ---------- Schlaf-Kompass ---------- */
+const SHIFTS={
+ frueh:{name:'Frühdienst',von:'06:00',bis:'14:15',bed:'21:30',wake:'04:45',sleepLbl:'Nachtschlaf vor dem Dienst'},
+ spaet:{name:'Spätdienst',von:'13:45',bis:'22:00',bed:'23:30',wake:'07:30',sleepLbl:'Nachtschlaf nach dem Dienst'},
+ nacht:{name:'Nachtdienst',von:'21:45',bis:'06:15',bed:'07:30',wake:'14:00',sleepLbl:'Tagschlaf nach dem Dienst'},
+ frei:{name:'Frei nach Nächten',von:'',bis:'',bed:'07:30',wake:'11:00',sleepLbl:'Kurzer Schlaf am Vormittag'}};
+const LV={s:['Studie','ok'],p:['Praxiswissen','gold'],e:['Einschätzung','muted']};
+const lv=k=>`<span class="lv lv-${LV[k][1]}">${LV[k][0]}</span>`;
+let sl={tab:'schicht',nap:20};
+function sdat(){const d=store.get(SKEY,null)||{};return Object.assign({shift:'frueh',times:{},list:'',listTs:0},d)}
+function sSave(d){store.set(SKEY,d)}
+const t2m=t=>{if(!t||!/^\d{1,2}:\d{2}$/.test(t))return null;const [h,m]=t.split(':').map(Number);return h*60+m};
+const m2t=m=>{m=((m%1440)+1440)%1440;return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')};
+const durTxt=min=>{const h=Math.floor(min/60),m=min%60;return h+' Std.'+(m?' '+m+' Min.':'')};
+function sTimes(d){const s=SHIFTS[d.shift],t=d.times[d.shift]||{};return {von:t.von??s.von,bis:t.bis??s.bis,bed:t.bed??s.bed,wake:t.wake??s.wake}}
+/* 24-Stunden-Band: Segmente über Mitternacht werden geteilt */
+function band(segs){
+  const parts=[];segs.forEach(([a,b,cls,lbl])=>{if(a==null||b==null)return;a=((a%1440)+1440)%1440;b=((b%1440)+1440)%1440;if(a===b)return;
+    if(b>a)parts.push([a,b,cls,lbl]);else{parts.push([a,1440,cls,lbl]);if(b>0)parts.push([0,b,cls,''])}});
+  return `<div class="band" role="img" aria-label="${segs.filter(s=>s[0]!=null&&s[1]!=null).map(s=>s[3]+' '+m2t(s[0])+' bis '+m2t(s[1])).join(', ')}">
+   ${parts.map(([a,b,cls,lbl])=>`<span class="seg-${cls}" style="left:${(a/14.4).toFixed(2)}%;width:${((b-a)/14.4).toFixed(2)}%"><em>${(b-a)>=150?lbl:''}</em></span>`).join('')}
+   </div><div class="band-ax"><span>0</span><span>6</span><span>12</span><span>18</span><span>24 Uhr</span></div>`;
+}
+function shiftTips(k,T){
+  const kaf=m2t(t2m(T.bed)-360);
+  const KAF=`${lv('s')} <b>Koffein bis etwa ${kaf} Uhr.</b> In einer Studie störten 400 mg Koffein (etwa vier Tassen Filterkaffee) den Schlaf selbst dann noch messbar, wenn sie 6 Stunden vor dem Zubettgehen getrunken wurden (Drake et al., 2013). Kleinere Mengen wirken schwächer – und jeder Körper baut Koffein unterschiedlich schnell ab.`;
+  const PARK=`${lv('s')} <b>Gedanken parken:</b> Fünf Minuten eine konkrete To-do-Liste für morgen schreiben – das half Studierenden im Schlaflabor, schneller einzuschlafen (Scullin et al., 2018). <button class="link" data-stab="parken">Jetzt aufschreiben</button>`;
+  const TIPS={
+   frueh:[
+    `${lv('p')} <b>Der Schlaf vor dem Frühdienst ist oft zu kurz.</b> Fahr am Vorabend bewusst früher runter: Licht dimmen, Handy weglegen, Tasche schon packen.`,PARK,KAF,
+    `${lv('s')} <b>Nach dem Dienst: kurz statt lang.</b> Nickerchen von 10–20 Minuten machen wacher, ohne lange Benommenheit; längerer Tagschlaf führt eher zu Schlaftrunkenheit (Lovato & Lack, 2010). ${lv('p')} Lieber am frühen Nachmittag, damit der Nachtschlaf nicht leidet.`,
+    `${lv('e')} <b>Lernen:</b> Am Nachmittag nach einer Pause klappt es meist besser als direkt nach dem Dienst. Abends reicht ein kurzer <button class="link" data-go="abruf">Abruf von 5 Minuten</button>.`],
+   spaet:[
+    `${lv('p')} <b>Nach dem Spätdienst ist der Kopf oft noch „im Dienst“.</b> Plane 30–60 Minuten Pufferzeit ein: duschen, etwas Leichtes essen, gedämpftes Licht – und kein intensives Lernen mehr.`,KAF,
+    `${lv('s')} <b>Alkohol zum Runterkommen?</b> Er lässt schneller einschlafen, stört aber den Schlaf in der zweiten Nachthälfte – unterm Strich wird die Nacht nicht erholsamer (Ebrahim et al., 2013).`,PARK,
+    `${lv('e')} <b>Lernen:</b> Der Vormittag vor dem Spätdienst ist oft deine ausgeschlafenste Zeit – gut für Neues und Schwieriges.`],
+   nacht:[
+    `${lv('s')} <b>Vorschlaf und Nickerchen:</b> In den meisten von 13 (kleinen) Studien verringerte ein Nickerchen während der Nachtschicht die Müdigkeit und verbesserte die Leistung (Ruggiero & Redeker, 2014). ${lv('p')} Vor der ersten Nacht hilft vielen ein Schlaf am Nachmittag. Nickerchen im Dienst nur, wenn es bei euch geregelt und erlaubt ist.`,
+    `${lv('s')} <b>Nach dem Aufwachen bist du kurz benommen</b> (Schlafträgheit; Tassi & Muzet, 2000). ${lv('e')} Gib dir nach einem Nickerchen ein paar Minuten, bevor du z. B. Medikamente richtest.`,
+    `${lv('s')} <b>Koffein nur in der ersten Hälfte der Nacht – bis etwa ${kaf} Uhr</b>, wenn du um ${T.bed} Uhr schlafen willst (abgeleitet aus Drake et al., 2013).`,
+    `${lv('p')} <b>Heimweg und Tagschlaf:</b> Sonnenbrille auf dem Heimweg, Zimmer dunkel, kühl und ruhig, Handy lautlos, Mitbewohnenden Bescheid geben. Ehrlich: Ob Licht-Strategien bei Schichtarbeit wirken, ist in Studien noch sehr unsicher (Slanger et al., 2016).`,
+    `${lv('p')} <b>Sicher nach Hause:</b> Wenn dir auf dem Heimweg die Augen zufallen, halte an und mach eine Pause. Sekundenschlaf kündigt sich nicht immer an.`,
+    `${lv('s')} <b>Lernen:</b> Nicht direkt nach der Nacht. Wer übermüdet ist, speichert neue Inhalte deutlich schlechter ein (Yoo et al., 2007). Erst schlafen – danach ein kurzer <button class="link" data-go="abruf">Abruf</button>.`],
+   frei:[
+    `${lv('p')} <b>Zurück in den Tag-Rhythmus:</b> Nach der letzten Nacht nur kurz schlafen (etwa 3–4 Stunden), dann wach bleiben, nach draußen ins Tageslicht gehen und abends zur gewohnten Zeit ins Bett. Gut untersucht ist das nicht – aber es ist ein bewährter Weg.`,
+    `${lv('s')} <b>Wie viel Schlaf?</b> Für Erwachsene werden regelmäßig mindestens 7 Stunden empfohlen (Watson et al., 2015). ${lv('e')} Im Schichtdienst kannst du Haupt- und Kurzschlaf zusammenzählen – und fehlenden Schlaf an freien Tagen sanft nachholen.`,PARK,
+    `${lv('e')} <b>Lernen:</b> Heute eher wiederholen als Neues anfangen. Ein lockerer <button class="link" data-go="abruf">Abruf</button> reicht völlig.`]};
+  return TIPS[k];
+}
+function vSchlaf(){
+  const d=sdat(),T=sTimes(d),k=d.shift,S=SHIFTS[k];
+  const T0=[['schicht','Mein Dienst'],['parken','Gedanken parken'],['lernen','Schlaf & Lernen'],['ehrlich','Ehrlich eingeordnet']];
+  let body='';
+  if(sl.tab==='schicht'){
+    const bed=t2m(T.bed),wake=t2m(T.wake),dur=(bed!=null&&wake!=null)?(((wake-bed)%1440)+1440)%1440:null;
+    const segs=[];if(k!=='frei')segs.push([t2m(T.von),t2m(T.bis),'d','Dienst']);
+    segs.push([bed,wake,'s','Schlaf']);if(bed!=null)segs.push([bed-360,bed,'k','']);
+    body=`<div class="card"><h2>Welcher Dienst steht an?</h2>
+     <div class="seg" role="group" aria-label="Dienst">${Object.entries(SHIFTS).map(([x,s])=>`<button data-shift="${x}" aria-pressed="${k===x}">${s.name}</button>`).join('')}</div>
+     ${k!=='frei'?`<div class="grid2"><label class="f">Dienstbeginn<input type="time" id="sl-von" value="${T.von}"></label><label class="f">Dienstende<input type="time" id="sl-bis" value="${T.bis}"></label></div>`:''}
+     <div class="grid2"><label class="f">${S.sleepLbl}: ins Bett um<input type="time" id="sl-bed" value="${T.bed}"></label><label class="f">Aufstehen um<input type="time" id="sl-wake" value="${T.wake}"></label></div>
+     <p class="note">Die Zeiten sind Beispiele – trag deine eigenen ein. Sie werden nur auf diesem Gerät gespeichert.</p>
+     ${band(segs)}
+     <div class="legend"><span><i class="seg-d"></i>Dienst</span><span><i class="seg-s"></i>Schlaf</span><span><i class="seg-k"></i>besser ohne Koffein</span></div>
+     ${dur!=null?`<div class="box ${dur>=420||k==='frei'?'ok':'tip'}">Schlafgelegenheit: <b>${durTxt(dur)}</b>${k==='frei'?' – danach wach bleiben und abends normal schlafen.':dur>=420?' – das reicht für die meisten Erwachsenen.':' – das ist weniger als die empfohlenen 7 Stunden. Ein kurzes Nickerchen kann einen Teil auffangen.'}</div>`:''}</div>
+     <div class="card"><h2>Tipps für deinen ${S.name}</h2><ul class="stips">${shiftTips(k,T).map(t=>`<li>${t}</li>`).join('')}</ul>
+     <p class="src">Die Etiketten zeigen, worauf ein Tipp beruht: <b>Studie</b> = durch Forschung gestützt · <b>Praxiswissen</b> = bewährt, aber kaum untersucht · <b>Einschätzung</b> = begründete Empfehlung ohne direkte Studie.</p></div>`;}
+  if(sl.tab==='parken'){
+    body=`<div class="card"><h2>Gedanken parken</h2><p>Was steht morgen oder in den nächsten Tagen an? Schreib es auf – <b>so konkret wie möglich</b>. Dann darf es bis morgen hier liegen bleiben.</p>
+     <textarea id="sl-list" style="min-height:170px" placeholder="z. B.&#10;– Pflegeplanung für Frau M. bis Freitag fertig&#10;– Apotheke: Rezept abholen&#10;– Lernplan: 20 Min. Thema Atmung wiederholen">${esc(d.list)}</textarea>
+     <div class="row"><button class="btn" id="sl-save">Speichern – gute Nacht</button><button class="btn small ghost" id="sl-copy">Kopieren</button><button class="btn small ghost" id="sl-clear">Liste leeren</button></div>
+     ${d.listTs?`<p class="note">Zuletzt gespeichert: ${new Date(d.listTs).toLocaleString('de-DE',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</p>`:''}
+     <div class="box info">Fünf Minuten reichen. Es geht nicht darum, alles zu lösen – nur darum, es aus dem Kopf aufs Papier zu holen.</div>
+     <div class="box warm">Wenn dich belastende Erlebnisse aus dem Dienst nicht loslassen, ist eine Liste oft nicht genug. Sprich darüber – mit Kolleginnen, deiner Praxisanleitung oder in der Supervision. Für den Moment: <button class="link" data-dtab="erdung">Erden</button> oder die <button class="link" data-dtab="hilfe">Hilfe-Karte</button>.</div>
+     <p class="src">In einer Schlaflabor-Studie mit 57 jungen Erwachsenen schliefen diejenigen schneller ein, die vor dem Schlafen 5 Minuten eine To-do-Liste schrieben – schneller als die, die erledigte Aufgaben notierten. Je konkreter die Liste, desto schneller ging es (Scullin et al., 2018). Es war nur eine Nacht mit gesunden Studierenden – bei Schlafstörungen ist offen, ob es genauso wirkt.</p></div>`;}
+  if(sl.tab==='lernen'){
+    const now=new Date(),wake=new Date(now.getTime()+(sl.nap+10)*60000);
+    body=`<div class="card"><h2>Was Schlaf fürs Lernen tut</h2>
+     <p>Im Schlaf spielt dein Gehirn das Gelernte noch einmal ab: Der <b>Hippocampus</b> – eine Art Zwischenspeicher – reaktiviert die neuen Gedächtnisspuren, und sie werden nach und nach in die Netzwerke der <b>Großhirnrinde</b> eingebaut. Vor allem im Tiefschlaf wird so gefestigt, was du tagsüber gelernt hast (Diekelmann & Born, 2010).</p>
+     <p>Und umgekehrt: Wer übermüdet lernt, speichert Neues deutlich schlechter ein – im Experiment war der Hippocampus nach einer durchwachten Nacht beim Einspeichern weniger aktiv (Yoo et al., 2007).</p>
+     <div class="box ok"><b>Für dich heißt das:</b><ul class="plain"><li>Abends lieber 5 Minuten abrufen als bis spät in die Nacht pauken.</li><li>Vor einer Klausur nicht die Nacht durchlernen – Schlaf ist Teil des Lernens.</li><li>Nach dem Nachtdienst erst schlafen, dann lernen.</li></ul></div>
+     <div class="row"><button class="btn small" data-go="abruf">Abend-Abruf starten</button><button class="btn small ghost" data-stab="parken">Gedanken parken</button></div></div>
+     <div class="card"><h2>Nickerchen-Rechner</h2><p>Wie lange willst du schlafen? Der Rechner zeigt dir, wann du den Wecker stellen solltest (ca. 10 Minuten zum Einschlafen eingerechnet).</p>
+     <div class="seg" role="group" aria-label="Nickerchen-Dauer">${[[20,'Kurz: 20 Min.'],[90,'Vorschlaf: 90 Min.']].map(([n,l])=>`<button data-nap="${n}" aria-pressed="${sl.nap===n}">${l}</button>`).join('')}</div>
+     <div class="napout">Wecker stellen auf <b>${wake.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})} Uhr</b></div>
+     <p class="note">${sl.nap===20?'Kurze Nickerchen machen wacher, ohne dass du lange benommen bist (Lovato & Lack, 2010).':'Ein längerer Schlaf eignet sich vor allem als Vorschlaf am Nachmittag vor dem Nachtdienst. Danach bist du oft erst einmal etwas benommen (Tassi & Muzet, 2000).'} Bitte stell deinen Handy-Wecker – die App kann dich bei ausgeschaltetem Bildschirm nicht zuverlässig wecken.</p></div>`;}
+  if(sl.tab==='ehrlich'){
+    body=`<div class="card"><h2>Was die Forschung sagt – und was nicht</h2>
+     <ul class="stips">
+      <li>${lv('s')} <b>Schlafhygiene-Regeln</b> (kein Koffein am Abend, regelmäßige Zeiten, ruhiges Zimmer …) hängen einzeln mit besserem Schlaf zusammen. Als Paket „beigebracht“ verbessern sie Schlafstörungen aber kaum (Irish et al., 2015). Sie sind ein guter Anfang, keine Behandlung.</li>
+      <li>${lv('s')} <b>Schichtdienst:</b> Eine Cochrane-Übersicht fand zu Licht, Nickerchen und Schlafschulung nur wenige, sehr unterschiedliche Studien. Ob diese Strategien wirken, lässt sich noch nicht sicher sagen (Slanger et al., 2016).</li>
+      <li>${lv('e')} <b>Keine starren Regeln:</b> „Immer zur gleichen Zeit ins Bett“ passt nicht zum Schichtdienst. Finde heraus, was bei dir funktioniert – Morgenmenschen und Abendmenschen kommen mit Früh- und Nachtdiensten unterschiedlich gut zurecht.</li>
+      <li>${lv('s')} <b>Wenn du über Wochen schlecht schläfst</b>, sprich mit deiner Hausärztin. Bei Schlafstörungen ist eine kognitive Verhaltenstherapie für Insomnie (KVT-I) die Behandlung der ersten Wahl (Riemann et al., 2017) – und gut wirksam.</li>
+     </ul>
+     <div class="box lav">Schlaf lässt sich nicht erzwingen. Je mehr Druck („Ich MUSS jetzt schlafen“), desto wacher wird man oft. Es ist in Ordnung, einfach ruhig zu liegen – auch das ist Erholung.</div>
+     <p class="src">Die letzte Aussage ist Erfahrungswissen aus der Schlafberatung und nicht direkt durch eine eigene Studie belegt.</p></div>`;}
+  return head('Schlaf-Kompass','Gut schlafen im Schichtdienst','Früh, spät, nachts – dein Schlaf muss sich ständig anpassen. Hier findest du Tipps für deinen Dienstplan, einen Platz zum Gedanken-Parken und das Wissen, warum Schlaf fürs Lernen so wichtig ist.','erschoepft')+
+   `<div class="chips" role="tablist" aria-label="Bereiche">${T0.map(([x,l])=>`<button class="chip" data-stab="${x}" aria-pressed="${sl.tab===x}">${l}</button>`).join('')}</div>`+body;
+}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-stab]');if(!b)return;sl.tab=b.dataset.stab;if(view!=='schlaf')go('schlaf');else{render();window.scrollTo({top:0,behavior:'smooth'})}});
+AFTER.schlaf=()=>{
+  document.querySelectorAll('[data-shift]').forEach(b=>b.onclick=()=>{const d=sdat();d.shift=b.dataset.shift;sSave(d);render()});
+  ['von','bis','bed','wake'].forEach(f=>{const el=$('#sl-'+f);if(el)el.onchange=()=>{if(!t2m(el.value))return;const d=sdat();d.times[d.shift]=Object.assign({},sTimes(d),{[f]:el.value});sSave(d);render()}});
+  document.querySelectorAll('[data-nap]').forEach(b=>b.onclick=()=>{sl.nap=+b.dataset.nap;render()});
+  const ls=$('#sl-list');if(ls){
+    $('#sl-save').onclick=()=>{const d=sdat();d.list=ls.value;d.listTs=Date.now();sSave(d);toast('Gespeichert – gute Nacht!');render()};
+    $('#sl-copy').onclick=()=>copy(ls.value,'Liste kopiert');
+    const cl=$('#sl-clear');cl.onclick=()=>{if(cl.dataset.sure){const d=sdat();d.list='';d.listTs=0;sSave(d);render()}else{cl.dataset.sure='1';cl.textContent='Wirklich leeren?';setTimeout(()=>{if(cl.isConnected){delete cl.dataset.sure;cl.textContent='Liste leeren'}},3000)}};
+    ls.oninput=()=>{const d=sdat();d.list=ls.value;sSave(d)}}
+};
+
+/* ---------- Klausurtag-Begleiter ---------- */
+let kt={tab:null,exam:undefined,rf:{feel:3,prep:3,gut:'',attr:[],mit:'',note:''}};
+function kdat(){const d=store.get(KKEY,null)||{};return Object.assign({checks:{},refl:[]},d)}
+function kSave(d){store.set(KKEY,d)}
+const KCHK=[['zeit','Uhrzeit und Raum der Klausur nachgeschaut'],['stifte','Stifte (zwei, die schreiben), Lineal, ggf. Taschenrechner'],['ausweis','Was laut Schule mit muss (z. B. Ausweis) – eingepackt'],['uhr','Armbanduhr (das Handy ist meist nicht erlaubt)'],['essen','Wasserflasche und ein kleiner Snack'],['kleidung','Bequeme Kleidung, eine Schicht zum Ausziehen'],['wecker','Wecker gestellt – und Anfahrt mit Puffer geplant']];
+const KATTR=[['lernen','Wie viel und wie ich gelernt habe','ok','Darauf hast du direkten Einfluss – das ist eine gute Nachricht: Du kannst es beim nächsten Mal gezielt verändern.'],
+ ['methode','Meine Lernmethode','ok','Auch die Methode kannst du wechseln. Der Methoden-Finder hilft dir, eine passendere zu finden.'],
+ ['zeit','Meine Zeiteinteilung in der Klausur','ok','Lässt sich üben: Beim nächsten Mal zuerst alles überfliegen und die Zeit nach Punkten aufteilen.'],
+ ['aufregung','Aufregung oder Tagesform','mid','Das wechselt von Tag zu Tag. Schlaf, ein ruhiger Morgen und Atemübungen können die Aufregung etwas abfedern.'],
+ ['schwer','Die Klausur war schwer','mid','Schwierige Aufgaben gibt es – die Frage ist, welcher Teil davon mit mehr Übung leichter würde.'],
+ ['glueck','Glück oder Pech bei den Fragen','mid','Zufall spielt immer mit. Je breiter du lernst, desto weniger hängt vom Glück ab.'],
+ ['koennen','„Ich kann das einfach (nicht)“','no','Achtung, diese Erklärung ist tückisch: Wer Misserfolg auf feste Begabung schiebt, verliert schnell die Motivation. Fast immer stecken veränderbare Dinge dahinter – Lernzeit, Methode, Schlaf. Was davon könnte es diesmal gewesen sein?']];
+function attrFb(){return KATTR.filter(a=>kt.rf.attr.includes(a[0])).map(a=>`<div class="box ${a[2]==='ok'?'ok':a[2]==='no'?'warm':'info'}"><b>${a[1]}:</b> ${a[3]}${a[0]==='methode'?' <button class="link" data-go="finder">Zum Finder</button>':''}</div>`).join('')}
+function ktExams(){return plan().exams.filter(e=>daysTo(e.date)>=-14).sort((a,b)=>a.date.localeCompare(b.date))}
+function ktDefault(){const ex=ktExams(),up=ex.filter(e=>daysTo(e.date)>=0);return up.length?up[0].id:(ex.length?ex[ex.length-1].id:null)}
+function ktTabFor(e){if(!e)return 'vorabend';const d=daysTo(e.date);return d<0?'danach':d===0?'morgen':'vorabend'}
+function ktCard(){/* Hinweis auf dem Startbildschirm */
+  const ex=plan().exams,soon=ex.filter(e=>{const d=daysTo(e.date);return d===0||d===1}).sort((a,b)=>a.date.localeCompare(b.date))[0];
+  const done=new Set(kdat().refl.map(r=>r.exam));
+  const past=ex.filter(e=>{const d=daysTo(e.date);return d<0&&d>=-5&&!done.has(e.id)})[0];
+  const e=soon||past;if(!e)return '';const d=daysTo(e.date);
+  const t=d===1?`Morgen ist deine Klausur „${esc(e.name)}“`:d===0?`Heute ist deine Klausur „${esc(e.name)}“`:`Wie lief „${esc(e.name)}“?`;
+  const s=d===1?'Checkliste für heute Abend, ein ruhiger Morgen – und was hilft, wenn es eng wird.':d===0?'Ein kurzer Begleiter für den Morgen und die Minuten davor. Du schaffst das.':'Fünf Minuten Rückblick – damit die nächste Klausur noch besser wird.';
+  return `<button class="calm kt" data-kt="${e.id}"><span class="ic" style="background:var(--rose-l);color:var(--rose)">${ic('flag')}</span><span><b>${t}</b><br><span class="note">${s}</span></span><span style="color:var(--rose)">›</span></button>`;
+}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-kt]');if(!b)return;const ex=plan().exams.find(x=>x.id===b.dataset.kt);kt.exam=ex?ex.id:null;kt.tab=ktTabFor(ex);stopTimers();if(view!=='klausurtag')go('klausurtag');else{render();window.scrollTo({top:0,behavior:'smooth'})}});
+function vKlausur(){
+  if(kt.exam===undefined||(kt.exam&&!plan().exams.find(x=>x.id===kt.exam)))kt.exam=ktDefault();
+  const E=kt.exam?plan().exams.find(x=>x.id===kt.exam):null;if(!kt.tab)kt.tab=ktTabFor(E);
+  const d=kdat(),ck=d.checks[kt.exam||'_']||{},dd=E?daysTo(E.date):null;
+  const T0=[['vorabend','Am Abend davor'],['morgen','Am Morgen'],['vorher','In der Klausur'],['danach','Danach']];
+  const ex=ktExams();
+  const sel=`<div class="card" style="gap:10px">${ex.length?`<label class="f">Um welche Klausur geht es?<select id="kt-ex">${ex.map(e=>{const x=daysTo(e.date);return `<option value="${e.id}" ${kt.exam===e.id?'selected':''}>${esc(e.name)} · ${x===0?'heute':x===1?'morgen':x>0?'in '+x+' Tagen':'vor '+(-x)+' '+(-x===1?'Tag':'Tagen')}</option>`}).join('')}<option value="" ${!kt.exam?'selected':''}>– ohne Lernplan –</option></select></label>`:`<p class="note">Tipp: Wenn du deine Klausur im <button class="link" data-go="plan">Lernplan</button> einträgst, zeigt dir der Begleiter auch deine wackeligen Themen.</p>`}
+   ${E?(()=>{const c=counts(E),n=c[0]+c[1]+c[2];return n?`<div class="pbar"><span class="s2" style="width:${100*c[2]/n}%"></span><span class="s1" style="width:${100*c[1]/n}%"></span></div><div class="legend"><span><i style="background:var(--sage)"></i>${c[2]} sicher</span><span><i style="background:var(--gold)"></i>${c[1]} bearbeitet</span><span><i style="background:var(--line2)"></i>${c[0]} offen</span></div>`:''})():''}</div>`;
+  let body='';
+  if(kt.tab==='vorabend'){
+    const nck=KCHK.filter(([k])=>ck[k]).length;
+    const wack=E?E.topics.flatMap(t=>t.subs.filter(s=>(s.status||0)<2).map(s=>({t,s}))).slice(0,4):[];
+    body=`<div class="card"><div class="row" style="justify-content:space-between"><h2>Checkliste für heute Abend</h2><span class="tag">${nck} / ${KCHK.length}</span></div>
+     <div class="checks">${KCHK.map(([k,l])=>`<label class="ck ${ck[k]?'on':''}"><input type="checkbox" data-ck="${k}" ${ck[k]?'checked':''}><span class="bx">${ic('check')}</span><span>${l}</span></label>`).join('')}</div>
+     ${nck===KCHK.length?'<div class="box ok">Alles bereit. Den Rest musst du heute nicht mehr tragen.</div>':''}
+     <p class="src">Praxiswissen: Wer abends alles vorbereitet, hat morgens weniger zu entscheiden – und mehr Ruhe im Kopf.</p></div>
+     <div class="card"><h2>Heute nur noch wiederholen</h2><p>Neues lernen bringt jetzt wenig. Besser: <b>10–15 Minuten locker abrufen</b>, was du schon kannst – dann Schluss.</p>
+     ${wack.length?`<div class="today">${wack.map(x=>`<div class="it"><span>${esc(x.s.name)}<small>${esc(x.t.name)} · ${STAT[x.s.status||0]}</small></span><button class="mini" data-abr="${x.s.id}">Abrufen</button></div>`).join('')}</div>`:`<div class="row"><button class="btn small" data-go="abruf">Kurz abrufen</button></div>`}
+     <p class="src">Abrufen festigt das Gelernte stärker als nochmaliges Lesen (Roediger & Karpicke, 2006).</p></div>
+     <div class="card"><h2>Und dann: schlafen</h2><p>Im Schlaf festigt dein Gehirn, was du gelernt hast (Diekelmann & Born, 2010). Eine durchlernte Nacht schadet mehr, als sie nützt – übermüdet lässt sich Neues deutlich schlechter einspeichern (Yoo et al., 2007).</p>
+     <div class="row"><button class="btn small" data-stab="parken">Gedanken parken</button><button class="btn small ghost" data-dtab="atem">Atem-Begleiter</button></div>
+     <div class="box warm">Du kannst nicht einschlafen? Das ist vor Prüfungen ganz normal und kein Drama – eine unruhige Nacht verkraftet dein Körper. Ruhig liegen ist auch Erholung.</div>
+     <p class="src">Der letzte Hinweis ist Erfahrungswissen; er soll Druck nehmen, nicht Schlaf ersetzen.</p></div>`;}
+  if(kt.tab==='morgen'){
+    body=`<div class="card"><h2>Ein ruhiger Start</h2><ul class="stips">
+      <li>${lv('p')} <b>Frühstücken und trinken</b> – auch wenn der Magen flattert: etwas Kleines reicht.</li>
+      <li>${lv('p')} <b>Mit Puffer losgehen.</b> Lieber 15 Minuten zu früh als gehetzt ankommen.</li>
+      <li>${lv('e')} <b>Kein neues Thema mehr anfangen.</b> Wenn du magst: ein kurzes Aufwärmen – zu jedem Thema drei Stichworte aus dem Kopf aufschreiben.</li>
+      <li>${lv('s')} <b>Du hast mit Abrufen gelernt?</b> Gut so: In einer Studie konnten Menschen, die mit Abrufübungen gelernt hatten, ihr Wissen auch unter akutem Stress gut abrufen – anders als die, die nur wiederholt gelesen hatten (Smith et al., 2016).</li></ul>
+     <div class="row"><button class="btn small" data-dtab="atem">1 Minute durchatmen</button><button class="btn small ghost" data-kttab="vorher">Weiter: In der Klausur</button></div></div>`;}
+  if(kt.tab==='vorher'){
+    body=`<div class="card"><h2>Aufregung ist Energie</h2>
+     <div class="kind" style="font-size:1.1rem">„Mein Herz klopft, weil mein Körper Energie bereitstellt. Ich bin bereit.“</div>
+     <p>Herzklopfen, schnellerer Atem, flaues Gefühl: Das ist dein Körper, der sich auf eine Herausforderung vorbereitet – kein Zeichen, dass du versagst. Diese Deutung auszuprobieren, kann helfen.</p>
+     <p class="src">Eine Meta-Analyse über 44 Effektgrößen aus randomisierten Studien fand: Wer Stress-Erregung als hilfreich umdeutet, schneidet im Schnitt etwas besser ab – der Effekt ist klein (d = 0,23; Bosshard & Gomez, 2024). Es lohnt sich, aber es ist kein Wundermittel.</p>
+     <div class="box warm">Etwas Aufregung ist normal. Starke Prüfungsangst hängt dagegen mit schlechteren Leistungen zusammen (kleiner bis mittlerer Effekt in einer Meta-Analyse über 238 Studien; von der Embse et al., 2018). Wenn dich die Angst schon Tage vorher stark belastet: Sprich mit deiner Lehrkraft oder Schulsozialarbeit – dagegen lässt sich etwas tun.</div></div>
+     <div class="card"><h2>So gehst du die Klausur an</h2><ol class="steps">
+      <li><span><b>Erst alles überfliegen.</b> Wie viele Aufgaben, wie viele Punkte? Teil deine Zeit grob nach Punkten ein.</span></li>
+      <li><span><b>Operatoren markieren.</b> „Nennen“ will etwas anderes als „erläutern“ oder „beurteilen“. Unterstreiche das Verb, bevor du schreibst.</span></li>
+      <li><span><b>Mit etwas Leichtem beginnen.</b> Ein sicherer Einstieg beruhigt und bringt Punkte.</span></li>
+      <li><span><b>Hängen geblieben?</b> Stichworte notieren, Aufgabe markieren, weitermachen – später zurückkommen.</span></li>
+      <li><span><b>Am Ende:</b> Hast du alle Aufgaben gesehen? Passt die Antwort zum Operator?</span></li></ol>
+     <p class="src">Praxiswissen aus der Prüfungsvorbereitung. Die Operatoren entsprechen den Taxonomiestufen nach Bloom (Bloom et al., 1956; Anderson & Krathwohl, 2001) – mehr dazu bei der <button class="link" data-go="ki">Probeklausur mit KI</button>.</p></div>
+     <div class="card sos"><h2>Blackout? Notfallkarte</h2><ol class="steps">
+      <li><span><b>Stift hinlegen.</b> Du darfst kurz pausieren.</span></li>
+      <li><span><b>Dreimal lang ausatmen</b> – länger aus als ein.</span></li>
+      <li><span><b>Füße auf den Boden drücken</b>, den Stuhl spüren, einmal umschauen.</span></li>
+      <li><span><b>Irgendein Stichwort</b> zur Aufgabe aufschreiben – egal wie klein. Daran hängt oft der Rest.</span></li>
+      <li><span>Geht gar nichts: <b>nächste Aufgabe</b>. Das Wissen ist nicht weg, nur gerade schwer erreichbar.</span></li></ol>
+     <p class="src">Praxiswissen. Unter starkem Stress fällt das Abrufen schwerer; der Blick nach außen und langes Ausatmen helfen vielen, wieder anzukommen (vgl. Durchatmen).</p></div>
+     <details class="card"><summary><b>Sorgen vorher aufschreiben?</b> <span class="note">– ehrlich eingeordnet</span></summary>
+      <p>Manche schreiben vor der Klausur zehn Minuten lang auf, was sie beunruhigt. In einer bekannten Studie verbesserte das die Leistung prüfungsängstlicher Schülerinnen und Schüler (Ramirez & Beilock, 2011). Eine große Wiederholungsstudie konnte das Ergebnis aber <b>nicht bestätigen</b> (Camerer et al., 2018).</p>
+      <p>Wenn es dir guttut: probier es gern. Wenn nicht: Du verpasst nichts Wichtiges.</p></details>`;}
+  if(kt.tab==='danach'){
+    const R=d.refl.slice().reverse(),rf=kt.rf;
+    body=`<div class="card"><h2>Erst mal: geschafft.</h2><p>Egal, wie es gelaufen ist – du hast dich hingesetzt und es durchgezogen. Gönn dir eine Pause, bevor du zurückschaust. Die Reflexion kann auch morgen sein.</p></div>
+     <div class="card"><h2>Kurzer Rückblick</h2>
+      <div class="slider"><label for="kt-feel">Wie fühlst du dich nach der Klausur?<output id="kt-feel-o">${rf.feel} / 5</output></label><input type="range" id="kt-feel" min="1" max="5" value="${rf.feel}"><div class="scale"><span>schlecht</span><span>gut</span></div></div>
+      <div class="slider"><label for="kt-prep">Wie gut warst du vorbereitet?<output id="kt-prep-o">${rf.prep} / 5</output></label><input type="range" id="kt-prep" min="1" max="5" value="${rf.prep}"><div class="scale"><span>kaum</span><span>sehr gut</span></div></div>
+      <label class="f">Was lief gut?<textarea id="kt-gut" style="min-height:70px" placeholder="z. B. Die Aufgaben zur Atmung konnte ich sicher beantworten.">${esc(rf.gut)}</textarea></label>
+      <div><b style="font-size:.9rem;color:var(--ink)">Woran lag es vor allem, wie es lief?</b> <span class="note">(mehrere möglich)</span>
+       <div class="chips" style="margin-top:8px">${KATTR.map(([k,l])=>`<button class="chip" data-attr="${k}" aria-pressed="${rf.attr.includes(k)}">${l}</button>`).join('')}</div></div>
+      <div class="attrfb" id="kt-fb" aria-live="polite">${attrFb()}</div>
+      <label class="f">Was nehme ich mir für die nächste Klausur vor?<textarea id="kt-mit" style="min-height:70px" placeholder="z. B. Zwei Wochen vorher anfangen und jeden zweiten Tag 15 Minuten abrufen.">${esc(rf.mit)}</textarea></label>
+      <label class="f">Ergebnis oder Note <span class="note" style="font-weight:400">(optional, auch später)</span><input type="text" id="kt-note" maxlength="40" value="${esc(rf.note)}" placeholder="z. B. 2,3"></label>
+      <div class="row"><button class="btn" id="kt-save">Rückblick speichern</button></div>
+      <p class="src">Ob wir Erfolg und Misserfolg auf veränderbare oder feste Ursachen zurückführen, beeinflusst Gefühle und Motivation für das nächste Mal (Weiner, 1979). Ehrlich: Ein Rückblick-Bogen allein verbesserte in einer Studie weder Noten noch Metakognition (Soicher & Gurung, 2017). Er wirkt erst, wenn du deinen Vorsatz auch in den Lernplan übernimmst.</p></div>
+     ${R.length?`<div class="card"><h3>Deine Rückblicke</h3><div class="hist">${R.slice(0,8).map(r=>`<div class="h"><b>${esc(r.name)}</b><span class="note">${new Date(r.ts).toLocaleDateString('de-DE',{day:'numeric',month:'short',year:'2-digit'})}${r.note?' · '+esc(r.note):''}</span><span class="note" style="grid-column:1/-1">${r.mit?'Vorsatz: „'+esc(r.mit)+'“':'ohne Vorsatz'}</span></div>`).join('')}</div>
+      <div class="row"><button class="btn small ghost" data-go="plan">Vorsatz im Lernplan umsetzen</button></div></div>`:''}`;}
+  return head('Klausurtag','Dein Klausur-Begleiter','Vom Abend davor bis zum Rückblick danach: was jetzt hilft – und was du getrost weglassen kannst.','winken')+sel+
+   `<div class="chips" role="tablist" aria-label="Abschnitte">${T0.map(([x,l])=>`<button class="chip" data-kttab="${x}" aria-pressed="${kt.tab===x}">${l}</button>`).join('')}</div>`+body;
+}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-kttab]');if(!b)return;kt.tab=b.dataset.kttab;render();window.scrollTo({top:0,behavior:'smooth'})});
+AFTER.klausurtag=()=>{
+  const xs=$('#kt-ex');if(xs)xs.onchange=()=>{kt.exam=xs.value||null;render()};
+  document.querySelectorAll('[data-ck]').forEach(c=>c.onchange=()=>{const d=kdat(),k=kt.exam||'_';d.checks[k]=d.checks[k]||{};d.checks[k][c.dataset.ck]=c.checked;kSave(d);render()});
+  const rf=kt.rf;
+  ['feel','prep'].forEach(k=>{const el=$('#kt-'+k);if(el)el.oninput=()=>{rf[k]=+el.value;$('#kt-'+k+'-o').textContent=el.value+' / 5'}});
+  ['gut','mit','note'].forEach(k=>{const el=$('#kt-'+k);if(el)el.oninput=()=>rf[k]=el.value});
+  document.querySelectorAll('[data-attr]').forEach(b=>b.onclick=()=>{const k=b.dataset.attr;rf.attr=rf.attr.includes(k)?rf.attr.filter(x=>x!==k):[...rf.attr,k];b.setAttribute('aria-pressed',rf.attr.includes(k));$('#kt-fb').innerHTML=attrFb()});
+  const sv=$('#kt-save');if(sv)sv.onclick=()=>{const E=kt.exam?plan().exams.find(x=>x.id===kt.exam):null;
+    if(!rf.gut.trim()&&!rf.mit.trim()&&!rf.attr.length){toast('Schreib wenigstens kurz etwas dazu');return}
+    const d=kdat();d.refl.push({id:uid(),exam:kt.exam,name:E?E.name:'Klausur',ts:Date.now(),feel:rf.feel,prep:rf.prep,gut:rf.gut.trim(),attr:rf.attr.slice(),mit:rf.mit.trim(),note:rf.note.trim()});d.refl=d.refl.slice(-60);kSave(d);
+    kt.rf={feel:3,prep:3,gut:'',attr:[],mit:'',note:''};toast('Rückblick gespeichert');render()};
+};
+
+/* ---------- Abruf-Pakete & Tandem ---------- */
+/* Fragen: [Stufe 1–3, Frage, Lösungshinweis] */
+const PAK=[
+ {id:'b1',n:1,t:'Ankommen & Lernbiografie',c:'rose',q:[
+  [1,'Nenne zwei Unterschiede zwischen dem Lernen in der Schule und dem Lernen in der Pflegeausbildung.','Zum Beispiel: Du lernst an zwei Lernorten (Schule und Praxis), die zusammenhängen. Du organisierst dein Lernen viel selbstständiger. Und du lernst für die Versorgung echter Menschen – nicht nur für Noten.'],
+  [2,'Erkläre, warum es sich lohnt, auf die eigene Lernbiografie zu schauen.','Frühere Lernerfahrungen prägen, was du dir zutraust. Wer weiß, was früher geholfen hat, kann es gezielt wieder nutzen – und erkennt Muster, die eher geschadet haben.'],
+  [2,'Erläutere den Unterschied zwischen „Lernen müssen“ und „Lernen wollen“.','„Müssen“ kommt von außen (Druck, Noten), „Wollen“ von innen (Interesse, Sinn). Motivation von innen wird gestärkt, wenn du selbst mitentscheiden kannst, dich kompetent erlebst und dich verbunden fühlst (Deci & Ryan).'],
+  [3,'Beschreibe eine Lernerfahrung, die dir geholfen hat, und leite daraus eine Strategie für die Ausbildung ab.','Deine eigene Antwort. Beispiel: „Im Abi hat mir Lernen mit einer Freundin geholfen“ → „Ich verabrede mich einmal pro Woche mit meinem Tandem zum gegenseitigen Abfragen.“']]},
+ {id:'b2',n:2,t:'Lernumgebung & Arbeitsplatz',c:'peach',q:[
+  [1,'Nenne vier Merkmale eines lernförderlichen Arbeitsplatzes.','Zum Beispiel: ruhig, aufgeräumt, gutes Licht, Material griffbereit, etwas zu trinken – und das Handy außer Sichtweite.'],
+  [2,'Erkläre, warum das Handy am besten in einem anderen Raum liegt.','Jede Benachrichtigung unterbricht, und nach jeder Unterbrechung brauchst du Zeit, um wieder reinzukommen. Liegt das Handy außer Sicht, musst du der Versuchung nicht ständig widerstehen.'],
+  [2,'Mythos oder Fakt: „Musik hilft immer beim Lernen.“ Begründe.','Eher Mythos. Vor allem Musik mit Gesang kann beim Lesen und Auswendiglernen stören. Ob leise Instrumentalmusik hilft, ist individuell verschieden – probier es bewusst aus.'],
+  [3,'Formuliere einen Wenn-dann-Plan für deinen Lernplatz.','Zum Beispiel: „Wenn ich mich zum Lernen an den Schreibtisch setze, dann lege ich mein Handy in die Küche.“ Wichtig: konkrete Situation + konkrete Handlung.']]},
+ {id:'b3',n:3,t:'Wahrnehmung & Aufmerksamkeit',c:'sky',q:[
+  [1,'Nenne die Stationen vom Reiz bis zum Handeln.','Reiz → Sinnesorgan nimmt ihn auf → Weiterleitung über Nerven → Verarbeitung im Gehirn (auswählen, deuten, mit Bekanntem verknüpfen) → Reaktion bzw. Handeln.'],
+  [2,'Erkläre, was das Gorilla-Experiment zeigt.','Unaufmerksamkeitsblindheit: Was nicht im Fokus unserer Aufmerksamkeit liegt, nehmen wir oft gar nicht bewusst wahr – selbst wenn es auffällig ist.'],
+  [2,'Erkläre, warum Multitasking beim Lernen Zeit und Fehler kostet.','Die Aufmerksamkeit ist begrenzt. Beim „Multitasking“ springen wir in Wahrheit hin und her. Jeder Wechsel kostet Zeit und macht fehleranfälliger.'],
+  [2,'Beschreibe den Cocktailparty-Effekt.','Wir können uns auf ein Gespräch konzentrieren und andere ausblenden (selektive Aufmerksamkeit). Trotzdem bemerken wir es, wenn jemand im Hintergrund unseren Namen sagt – Bedeutsames wird unbewusst mitverarbeitet.'],
+  [3,'Übertrage es auf die Pflege: Wo kann Unaufmerksamkeit gefährlich werden – und was hilft?','Zum Beispiel beim Richten von Medikamenten, wenn man ständig unterbrochen wird. Hilfreich: ungestörte Zeiten oder Bereiche, Checklisten, Vier-Augen-Prinzip, eine Aufgabe nach der anderen.']]},
+ {id:'b4',n:4,t:'Fokus, Gefühle & Balance',c:'sage',q:[
+  [1,'Nenne die vier Bausteine der Lernbalance.','Pausen, Schlaf, Bewegung und Ernährung.'],
+  [2,'Erkläre, warum es hilft, ein Gefühl in Worte zu fassen.','Ein Gefühl zu benennen („Ich bin gerade angespannt“), kann die emotionale Reaktion bereits etwas dämpfen. Das schafft Abstand, um zu entscheiden, was jetzt hilft (Lieberman et al., 2007).'],
+  [2,'Erkläre, warum Schlaf zum Lernen gehört.','Im Schlaf werden neu gelernte Inhalte gefestigt: Der Hippocampus reaktiviert sie, und sie werden in die Netzwerke der Großhirnrinde eingebaut (Diekelmann & Born, 2010).'],
+  [2,'Begründe, warum feste Pausen beim Lernen sinnvoll sind.','Die Konzentration lässt mit der Zeit nach. Kurze, feste Pausen – am besten mit Bewegung und ohne Handy – helfen, über längere Zeit aufmerksam zu bleiben.'],
+  [3,'Entwickle ein Lernstart-Ritual aus drei Schritten.','Deine eigene Antwort. Beispiel: 1. Handy in einen anderen Raum, 2. Ziel für diese Einheit aufschreiben, 3. einmal lang ausatmen und den Timer starten.']]},
+ {id:'b5',n:5,t:'Gedächtnis & Lerntypen-Mythos',c:'lav',q:[
+  [1,'Nenne die drei Gedächtnisspeicher im Mehrspeichermodell.','Ultrakurzzeitgedächtnis (sensorisches Gedächtnis), Kurzzeit- bzw. Arbeitsgedächtnis und Langzeitgedächtnis.'],
+  [1,'Nenne die Schritte von TQ3L.','Tune in (einstimmen), Question (Fragen stellen), Look (hinschauen), Listen (zuhören), Look again (rückblickend durchsehen).'],
+  [2,'Beschreibe die Vergessenskurve und was dagegen hilft.','Kurz nach dem Lernen vergessen wir sehr schnell, danach langsamer. Verteilte Wiederholungen – am besten aus dem Kopf – „stocken“ die Kurve wieder auf und machen sie flacher.'],
+  [2,'Erkläre, warum Abrufen wirksamer ist als nochmaliges Lesen.','Beim Abrufen wird die Erinnerung aktiv neu aufgebaut. Das festigt die Gedächtnisspur und die Abrufwege. Und du siehst ehrlich, was du noch nicht kannst (Roediger & Karpicke, 2006).'],
+  [3,'Beurteile die Aussage: „Ich bin ein visueller Lerntyp, also muss ich mir nur Bilder ansehen.“','Vorlieben gibt es, aber Unterricht passend zum „Lerntyp“ führt nicht zu besseren Ergebnissen (Pashler et al., 2008). Für alle hilft: Wort und Bild verbinden und den Stoff so darstellen, wie es zum Inhalt passt.'],
+  [3,'Plane die Wiederholungen für ein Thema, das du heute gelernt hast.','Zum Beispiel: nach 1, 3 und 7 Tagen jeweils ein paar Minuten aus dem Kopf abrufen, danach vergleichen. Der Abruf-Bereich der App plant das für dich.']]},
+ {id:'b6',n:6,t:'Lernmethoden-Werkstatt',c:'gold',q:[
+  [1,'Nenne die fünf Schritte der Fünf-Schritt-Lesemethode (SQ3R).','Überblick verschaffen (Survey), Fragen stellen (Question), Lesen (Read), Wiedergeben (Recite), Wiederholen (Review).'],
+  [2,'Erkläre, warum Markieren allein wenig bringt.','Markieren fühlt sich nach Lernen an, verarbeitet den Stoff aber kaum. Wirksamer: sparsam markieren und danach etwas damit tun – Fragen beantworten, zusammenfassen, abrufen (Dunlosky et al., 2013).'],
+  [2,'Erkläre, wie du Karteikarten am wirksamsten nutzt.','Vorderseite Frage, Rückseite Antwort. Erst aus dem Kopf antworten, dann umdrehen. Verteilt wiederholen (z. B. Lernkartei) und auch Karten, die du schon kannst, nicht zu früh aussortieren.'],
+  [2,'Erläutere den Unterschied zwischen Mind-Map und Zusammenfassung.','Die Mind-Map zeigt Struktur und Zusammenhänge vom Zentrum aus, in Stichworten. Die Zusammenfassung gibt den Inhalt in eigenen Worten und in einer Reihenfolge wieder.'],
+  [2,'Erkläre, warum Sketchnotes beim Behalten helfen können.','Beim Zeichnen verbindest du Wort und Bild und musst den Inhalt dafür verarbeiten. In Studien wurden gezeichnete Begriffe besser erinnert als nur aufgeschriebene (Wammes et al., 2016).'],
+  [3,'Wähle für das Thema Dekubitusprophylaxe eine passende Methode und begründe deine Wahl.','Zum Beispiel: Mind-Map für den Überblick über Risikofaktoren und Maßnahmen, danach Karteikarten zum Abfragen der Details. Entscheidend ist, dass die Methode zu deinem Ziel passt (Überblick, Verstehen oder Behalten).']]},
+ {id:'b7',n:7,t:'Versagensangst & Aufschieben',c:'rose',q:[
+  [1,'Nenne drei Anzeichen von Prokrastination.','Wichtige Aufgaben werden trotz absehbarer Nachteile verschoben, stattdessen erledigt man Unwichtiges, und es bleibt ein schlechtes Gewissen. Vieles passiert dann auf den letzten Drücker.'],
+  [2,'Erkläre, warum wir aufschieben.','Meist nicht aus Faulheit: Aufschieben ist oft ein Versuch, unangenehme Gefühle kurzfristig zu vermeiden – zum Preis von mehr Stress später (Sirois & Pychyl, 2013).'],
+  [2,'Erkläre, warum es hilft, sich das Aufschieben zu verzeihen.','Wer sich nach dem Aufschieben verzeiht, schiebt beim nächsten Mal weniger auf – Selbstvorwürfe halten dagegen die unangenehmen Gefühle am Leben (Wohl et al., 2010).'],
+  [2,'Erkläre, wie ein Wenn-dann-Plan funktioniert.','Du legst vorher fest: In Situation X mache ich Y. Die Situation wird dann zum Startsignal, und du musst nicht jedes Mal neu entscheiden (Gollwitzer & Sheeran, 2006).'],
+  [3,'Formuliere einen 5-Minuten-Start für eine Aufgabe, die du gerade aufschiebst.','Deine eigene Antwort. Beispiel: „Ich öffne heute um 17 Uhr das Skript, lese die Überschriften von Kapitel 3 und schreibe drei Fragen dazu auf.“']]},
+ {id:'b8',n:8,t:'Klausurvorbereitung',c:'sky',q:[
+  [1,'Nenne die drei Taxonomiestufen eurer Schule mit je einem Operator.','Stufe 1 Wissen (z. B. nennen), Stufe 2 Verständnis (z. B. erklären), Stufe 3 Anwendung (z. B. anwenden, ermitteln).'],
+  [2,'Erläutere den Unterschied zwischen „nennen“ und „erläutern“.','„Nennen“: aufzählen, ohne zu erklären. „Erläutern“: einen Sachverhalt verständlich machen – mit Begründung und Beispielen.'],
+  [2,'Erkläre, warum eine durchlernte Nacht vor der Klausur keine gute Idee ist.','Im Schlaf wird das Gelernte gefestigt. Übermüdet speicherst du Neues deutlich schlechter ein und rufst schlechter ab (Yoo et al., 2007; Diekelmann & Born, 2010).'],
+  [3,'Erstelle einen groben Lernplan für eine Klausur in zehn Tagen.','Zum Beispiel: Themen in Unterthemen teilen, auf Tag 1–8 verteilen, jedes Unterthema mehrfach abrufen, Tag 9 nur wiederholen, Tag 10 Klausur. Puffer für Dienste einplanen.'],
+  [3,'Was machst du, wenn du in der Klausur einen Blackout hast?','Stift hinlegen, dreimal lang ausatmen, Füße auf den Boden, ein Stichwort zur Aufgabe aufschreiben – oder zur nächsten Aufgabe wechseln und später zurückkommen.']]}];
+const LVN=['','Wissen','Verständnis','Anwendung'];
+let pk={tab:'pakete',src:null,title:'',list:[],i:0,show:false,ans:'',res:[],lv:0,incoming:null,inErr:'',draft:{t:'',q:[[1,'',''],[2,'',''],[3,'','']]},link:'',qrErr:''};
+const TKEY='lernkompass-tandem-v1';
+function tPacks(){return store.get(TKEY,[])}
+function tSave(a){store.set(TKEY,a)}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function pkStart(title,qs,src){pk.src=src;pk.title=title;pk.list=shuffle(qs).map(q=>({l:q[0],q:q[1],a:q[2]||''}));pk.i=0;pk.show=false;pk.ans='';pk.res=[];render();window.scrollTo({top:0,behavior:'smooth'})}
+/* Link-Kodierung: JSON → (deflate) → base64url. Fragen stecken nur im Link, nichts wird auf einem Server gespeichert. */
+const b64u=u8=>{let s='';u8.forEach(b=>s+=String.fromCharCode(b));return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')};
+const ub64=s=>{s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';const b=atob(s),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u};
+async function packEncode(o){const raw=new TextEncoder().encode(JSON.stringify(o));
+  try{if('CompressionStream' in window){const cs=new Blob([raw]).stream().pipeThrough(new CompressionStream('deflate-raw'));const z=new Uint8Array(await new Response(cs).arrayBuffer());if(z.length<raw.length)return 'z'+b64u(z)}}catch(e){}
+  return 'j'+b64u(raw)}
+async function packDecode(s){const k=s[0],u=ub64(s.slice(1));let raw=u;
+  if(k==='z'){if(!('DecompressionStream' in window))throw new Error('alt');const ds=new Blob([u]).stream().pipeThrough(new DecompressionStream('deflate-raw'));raw=new Uint8Array(await new Response(ds).arrayBuffer())}
+  const o=JSON.parse(new TextDecoder().decode(raw));
+  if(!o||!Array.isArray(o.q))throw new Error('format');
+  return {t:String(o.t||'Fragen von deinem Tandem').slice(0,80),q:o.q.slice(0,12).map(x=>[Math.min(3,Math.max(1,+x[0]||1)),String(x[1]||'').slice(0,240),String(x[2]||'').slice(0,400)]).filter(x=>x[1].trim())}}
+function tandemIn(payload){pk.tab='tandem';pk.inErr='';packDecode(decodeURIComponent(payload)).then(o=>{pk.incoming=o;if(view==='pakete')render()}).catch(e=>{pk.incoming=null;pk.inErr=e.message==='alt'?'Dein Browser ist zu alt, um diesen Link zu öffnen. Bitte aktualisiere ihn oder öffne den Link in Chrome oder Safari.':'Dieser Link ist unvollständig oder beschädigt. Bitte lass ihn dir noch einmal schicken.';if(view==='pakete')render()})}
+function appBase(){return location.href.split('#')[0]}
+function qrSVG(text){if(!window.QRGen)throw new Error('qr');const q=QRGen.make(text),n=q.getModuleCount();let d='';for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(q.isDark(r,c))d+=`M${c+4} ${r+4}h1v1h-1z`;
+  return `<svg class="qr" viewBox="0 0 ${n+8} ${n+8}" role="img" aria-label="QR-Code mit den Fragen"><rect width="100%" height="100%" fill="#fff"/><path d="${d}" fill="#2a2440"/></svg>`}
+function quizView(){
+  const n=pk.list.length;
+  if(pk.i>=n){const k=pk.res.filter(r=>r===2).length,t=pk.res.filter(r=>r===1).length,no=pk.res.filter(r=>r===0).length;
+    const miss=pk.list.filter((_,i)=>pk.res[i]<2);
+    return `<div class="card" style="align-items:center;text-align:center"><h2>Geschafft!</h2><img src="img/winken.png" alt="" style="width:min(150px,40vw)">
+     <div class="score"><span class="s2"><b>${k}</b>gewusst</span><span class="s1"><b>${t}</b>teilweise</span><span class="s0"><b>${no}</b>noch nicht</span></div>
+     <p style="max-width:46ch">${no+t===0?'Alles gewusst – stark! Wiederhol das Paket in ein paar Tagen, damit es so bleibt.':'Was du noch nicht sicher wusstest, ist genau das, was sich jetzt zu üben lohnt. Lücken sind dein wertvollstes Material.'}</p>
+     <div class="row" style="justify-content:center">${miss.length?'<button class="btn" id="pk-again">Nur die Lücken noch mal</button><button class="btn ghost" id="pk-plan">In meinen Wiederholplan</button>':''}<button class="btn ghost" id="pk-end">Zur Übersicht</button></div>
+     <p class="src" style="text-align:left">Der Wiederholplan erinnert dich nach 1, 3 und 7 Tagen. Verteiltes Abrufen hält Wissen länger als einmaliges Üben (Cepeda et al., 2006).</p></div>`}
+  const Q=pk.list[pk.i];
+  return `<div class="card"><div class="row" style="justify-content:space-between"><span class="note">${esc(pk.title)}</span><span class="note">Frage ${pk.i+1} von ${n}</span></div>
+   <div class="prog">${pk.list.map((_,i)=>`<i class="${i<pk.i?'done':''}"></i>`).join('')}</div>
+   <div class="qrow"><span class="lvl l${Q.l}">${Q.l}</span><div style="display:flex;flex-direction:column;gap:2px"><span class="note">Stufe ${Q.l} · ${LVN[Q.l]}</span><p class="qq">${esc(Q.q)}</p></div></div>
+   ${pk.show?`<div class="box ${Q.a?'lav':'info'} reveal">${Q.a?`<b>Lösungshinweis:</b> ${esc(Q.a)}`:'Zu dieser Frage gibt es keinen Lösungshinweis. Vergleiche mit deinen Unterlagen oder frag dein Tandem.'}</div>
+    ${pk.ans.trim()?`<div class="box ghostbox"><b>Deine Antwort:</b> ${esc(pk.ans)}</div>`:''}
+    <div><div class="note" style="margin-bottom:6px">Ehrlich verglichen – wie war’s?</div><div class="conf">${['noch nicht','teilweise','gewusst'].map((c,i)=>`<button data-rate="${i}">${c}</button>`).join('')}</div></div>`
+   :`<label class="f">Deine Antwort <span class="note" style="font-weight:400">(optional – oder laut sagen bzw. auf Papier)</span><textarea id="pk-ans" style="min-height:90px" placeholder="Erst aus dem Kopf antworten, dann vergleichen">${esc(pk.ans)}</textarea></label>
+    <div class="row"><button class="btn" id="pk-show">Lösung zeigen</button><button class="btn small ghost" id="pk-quit">Abbrechen</button></div>`}</div>`;
+}
+function vPakete(){
+  const T0=[['pakete','Fertige Pakete'],['tandem','Tandem']];
+  let body='';
+  if(pk.src){body=quizView()}
+  else if(pk.tab==='pakete'){
+    body=`<div class="card" style="gap:10px"><h2>Welche Stufen?</h2><div class="seg" role="group" aria-label="Taxonomiestufe">${[[0,'Alle gemischt'],[1,'Stufe 1'],[2,'Stufe 2'],[3,'Stufe 3']].map(([v,l])=>`<button data-lv="${v}" aria-pressed="${pk.lv===v}">${l}</button>`).join('')}</div>
+     <p class="note">Stufe 1 = Wissen (nennen) · Stufe 2 = Verständnis (erklären) · Stufe 3 = Anwendung (anwenden, beurteilen)</p></div>
+     <div class="paks"><button class="pak mix" data-pak="mix"><span class="pn">${ic('recall')}</span><b>Bunt gemischt</b><span class="d">10 Fragen aus allen Blöcken – die anspruchsvollste und wirksamste Variante.</span></button>
+     ${PAK.map(p=>{const c=p.q.filter(q=>!pk.lv||q[0]===pk.lv).length;return `<button class="pak" data-pak="${p.id}" style="--tc:var(--${p.c})" ${c?'':'disabled'}><span class="pn">${p.n}</span><b>${p.t}</b><span class="d">${c} ${c===1?'Frage':'Fragen'}</span></button>`}).join('')}</div>
+     <p class="src">Die Pakete passen zu den acht Blöcken des Moduls „Lernen lernen“. Gemischtes Üben ist anstrengender, hilft aber, Inhalte auseinanderzuhalten und flexibel abzurufen (Brunmair & Richter, 2019). Erst antworten, dann die Lösung ansehen: Das ist Abrufüben (Roediger & Karpicke, 2006).</p>`;}
+  else {
+    const mine=tPacks(),ents=entries().filter(e=>e.q&&e.q.some(x=>x.trim()));
+    body=(pk.inErr?`<div class="box warm">${pk.inErr}</div>`:'')+
+     (pk.incoming?`<div class="card incoming"><span class="tag">Neu für dich</span><h2>${esc(pk.incoming.t)}</h2><p>Dein Tandem hat dir <b>${pk.incoming.q.length} ${pk.incoming.q.length===1?'Frage':'Fragen'}</b> geschickt.</p>
+      <div class="row"><button class="btn" id="in-go">Jetzt beantworten</button><button class="btn ghost" id="in-save">Speichern</button></div></div>`:'')+
+     `<div class="card"><h2>Fragen für dein Tandem</h2><p>Formuliere Fragen zu einem Thema – dein Tandem beantwortet sie aus dem Kopf. Beim Fragen-Ausdenken lernst du gleich mit.</p>
+      <label class="f">Thema<input type="text" id="td-t" maxlength="80" placeholder="z. B. Atmung – Block 3 Anatomie" value="${esc(pk.draft.t)}"></label>
+      ${ents.length?`<label class="f">Fragen aus deinem Abruf übernehmen <span class="note" style="font-weight:400">(optional)</span><select id="td-from"><option value="">– auswählen –</option>${ents.map(e=>`<option value="${e.id}">${esc(e.thema)}</option>`).join('')}</select></label>`:''}
+      <div class="tdq">${pk.draft.q.map((q,i)=>`<div class="tdrow"><div class="row" style="justify-content:space-between"><div class="seg sm" role="group" aria-label="Stufe Frage ${i+1}">${[1,2,3].map(l=>`<button data-tdl="${i}|${l}" aria-pressed="${q[0]===l}">Stufe ${l}</button>`).join('')}</div>${pk.draft.q.length>1?`<button class="mini x" data-tddel="${i}" aria-label="Frage entfernen">×</button>`:''}</div>
+        <input type="text" data-tdq="${i}" maxlength="240" placeholder="Frage ${i+1}" value="${esc(q[1])}"><input type="text" data-tda="${i}" maxlength="400" placeholder="Lösungshinweis (optional)" value="${esc(q[2])}"></div>`).join('')}</div>
+      <div class="row">${pk.draft.q.length<8?'<button class="btn small ghost" id="td-add">+ Frage</button>':''}<button class="btn" id="td-make">Link und QR-Code erstellen</button></div>
+      ${pk.link?`<div class="share">${(()=>{try{return pk.link.length<=2200?qrSVG(pk.link):'<p class="note">Zu viele Zeichen für einen QR-Code – bitte den Link teilen oder Fragen kürzen.</p>'}catch(e){return '<p class="note">QR-Code konnte nicht erstellt werden – bitte den Link teilen.</p>'}})()}
+        ${/claudeusercontent|claude\.ai|localhost/.test(location.hostname)?'<div class="box tip" style="width:100%">Hinweis: Das ist eine Vorschau. Links für dein Tandem funktionieren erst in der veröffentlichten App (z. B. über GitHub Pages).</div>':''}<p class="note" style="text-align:center">Dein Tandem scannt den Code mit der Kamera – oder du schickst den Link.</p><input type="text" readonly class="linkbox" id="td-link" value="${esc(pk.link)}" aria-label="Link zu deinen Fragen" onclick="this.select()">
+        <div class="row" style="justify-content:center">${navigator.share?'<button class="btn small" id="td-share">Teilen</button>':''}<button class="btn small ghost" id="td-copy">Link kopieren</button><button class="btn small ghost" id="td-keep">Auch für mich speichern</button></div></div>`:''}
+      <p class="src">Datenschutz: Die Fragen stecken im Link selbst. Sie werden auf keinem Server gespeichert – nur wer den Link hat, sieht sie. Sich gegenseitig abzufragen ist Abrufüben; das Formulieren der Fragen ist zusätzlich eine Form der Ausarbeitung (Praxiswissen, gestützt auf Roediger & Karpicke, 2006).</p></div>`+
+     (mine.length?`<div class="card"><h3>Gespeicherte Fragen-Pakete</h3><div class="hist">${mine.slice().reverse().map(m=>`<div class="h"><b>${esc(m.t)}</b><span class="note">${m.q.length} Fragen</span><span class="row" style="gap:6px;grid-column:1/-1"><button class="mini" data-tgo="${m.id}">Üben</button><button class="mini" data-tsh="${m.id}">Teilen</button><button class="mini x" data-tdelp="${m.id}">Löschen</button></span></div>`).join('')}</div></div>`:'')+
+     `<div class="box info">Tipp für Lehrkräfte: Auf demselben Weg lassen sich Fragen an die ganze Klasse verteilen – Link in Moodle stellen oder QR-Code an die Wand werfen.</div>`;
+  }
+  return head('Abrufen','Fragen-Pakete & Tandem','Fertige Abruf-Fragen zu allen Blöcken des Moduls – und ein einfacher Weg, Fragen mit deinem Tandem zu tauschen.','lernen')+
+   (pk.src?'':`<div class="chips" role="tablist" aria-label="Bereiche">${T0.map(([x,l])=>`<button class="chip" data-pktab="${x}" aria-pressed="${pk.tab===x}">${l}</button>`).join('')}</div>`)+body;
+}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-pktab]');if(!b)return;pk.tab=b.dataset.pktab;pk.src=null;if(view!=='pakete')go('pakete');else render()});
+AFTER.pakete=()=>{
+  document.querySelectorAll('[data-lv]').forEach(b=>b.onclick=()=>{pk.lv=+b.dataset.lv;render()});
+  document.querySelectorAll('[data-pak]').forEach(b=>b.onclick=()=>{const id=b.dataset.pak;
+    if(id==='mix'){const all=PAK.flatMap(p=>p.q.filter(q=>!pk.lv||q[0]===pk.lv));pkStart('Bunt gemischt',shuffle(all).slice(0,10),'mix')}
+    else{const p=PAK.find(x=>x.id===id);pkStart('Block '+p.n+' · '+p.t,p.q.filter(q=>!pk.lv||q[0]===pk.lv),id)}});
+  const an=$('#pk-ans');if(an)an.oninput=()=>pk.ans=an.value;
+  const sh=$('#pk-show');if(sh)sh.onclick=()=>{pk.show=true;render()};
+  const qt=$('#pk-quit');if(qt)qt.onclick=()=>{pk.src=null;render()};
+  document.querySelectorAll('[data-rate]').forEach(b=>b.onclick=()=>{pk.res[pk.i]=+b.dataset.rate;pk.i++;pk.show=false;pk.ans='';render()});
+  const ag=$('#pk-again');if(ag)ag.onclick=()=>{const miss=pk.list.filter((_,i)=>pk.res[i]<2).map(x=>[x.l,x.q,x.a]);pkStart(pk.title,miss,pk.src)};
+  const pp=$('#pk-plan');if(pp)pp.onclick=()=>{const miss=pk.list.filter((_,i)=>pk.res[i]<2).sort((a,b)=>a.l-b.l).slice(0,3);
+    const a=entries();a.push({id:uid(),sub:'',thema:pk.title,ziel:'',created:today0(),q:miss.map(x=>x.q),gaps:miss.map(x=>'• '+x.q+(x.a?' → '+x.a:'')).join('\n'),conf:null,done:0});saveEntries(a);toast('Im Wiederholplan – morgen wieder dran');pk.src=null;render()};
+  const en=$('#pk-end');if(en)en.onclick=()=>{pk.src=null;render()};
+  /* Tandem */
+  const ig=$('#in-go');if(ig)ig.onclick=()=>pkStart(pk.incoming.t,pk.incoming.q,'in');
+  const is=$('#in-save');if(is)is.onclick=()=>{const a=tPacks();a.push({id:uid(),t:pk.incoming.t,q:pk.incoming.q,ts:Date.now()});tSave(a.slice(-40));pk.incoming=null;toast('Gespeichert');render()};
+  const tt=$('#td-t');if(tt)tt.oninput=()=>{pk.draft.t=tt.value;pk.link=''};
+  const fr=$('#td-from');if(fr)fr.onchange=()=>{const e=entries().find(x=>x.id===fr.value);if(!e)return;pk.draft.t=pk.draft.t||e.thema;const qs=e.q.map((q,i)=>[Math.min(3,i+1),q,'']).filter(x=>x[1].trim());pk.draft.q=[...pk.draft.q.filter(x=>x[1].trim()),...qs].slice(0,8);if(!pk.draft.q.length)pk.draft.q=[[1,'','']];pk.link='';render()};
+  document.querySelectorAll('[data-tdl]').forEach(b=>b.onclick=()=>{const [i,l]=b.dataset.tdl.split('|').map(Number);pk.draft.q[i][0]=l;pk.link='';document.querySelectorAll(`[data-tdl^="${i}|"]`).forEach(x=>x.setAttribute('aria-pressed',x===b))});
+  document.querySelectorAll('[data-tdq]').forEach(el=>el.oninput=()=>{pk.draft.q[+el.dataset.tdq][1]=el.value;pk.link=''});
+  document.querySelectorAll('[data-tda]').forEach(el=>el.oninput=()=>{pk.draft.q[+el.dataset.tda][2]=el.value;pk.link=''});
+  document.querySelectorAll('[data-tddel]').forEach(b=>b.onclick=()=>{pk.draft.q.splice(+b.dataset.tddel,1);pk.link='';render()});
+  const ad=$('#td-add');if(ad)ad.onclick=()=>{pk.draft.q.push([Math.min(3,pk.draft.q.length+1),'','']);render()};
+  const mk=$('#td-make');if(mk)mk.onclick=async()=>{const qs=pk.draft.q.filter(x=>x[1].trim()).map(x=>[x[0],x[1].trim(),x[2].trim()]);
+    if(!qs.length){toast('Bitte mindestens eine Frage eintragen');return}
+    pk.link=appBase()+'#t='+await packEncode({t:pk.draft.t.trim()||'Fragen von deinem Tandem',q:qs});render();setTimeout(()=>{const s=$('.share');if(s)s.scrollIntoView({behavior:'smooth',block:'center'})},60)};
+  const cp=$('#td-copy');if(cp)cp.onclick=()=>copy(pk.link,'Link kopiert');
+  const sr=$('#td-share');if(sr)sr.onclick=()=>{navigator.share({title:'Lernkompass – Fragen für dich',text:'Beantworte meine Fragen zu „'+(pk.draft.t||'unserem Thema')+'“:',url:pk.link}).catch(()=>{})};
+  const kp=$('#td-keep');if(kp)kp.onclick=()=>{const qs=pk.draft.q.filter(x=>x[1].trim());const a=tPacks();a.push({id:uid(),t:pk.draft.t.trim()||'Meine Fragen',q:qs,ts:Date.now()});tSave(a.slice(-40));toast('Gespeichert');render()};
+  document.querySelectorAll('[data-tgo]').forEach(b=>b.onclick=()=>{const m=tPacks().find(x=>x.id===b.dataset.tgo);if(m)pkStart(m.t,m.q,'mine')});
+  document.querySelectorAll('[data-tsh]').forEach(b=>b.onclick=()=>{const m=tPacks().find(x=>x.id===b.dataset.tsh);if(!m)return;pk.draft={t:m.t,q:m.q.map(x=>x.slice())};pk.link='';render();setTimeout(()=>{const mk=$('#td-make');if(mk){mk.scrollIntoView({behavior:'smooth',block:'center'});mk.click()}},60)});
+  document.querySelectorAll('[data-tdelp]').forEach(b=>b.onclick=()=>{if(b.dataset.sure){tSave(tPacks().filter(x=>x.id!==b.dataset.tdelp));render()}else{b.dataset.sure='1';b.textContent='Sicher?';setTimeout(()=>{if(b.isConnected){delete b.dataset.sure;b.textContent='Löschen'}},3000)}});
+};
+
+/* ---------- Wochenrückblick ---------- */
+const WRKEY='lernkompass-woche-v1';
+const BRAKES=[['dienst','Dienste und Müdigkeit','schlaf','Schlaf-Kompass','Im Schichtdienst ist Müdigkeit kein Charakterfehler. Plane Lernzeiten nach dem Schlaf und nimm dir in Dienstwochen bewusst weniger vor.'],
+ ['aufschieben','Aufschieben','anfangen','Anfangen statt Aufschieben','Aufschieben hat meist mit Gefühlen zu tun, nicht mit Faulheit. Ein lächerlich kleiner erster Schritt hilft oft mehr als ein großer Vorsatz.'],
+ ['handy','Handy und Ablenkung','timer','Fokus-Timer','Das Handy in einen anderen Raum legen und mit festen Pausen lernen – die Pause ist die Handyzeit.'],
+ ['plan','Kein klarer Plan','plan','Lernplan','Wenn unklar ist, was dran ist, kostet schon das Anfangen Kraft. Teile die nächste Klausur in kleine Unterthemen auf.'],
+ ['schwer','Stoff war zu schwer','finder','Methoden-Finder','Schwieriger Stoff braucht oft eine andere Methode – oder jemanden, der ihn erklärt. Frag dein Tandem oder deine Lehrkraft.'],
+ ['privat','Private Belastung','durchatmen','Durchatmen','Manche Wochen sind einfach schwer. Dann ist es klug, weniger zu lernen und gut für dich zu sorgen. Du musst das nicht allein tragen.'],
+ ['nichts','Nichts Besonderes',null,null,'Schön! Dann lohnt sich ein Blick darauf, was du beibehalten willst.']];
+let wr={good:'',brakes:[],sat:3,plan:'',wenn:'',dann:''};
+function wdat(){return store.get(WRKEY,[])}
+function wSave(a){store.set(WRKEY,a)}
+function weekStats(){
+  const t1=Date.now(),t0=t1-7*864e5;
+  const ev=evals().filter(e=>e.ts>=t0),mins=ev.reduce((a,e)=>a+(+e.dauer||0),0);
+  const ent=entries(),newAb=ent.filter(e=>e.created>=today0()-6*864e5).length;
+  const revs=ent.reduce((a,e)=>a+(e.hist||[]).filter(x=>x>=t0).length,0);
+  const due=dueList().length;
+  const subs=allSubs().filter(x=>x.s.last&&x.s.last>=t0).length;
+  const up=plan().exams.filter(e=>daysTo(e.date)>=0).sort((a,b)=>a.date.localeCompare(b.date));
+  const byM={};ev.forEach(e=>{if(!e.method)return;(byM[e.method]=byM[e.method]||[]).push(e)});
+  const best=Object.entries(byM).map(([k,l])=>[k,l.reduce((a,e)=>a+e.eff,0)/l.length,l.length]).sort((a,b)=>b[1]-a[1])[0];
+  const kr=kdat().refl.filter(r=>r.ts>=t0).length;
+  return {ev:ev.length,mins,newAb,revs,due,subs,up,best,kr};
+}
+function weekTips(S){const t=[];
+  if(S.due)t.push(`${S.due} ${S.due===1?'Wiederholung ist':'Wiederholungen sind'} offen – plane sie gleich am Anfang der Woche ein, je 5 Minuten reichen.`);
+  if(S.up[0]){const e=S.up[0],c=counts(e),open=c[0]+c[1],d=daysTo(e.date);if(open&&d<=21)t.push(`„${esc(e.name)}“ ist in ${d} ${d===1?'Tag':'Tagen'}: Noch ${open} ${open===1?'Unterthema':'Unterthemen'} nicht sicher – das sind etwa ${Math.ceil(open/Math.max(1,d-1))} pro Tag.`)}
+  if(S.best&&S.best[2]>=2)t.push(`Am wirksamsten fandest du diese Woche: <b>${esc(MBY[S.best[0]]?MBY[S.best[0]].name:'deine Methode')}</b> (Wirkung ${f1(S.best[1])} von 5). Behalte sie bei.`);
+  if(!S.ev&&!S.newAb&&!S.revs)t.push('Diese Woche hast du noch nichts eingetragen. Kein Problem – starte mit einer einzigen kleinen Lerneinheit.');
+  return t}
+function wrCard(){/* Startseite: Fr–Mo, wenn es Daten gibt und seit 5 Tagen kein Rückblick */
+  const wd=new Date().getDay();if(![5,6,0,1].includes(wd))return '';
+  const last=wdat().slice(-1)[0];if(last&&Date.now()-last.ts<5*864e5)return '';
+  if(!evals().length&&!entries().length&&!allSubs().length)return '';
+  return `<button class="calm wk" data-go="woche"><span class="ic" style="background:var(--gold-l);color:var(--gold)">${ic('week')}</span><span><b>Zeit für deinen Wochenrückblick</b><br><span class="note">Fünf Minuten: Was lief gut, was bremste – und was nimmst du dir vor?</span></span><span style="color:var(--gold)">›</span></button>`}
+function vWoche(){
+  const S=weekStats(),hist=wdat(),last=hist.slice(-1)[0],tips=weekTips(S);
+  const st=[[S.ev,'Lerneinheiten','im Tagebuch'],[S.mins,'Minuten','gelernt'],[S.newAb+S.revs,'Abrufe','neu + wiederholt'],[S.subs,'Unterthemen','bearbeitet']];
+  const fb=BRAKES.filter(b=>wr.brakes.includes(b[0]));
+  return head('Wochenrückblick','Deine Lernwoche','Einmal pro Woche zurückschauen und nachsteuern: Was hat funktioniert, was hat gebremst – und was nimmst du dir als Nächstes vor?','lernen')+
+   (last&&last.plan?(last.done==null&&Date.now()-last.ts>2*864e5?`<div class="card lastplan"><span class="tag">Dein Vorhaben vom ${new Date(last.ts).toLocaleDateString('de-DE',{day:'numeric',month:'long'})}</span><div class="kind" style="font-size:1.05rem">„${esc(last.plan)}“</div><p>Hat es geklappt?</p><div class="conf">${[['2','ja'],['1','teilweise'],['0','nicht wirklich']].map(([v,l])=>`<button data-wdone="${v}">${l}</button>`).join('')}</div></div>`:last.done==null?`<div class="box tip"><b>Dein aktuelles Vorhaben:</b> „${esc(last.plan)}“<br><span class="note">In ein paar Tagen fragt dich der Rückblick, ob es geklappt hat.</span></div>`:''):'')+
+   `<div class="card"><h2>Die letzten 7 Tage</h2><div class="stats">${st.map(([v,l,s],i)=>`<div class="stat" style="--d:${i*80}ms"><b data-count="${v}">${v}</b><span>${l}</span><small>${s}</small></div>`).join('')}</div>
+    ${tips.length?`<ul class="stips">${tips.map(t=>`<li>${t}</li>`).join('')}</ul>`:''}
+    <p class="note">Die Zahlen stammen aus deinem Lerntagebuch, dem Abruf-Bereich und dem Lernplan – je mehr du einträgst, desto aussagekräftiger wird der Rückblick.</p></div>
+   <div class="card"><h2>Zurückschauen</h2>
+    <div class="slider"><label for="wr-sat">Wie zufrieden bist du mit deiner Lernwoche?<output id="wr-sat-o">${wr.sat} / 5</output></label><input type="range" id="wr-sat" min="1" max="5" value="${wr.sat}"><div class="scale"><span>gar nicht</span><span>sehr</span></div></div>
+    <label class="f">Was lief gut?<textarea id="wr-good" style="min-height:70px" placeholder="Auch Kleines zählt – z. B. „Dreimal nach dem Unterricht abgerufen.“">${esc(wr.good)}</textarea></label>
+    <div><b style="font-size:.9rem;color:var(--ink)">Was hat dich gebremst?</b> <span class="note">(mehrere möglich)</span>
+     <div class="chips" style="margin-top:8px">${BRAKES.map(([k,l])=>`<button class="chip" data-brake="${k}" aria-pressed="${wr.brakes.includes(k)}">${l}</button>`).join('')}</div></div>
+    <div class="attrfb" id="wr-fb">${fb.map(b=>`<div class="box ${b[0]==='privat'?'warm':b[0]==='nichts'?'ok':'info'}"><b>${b[1]}:</b> ${b[4]}${b[2]?` <button class="link" data-go="${b[2]}">${b[3]}</button>`:''}</div>`).join('')}</div></div>
+   <div class="card"><h2>Nachsteuern</h2><p>Nimm dir für die nächste Woche <b>ein</b> konkretes Vorhaben vor – lieber klein und machbar als groß und vage. Wenn du magst, mach daraus einen Wenn-dann-Plan.</p>
+    <label class="f">Mein Vorhaben<input type="text" id="wr-plan" maxlength="140" placeholder="z. B. Montag, Mittwoch und Freitag je 15 Minuten Anatomie abrufen" value="${esc(wr.plan)}"></label>
+    <div class="grid2"><label class="f">Wenn … <input type="text" id="wr-wenn" maxlength="100" placeholder="ich vom Frühdienst heimkomme und gegessen habe" value="${esc(wr.wenn)}"></label><label class="f">… dann …<input type="text" id="wr-dann" maxlength="100" placeholder="setze ich mich 15 Minuten an meine Karteikarten" value="${esc(wr.dann)}"></label></div>
+    <div class="row"><button class="btn" id="wr-save">Rückblick speichern</button></div>
+    <p class="src">Regelmäßig aufzuschreiben, wie man vorankommt, verbesserte in einer Meta-Analyse über 138 Experimente das Erreichen von Zielen (d = 0,40) – besonders, wenn der Fortschritt festgehalten wurde (Harkin et al., 2016; die Studien stammen überwiegend aus dem Gesundheitsbereich). Konkrete Ziele und Wenn-dann-Pläne erleichtern die Umsetzung (Latham & Locke, 1991; Gollwitzer & Sheeran, 2006). Der Rückblick durchläuft den metakognitiven Kreislauf: planen, überwachen, bewerten, nachsteuern (Hasselhorn & Gold, 2017).</p></div>`+
+   (hist.length?`<div class="card"><h3>Deine bisherigen Wochen</h3><div class="weeks">${hist.slice(-8).map(h=>`<div class="wk1" title="${esc(h.plan||'')}"><span class="bar" style="height:${12+h.sat*12}px"></span><small>${new Date(h.ts).toLocaleDateString('de-DE',{day:'numeric',month:'numeric'})}</small><i class="d${h.done==null?'x':h.done}"></i></div>`).join('')}</div>
+    <div class="legend"><span>Balkenhöhe = Zufriedenheit</span><span><i style="background:var(--ok)"></i>Vorhaben geklappt</span><span><i style="background:var(--gold)"></i>teilweise</span><span><i style="background:var(--rose)"></i>nicht wirklich</span></div></div>`:'');
+}
+AFTER.woche=()=>{
+  document.querySelectorAll('[data-wdone]').forEach(b=>b.onclick=()=>{const a=wdat();a[a.length-1].done=+b.dataset.wdone;wSave(a);toast(b.dataset.wdone==='2'?'Super – weiter so!':b.dataset.wdone==='1'?'Teilweise ist auch ein Schritt.':'Danke für deine Ehrlichkeit. Vielleicht war das Vorhaben zu groß?');render()});
+  const sa=$('#wr-sat');sa.oninput=()=>{wr.sat=+sa.value;$('#wr-sat-o').textContent=sa.value+' / 5'};
+  $('#wr-good').oninput=e=>wr.good=e.target.value;$('#wr-plan').oninput=e=>wr.plan=e.target.value;$('#wr-wenn').oninput=e=>wr.wenn=e.target.value;$('#wr-dann').oninput=e=>wr.dann=e.target.value;
+  document.querySelectorAll('[data-brake]').forEach(b=>b.onclick=()=>{const k=b.dataset.brake;wr.brakes=wr.brakes.includes(k)?wr.brakes.filter(x=>x!==k):[...wr.brakes,k];b.setAttribute('aria-pressed',wr.brakes.includes(k));
+    $('#wr-fb').innerHTML=BRAKES.filter(x=>wr.brakes.includes(x[0])).map(x=>`<div class="box ${x[0]==='privat'?'warm':x[0]==='nichts'?'ok':'info'}"><b>${x[1]}:</b> ${x[4]}${x[2]?` <button class="link" data-go="${x[2]}">${x[3]}</button>`:''}</div>`).join('')});
+  $('#wr-save').onclick=()=>{if(!wr.good.trim()&&!wr.plan.trim()&&!wr.brakes.length){toast('Schreib wenigstens kurz etwas dazu');return}
+    const a=wdat();const pl=wr.plan.trim()+(wr.wenn.trim()&&wr.dann.trim()?` (Wenn ${wr.wenn.trim()}, dann ${wr.dann.trim()}.)`:'');
+    a.push({id:uid(),ts:Date.now(),sat:wr.sat,good:wr.good.trim(),brakes:wr.brakes.slice(),plan:pl,done:null});wSave(a.slice(-60));
+    wr={good:'',brakes:[],sat:3,plan:'',wenn:'',dann:''};toast('Rückblick gespeichert – gute neue Woche!');render()};
+};
+
+/* ---------- Durchatmen ---------- */
+let dr={tab:'check',feel:null,int:5,after:null,pat:'seufzen',mins:3,run:false,ex:0,ground:[0,0,0,0,0],kind:0};
+const FEELS=[['unruhig','sky'],['angespannt','peach'],['überfordert','rose'],['müde','sage'],['traurig','lav'],['gereizt','gold'],['leer','sage'],['eigentlich okay','ok']];
+const PATS={seufzen:{name:'Langes Ausatmen',desc:'Zweimal einatmen – einmal lang und kurz nachgeschoben –, dann langsam und lang ausatmen.',ph:[['Einatmen',2,.88],['noch kurz nachatmen',1,1],['langsam ausatmen',6,.52]]},
+ ruhig:{name:'Ruhiges Atmen',desc:'4 Sekunden ein, 6 Sekunden aus – etwa sechs Atemzüge pro Minute.',ph:[['Einatmen',4,1],['Ausatmen',6,.52]]},
+ sanft:{name:'Ganz sanft',desc:'3 Sekunden ein, 4 Sekunden aus. Für den Einstieg oder wenn langes Atmen gerade zu viel ist.',ph:[['Einatmen',3,.9],['Ausatmen',4,.55]]}};
+const EXS=[['Schultern kreisen','Schultern langsam nach hinten kreisen, dann nach vorn. Im Sitzen oder Stehen.',30],
+ ['Strecken','Aufstehen, Arme über den Kopf, einmal lang machen – wie nach dem Aufwachen. Im Sitzen: Arme nach oben.',30],
+ ['Zur Seite neigen','Einen Arm über den Kopf, sanft zur Seite neigen. Dann die andere Seite.',30],
+ ['Wand-Liegestütz','Hände an die Wand, etwa 10 langsame Liegestütz im Stehen. Alternative: Hände gegeneinander drücken.',40],
+ ['Gehen','Auf der Stelle gehen, einmal durch den Raum oder den Flur entlang.',60],
+ ['Ausschütteln','Hände und Arme locker ausschütteln, dann einmal tief durchatmen.',20]];
+const GRD=[[5,'Dinge, die du siehst','Schau dich um: Farben, Formen, Licht.'],[4,'Dinge, die du hörst','Nah und fern – auch ganz leise Geräusche.'],[3,'Dinge, die du spürst','Füße auf dem Boden, Stuhl, Stoff, Temperatur.'],[2,'Dinge, die du riechst','Oder zwei Gerüche, die du magst.'],[1,'Ding, das du schmeckst','Oder einen Schluck trinken und darauf achten.']];
+const KIND=['Das ist gerade schwer. Es ist in Ordnung, dass es mir so geht.','Viele Menschen kennen dieses Gefühl. Ich bin damit nicht allein.','Was würde ich jetzt einer guten Freundin sagen? Das darf ich mir auch sagen.','Ich muss jetzt nicht alles schaffen. Ein kleiner nächster Schritt reicht.','Ich darf mir eine Pause gönnen. Lernen kann warten, ich bin wichtiger.'];
+function feelAdvice(){
+  const f=dr.feel,i=dr.int;if(!f)return '';
+  if(i>=8)return {t:'Das ist gerade sehr viel. Lenk deine Aufmerksamkeit zuerst nach außen – mit der Erdung. Bei sehr starker Anspannung können Atemübungen auch zu viel sein. Und: Du musst das nicht allein tragen.',go:['erdung','hilfe']};
+  if(f==='eigentlich okay')return {t:'Schön! Dann ist vielleicht genau jetzt ein guter Moment zum Lernen.',go:['timer']};
+  if(['unruhig','angespannt','gereizt'].includes(f))return {t:'Bei Unruhe hilft vielen ein langes Ausatmen – oder Bewegung, um die Anspannung loszuwerden. Probier, was sich besser anfühlt.',go:['atem','bewegung']};
+  if(f==='überfordert')return {t:'Wenn alles zu viel ist: erst ankommen – mit der Erdung. Danach hilft ein einziger, ganz kleiner Schritt.',go:['erdung','anfangen']};
+  if(['müde','leer'].includes(f))return {t:'Vielleicht ist das gar kein Aufschieben, sondern Erschöpfung. Eine echte Pause oder kurze Bewegung ist jetzt oft klüger als Lernen mit Druck.',go:['bewegung','schlaf','freundlich']};
+  return {t:'Traurigkeit braucht Freundlichkeit, keine Leistung. Gönn dir einen freundlichen Satz – und sprich, wenn du magst, mit einem Menschen, dem du vertraust.',go:['freundlich','hilfe']};
+}
+const DGO={erdung:['Erdung','erdung'],hilfe:['Hilfe-Karte','hilfe'],timer:['Fokus-Timer',null,'timer'],atem:['Atem-Begleiter','atem'],bewegung:['Bewegung','bewegung'],anfangen:['Kleiner erster Schritt',null,'anfangen'],freundlich:['Freundlicher Satz','freundlich'],schlaf:['Schlaf-Kompass',null,'schlaf']};
+function vDurch(){
+  const T=[['check','Wie geht’s dir?'],['atem','Atmen'],['bewegung','Bewegen'],['erdung','Erden'],['freundlich','Freundlich sein'],['hilfe','Hilfe']];
+  let body='';
+  if(dr.tab==='check'){const a=feelAdvice();
+    body=`<div class="card"><h2>Wie geht’s dir gerade?</h2><p>Wähle das Wort, das am ehesten passt. Es gibt kein falsches Gefühl.</p>
+     <div class="chips">${FEELS.map(([f])=>`<button class="chip" data-feel="${f}" aria-pressed="${dr.feel===f}">${f}</button>`).join('')}</div>
+     <div class="slider"><label for="dr-int">Wie stark ist das Gefühl?<output id="dr-int-o">${dr.int} / 10</output></label><input type="range" id="dr-int" min="0" max="10" step="1" value="${dr.int}"><div class="scale"><span>kaum</span><span>sehr stark</span></div></div>
+     ${a?`<div class="box lav" id="dr-adv">${a.t}<div class="row" style="margin-top:10px">${a.go.map(k=>{const g=DGO[k];return g[2]?`<button class="btn small" data-go="${g[2]}">${g[0]}</button>`:`<button class="btn small" data-dtab="${g[1]}">${g[0]}</button>`}).join('')}</div></div>`:''}
+     <p class="src">Ein Gefühl in Worte zu fassen, kann die emotionale Reaktion bereits etwas dämpfen (Lieberman et al., 2007). Deine Auswahl wird nicht gespeichert.</p></div>`;}
+  if(dr.tab==='atem'){const P=PATS[dr.pat];
+    body=`<div class="card" style="align-items:center;text-align:center"><h2>Atem-Begleiter</h2>
+     <div class="seg" role="group" aria-label="Atemmuster">${Object.entries(PATS).map(([k,p])=>`<button data-pat="${k}" aria-pressed="${dr.pat===k}">${p.name}</button>`).join('')}</div>
+     <p class="note" style="max-width:46ch">${P.desc}</p>
+     <div class="bwrap"><div class="bc" id="bc"><span id="bc-t">Bereit</span></div></div>
+     <div class="row" style="justify-content:center"><div class="seg" role="group" aria-label="Dauer">${[1,3,5].map(n=>`<button data-bmin="${n}" aria-pressed="${dr.mins===n}">${n} Min.</button>`).join('')}</div></div>
+     <div class="row" style="justify-content:center"><button class="btn" id="bc-go">${dr.run?'Neu starten':'Starten'}</button><button class="btn ghost" id="bc-stop">Beenden</button></div>
+     <div class="note" id="bc-rest"></div>
+     <div class="box info" style="text-align:left">Augen offen ist völlig in Ordnung. Wenn es unangenehm wird oder dir schwindelig wird: einfach normal weiteratmen und aufhören. Nicht für jeden ist der Fokus auf den Atem angenehm – dann probier lieber <button class="link" data-dtab="erdung">Erden</button> oder <button class="link" data-dtab="bewegung">Bewegen</button>.</div>
+     <div id="bc-after"></div>
+     <p class="src" style="text-align:left">Langes Ausatmen („zyklisches Seufzen“), täglich 5 Minuten über einen Monat, verbesserte in einer randomisierten Studie die Stimmung stärker als Achtsamkeitsmeditation (Balban et al., 2023). Langsames Atmen unter 10 Atemzügen pro Minute ging in einer Übersicht über 15 Studien mit mehr Entspannung und weniger Angst einher – die Studien sind aber klein und meist ohne Kontrollgruppe (Zaccaro et al., 2018).</p></div>`;}
+  if(dr.tab==='bewegung'){const e=EXS[dr.ex];
+    body=`<div class="card" style="align-items:center;text-align:center"><h2>Bewegungs-Snack</h2><p class="note">6 kleine Übungen, zusammen etwa 3½ Minuten. Nur so weit, wie es sich gut anfühlt.</p>
+     <div class="prog" style="width:100%">${EXS.map((_,i)=>`<i class="${i<=dr.ex?'done':''}"></i>`).join('')}</div>
+     <img src="img/pause.png" alt="" style="width:min(180px,50vw)">
+     <div class="note">Übung ${dr.ex+1} von ${EXS.length}</div><h2>${e[0]}</h2><p style="max-width:44ch">${e[1]}</p>
+     <div class="clock" id="mv-clock" style="font-size:2.4rem">${fmt(e[2])}</div><div class="ring" style="max-width:320px"><span id="mv-ring"></span></div>
+     <div class="row" style="justify-content:center">${dr.ex?'<button class="btn ghost small" id="mv-prev">Zurück</button>':''}<button class="btn" id="mv-go">Übung starten</button><button class="btn ghost small" id="mv-next">${dr.ex<EXS.length-1?'Überspringen':'Fertig'}</button></div>
+     <p class="src" style="text-align:left">Ehrlich eingeordnet: Kurze Bewegung verbessert die Denkleistung im Mittel nur wenig (Meta-Analyse über 79 Studien, g = 0,10; Chang et al., 2012). Sie kann aber helfen, Anspannung abzubauen und die Aufmerksamkeit neu zu sortieren. Bei Schmerzen aufhören.</p></div>`;}
+  if(dr.tab==='erdung'){const done=dr.ground.every((v,i)=>v>=GRD[i][0]);
+    body=`<div class="card"><h2>Erden mit 5 – 4 – 3 – 2 – 1</h2><p>Lenk deine Aufmerksamkeit nach außen. Tippe für jedes Ding einmal auf die Punkte – laut sagen oder in Gedanken, wie du magst.</p>
+     <div style="display:flex;flex-direction:column;gap:10px">${GRD.map(([n,l,h],i)=>`<div class="grd ${dr.ground[i]>=n?'ok':''}"><span class="num">${n}</span><div style="min-width:0"><b>${l}</b><span class="note">${h}</span></div><div class="gdots">${Array.from({length:n},(_,k)=>`<button class="gd ${k<dr.ground[i]?'on':''}" data-g="${i}" aria-label="${l}: ${k+1}"></button>`).join('')}</div></div>`).join('')}</div>
+     ${done?'<div class="box ok">Gut gemacht. Spür kurz nach: Wo bist du gerade? Was ist jetzt ein freundlicher nächster Schritt?</div>':''}
+     <div class="row"><button class="btn small ghost" id="gr-reset">Von vorn</button></div>
+     <p class="src">Die 5-4-3-2-1-Übung ist in der Praxis weit verbreitet, als eigene Methode aber kaum in Studien untersucht (Erfahrungswissen).</p></div>`;}
+  if(dr.tab==='freundlich'){
+    body=`<div class="card"><h2>Ein freundlicher Satz</h2><p>Lies den Satz langsam – laut oder leise. Wenn er nicht passt, nimm den nächsten.</p>
+     <div class="kind" id="kind">${KIND[dr.kind]}</div>
+     <div class="row"><button class="btn small" id="kd-next">Nächster Satz</button></div>
+     <p class="src">Freundlichkeit mit sich selbst nach einem Rückschlag erhöhte in Studien die Motivation, sich zu verbessern – statt sie zu senken (Breines & Chen, 2012).</p></div>`;}
+  if(dr.tab==='hilfe'){
+    body=`<div class="card"><h2>Wenn es dir gerade richtig schlecht geht</h2><p>Du musst das nicht allein schaffen. Hier findest du rund um die Uhr ein offenes Ohr – kostenlos und anonym:</p>
+     <div class="help"><b>TelefonSeelsorge</b><a href="tel:08001110111">0800 111 0 111</a><a href="tel:08001110222">0800 111 0 222</a><a href="tel:116123">116 123</a><span class="note">rund um die Uhr, kostenlos · auch Chat und Mail unter online.telefonseelsorge.de</span></div>
+     <div class="help"><b>In akuter Gefahr</b><a href="tel:112">112</a><span class="note">Notruf</span></div>
+     <ul class="plain"><li>Sprich mit einem Menschen, dem du vertraust – Freundin, Familie, Lehrkraft, Praxisanleitung.</li><li>Hält es länger an, ist deine Hausärztin eine gute erste Anlaufstelle.</li></ul>
+     <p class="note">Dieser Bereich ist ein Werkzeugkasten für den Alltag – keine Behandlung und kein Ersatz für Hilfe von Menschen.</p></div>`;}
+  return head('Durchatmen','Wenn Lernen gerade nicht geht','Manchmal ist der Kopf zu voll, das Herz zu schwer oder der Körper zu unruhig. Hier findest du kleine Werkzeuge, um wieder bei dir anzukommen. Alles ist freiwillig – nimm, was dir guttut.','ruhe')+
+   `<div class="chips" role="tablist" aria-label="Werkzeuge">${T.map(([k,l])=>`<button class="chip" data-dtab="${k}" aria-pressed="${dr.tab===k}">${l}</button>`).join('')}</div>`+body;
+}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-dtab]');if(!b)return;stopTimers();dr.tab=b.dataset.dtab;dr.run=false;if(view!=='durchatmen')go('durchatmen');else{render();window.scrollTo({top:0,behavior:'smooth'})}});
+function breathRun(){
+  stopTimers();const P=PATS[dr.pat],bc=$('#bc'),bt=$('#bc-t'),rest=$('#bc-rest');if(!bc)return;dr.run=true;dr.after=null;$('#bc-after').innerHTML='';
+  const end=Date.now()+dr.mins*60000;let i=0,id=null;
+  const step=()=>{if(!bc.isConnected)return;if(Date.now()>=end){bc.style.transitionDuration='2s';bc.style.transform='scale(.7)';bt.textContent='Geschafft';rest.textContent='';dr.run=false;wake(false);
+      $('#bc-after').innerHTML=`<div class="box lav" style="text-align:left">Spür kurz nach: Wie geht es dir jetzt?<div class="conf" style="margin-top:8px">${['ruhiger','gleich','unruhiger'].map(x=>`<button data-aft="${x}">${x}</button>`).join('')}</div><div id="aft-t" class="note" style="margin-top:6px"></div></div>`;
+      document.querySelectorAll('[data-aft]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-aft]').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#aft-t').innerHTML=b.dataset.aft==='ruhiger'?'Schön. Du kannst die Übung jederzeit wiederholen.':b.dataset.aft==='gleich'?'Das ist okay – nicht jede Übung wirkt sofort. Vielleicht passt heute Bewegung oder Erdung besser.':'Danke für deine Ehrlichkeit. Atemübungen sind nicht für jeden angenehm. Probier lieber <button class="link" data-dtab="erdung">Erden</button> oder <button class="link" data-dtab="bewegung">Bewegen</button>.'});return}
+    const [t,s,sc]=P.ph[i%P.ph.length];bc.style.transitionDuration=s+'s';bc.style.transform=`scale(${sc})`;bt.textContent=t;
+    rest.textContent='noch '+fmt((end-Date.now())/1000);i++;id=setTimeout(step,s*1000)};
+  wake(true);step();timers.push({stop(){clearTimeout(id);dr.run=false}});
+}
+AFTER.durchatmen=()=>{
+  document.querySelectorAll('[data-feel]').forEach(b=>b.onclick=()=>{dr.feel=b.dataset.feel;render()});
+  const di=$('#dr-int');if(di)di.oninput=()=>{dr.int=+di.value;$('#dr-int-o').textContent=di.value+' / 10'};if(di)di.onchange=()=>{if(dr.feel)render()};
+  document.querySelectorAll('[data-pat]').forEach(b=>b.onclick=()=>{stopTimers();dr.pat=b.dataset.pat;render()});
+  document.querySelectorAll('[data-bmin]').forEach(b=>b.onclick=()=>{dr.mins=+b.dataset.bmin;document.querySelectorAll('[data-bmin]').forEach(x=>x.setAttribute('aria-pressed',x===b))});
+  const bg=$('#bc-go');if(bg){bg.onclick=breathRun;$('#bc-stop').onclick=()=>{stopTimers();const bc=$('#bc');bc.style.transitionDuration='1.2s';bc.style.transform='scale(.7)';$('#bc-t').textContent='Beendet';$('#bc-rest').textContent=''}}
+  const mg=$('#mv-go');if(mg){const e=EXS[dr.ex];mg.onclick=()=>{unlock();stopTimers();const t=Timer(e[2],(r,s)=>{const c=$('#mv-clock'),g=$('#mv-ring');if(c)c.textContent=fmt(r);if(g)g.style.width=(100*(1-r/s))+'%'},()=>{gong(1);if(dr.ex<EXS.length-1){dr.ex++;render()}else{dr.ex=0;render();toast('Geschafft – gut gemacht!')}});t.start()};
+    $('#mv-next').onclick=()=>{stopTimers();if(dr.ex<EXS.length-1)dr.ex++;else{dr.ex=0;toast('Geschafft – gut gemacht!')}render()};const mp=$('#mv-prev');if(mp)mp.onclick=()=>{stopTimers();dr.ex--;render()}}
+  document.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{const i=+b.dataset.g;dr.ground[i]=Math.min(GRD[i][0],dr.ground[i]+1);render()});
+  const gr=$('#gr-reset');if(gr)gr.onclick=()=>{dr.ground=[0,0,0,0,0];render()};
+  const kn=$('#kd-next');if(kn)kn.onclick=()=>{dr.kind=(dr.kind+1)%KIND.length;const k=$('#kind');k.classList.remove('swap');void k.offsetWidth;k.textContent=KIND[dr.kind];k.classList.add('swap')};
+};
+
 /* ---------- Fokus-Timer (läuft auch beim Wechseln weiter) ---------- */
 const FT={focus:25,brk:5,phase:'idle',end:0,sec:1,round:0,id:null,task:''};
 const CIRC=2*Math.PI*54;
@@ -847,6 +1755,7 @@ function ftPaint(r){const c=$('#ft-clock');if(!c)return;c.textContent=fmt(FT.pha
   const bar=$('#ft-bar');if(bar)bar.style.strokeDashoffset=FT.phase==='idle'?CIRC:CIRC*(Math.max(0,r)/FT.sec);
   const L=$('#ft-label');if(L)L.textContent=FT.phase==='focus'?(FT.task?'Fokus: '+FT.task:'Fokus – eine Sache'):FT.phase==='break'?'Pause – aufstehen, trinken, Blick in die Ferne':'Bereit';
   const im=$('#ft-img');if(im)im.hidden=FT.phase!=='break';c.hidden=FT.phase==='break'&&false;
+  const eb=$('#ft-eval');if(eb)eb.hidden=!FT.round;
   const n=$('#ft-round');if(n)n.textContent=FT.round?`${FT.round} ${FT.round===1?'Runde':'Runden'} geschafft`:'Noch keine Runde';
   const sb=$('#ft-start');if(sb)sb.textContent=FT.phase==='idle'?'Fokus starten':'Neu starten';
   c.classList.toggle('warn',FT.phase==='focus'&&r<=10)}
@@ -862,21 +1771,32 @@ function vTimer(){
    <div class="ringwrap"><svg viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--lav)"/><stop offset="1" stop-color="var(--rose)"/></linearGradient></defs><circle class="trk" cx="60" cy="60" r="54"/><circle class="bar" id="ft-bar" cx="60" cy="60" r="54" stroke-dasharray="${CIRC}" stroke-dashoffset="${CIRC}"/></svg>
     <div class="mid"><img id="ft-img" src="img/pause.png" alt="" hidden><div class="clock" id="ft-clock" role="timer" aria-live="off">${fmt(FT.focus*60)}</div><div class="note" id="ft-label">Bereit</div></div></div>
    <div class="row" style="justify-content:center"><button class="btn" id="ft-start">Fokus starten</button><button class="btn ghost" id="ft-stop">Stopp</button></div>
-   <div class="note" id="ft-round">Noch keine Runde</div></div>
+   <div class="note" id="ft-round">Noch keine Runde</div>
+   <button class="btn small ghost" id="ft-eval" hidden>Lerneinheit im Lerntagebuch auswerten</button></div>
   <div class="card"><h3>So nutzt du den Timer</h3><ol class="steps"><li><span><b>Handy weg</b> – in einen anderen Raum oder außer Sicht, nicht nur umdrehen.</span></li><li><span><b>Eine Sache.</b> Schreib oben hin, woran du arbeitest, und bleib dabei.</span></li><li><span><b>Pause ist Pause:</b> aufstehen, trinken, aus dem Fenster schauen. Nach vier Runden eine längere Pause.</span></li></ol>
    <p class="src">Feste Pausen nach der Pomodoro-Methode gingen im Vergleich zu selbst gewählten Pausen mit weniger Ermüdung und mehr Konzentration einher (Biwer et al., 2023). Wie lange ein Fokusblock idealerweise dauert, ist nicht eindeutig geklärt – probier aus, was zu dir passt.</p></div>
+  <button class="tile" data-go="durchatmen" style="--tc:var(--sky);min-height:0;flex-direction:row;align-items:center;gap:14px"><span class="ic" style="background:var(--sky-l);color:var(--sky)">${ic('breath')}</span><span style="display:flex;flex-direction:column;gap:2px"><b>Pause sinnvoll füllen</b><span class="d">Bewegungs-Snack oder Atem-Begleiter unter „Durchatmen“.</span></span></button>
   <button class="tile" data-go="anfangen" style="--tc:var(--sky);min-height:0;flex-direction:row;align-items:center;gap:14px"><span class="ic" style="background:var(--sky-l);color:var(--sky)">${ic('start')}</span><span style="display:flex;flex-direction:column;gap:2px"><b>Fällt der Start schwer?</b><span class="d">„Anfangen statt Aufschieben“ hilft, den ersten Schritt zu finden.</span></span></button>`;
 }
 AFTER.timer=()=>{
   const t=$('#ft-task');t.oninput=()=>{FT.task=t.value.trim()};
   document.querySelectorAll('[data-rh]').forEach(b=>b.onclick=()=>{const [f,k]=b.dataset.rh.split('-').map(Number);FT.focus=f;FT.brk=k;FT.round=0;ftStop();document.querySelectorAll('[data-rh]').forEach(x=>x.setAttribute('aria-pressed',x===b))});
   $('#ft-start').onclick=()=>{unlock();ftStart('focus')};
+  $('#ft-eval').onclick=()=>{evf.thema=FT.task||evf.thema;evf.dauer=Math.min(90,Math.max(10,FT.round*FT.focus));go('auswerten')};
   $('#ft-stop').onclick=()=>{ftStop();toast('Timer gestoppt')};
   if(FT.phase!=='idle')ftTick();else ftPaint(0);
 };
 
 /* ---------- KI-Probeklausur ---------- */
-let ki={thema:'',n:9,mix:'ausgewogen',zeit:45,fall:true};
+let ki={thema:'',n:9,mix:'ausgewogen',zeit:45,fall:true,src:[],ck:{},ok:false};
+/* Material-Check: Selbstbestätigung vor dem Prompt-Generator. Wird nicht gespeichert, gilt nur für diesen Besuch. */
+const KSRC=[['mitschrift','Meine eigene Mitschrift oder eigene Notizen'],['lehrkraft','Skript, Folien oder Arbeitsblatt einer Lehrkraft'],['buch','Lehrbuch oder Fachartikel'],['praxis','Etwas aus der Praxis (z. B. Pflegedokumentation, Übergabe)']];
+const KCK=[['daten','Mein Material enthält <b>keine Patientendaten</b>, keine echten Namen und nichts aus der Pflegedokumentation.',()=>true],
+ ['ueben','Ich nutze die Probeklausur <b>nur zum Üben</b> – nicht in einer Prüfung oder für eine bewertete Arbeit.',()=>true],
+ ['regeln','Ich halte mich an die <b>KI-Regeln meiner Schule</b>. Wenn ich unsicher bin, frage ich nach.',()=>true],
+ ['erlaubt','Die Lehrkraft, von der das Material stammt, hat mir <b>erlaubt</b>, es in eine KI zu geben.',()=>ki.src.includes('lehrkraft')],
+ ['zsf','Ich verwende <b>meine eigene Zusammenfassung</b> – keine kopierten Buchseiten oder ganzen Artikel.',()=>ki.src.includes('buch')]];
+function kiValid(){return ki.src.length>0&&!ki.src.includes('praxis')&&KCK.every(([k,,need])=>!need()||ki.ck[k])}
 const OPTAB=[['1 · Wissen','Gelerntes wiedergeben: Fakten, Begriffe, Methoden','nennen, angeben, aufzählen, wiedergeben, bezeichnen, vervollständigen, aufschreiben','Stichpunkte'],
  ['2 · Verständnis','Sachverhalte erfassen und mit eigenen Worten erklären','erklären, begründen, erläutern, beschreiben, umschreiben, schildern, präzisieren, verdeutlichen','ganze Sätze'],
  ['3 · Anwendung','Gelerntes in einer neuen Situation anwenden, z. B. an einem Fall aus der Praxis','anwenden, ermitteln, erarbeiten, herausfinden, entwickeln, ausführen','ganze Sätze']];
@@ -902,7 +1822,7 @@ Anforderungen:
 - Gib noch KEINE Lösungen aus. Warte, bis ich „Lösung“ schreibe.
 
 Mein Lernmaterial:
-[HIER DEINE MITSCHRIFT ODER DEN SKRIPT-ABSCHNITT EINFÜGEN]`;
+[HIER DEINE MITSCHRIFT EINFÜGEN – ODER EIN SKRIPT, FÜR DAS DU DIE ERLAUBNIS DER LEHRKRAFT HAST. KEINE PATIENTENDATEN.]`;
 }
 function prompt2(){
   return `Lösung
@@ -917,19 +1837,35 @@ Hier sind meine Antworten. Gib mir zu jeder Aufgabe eine freundliche, konkrete R
 Meine Antworten:
 [HIER DEINE ANTWORTEN EINFÜGEN]`;
 }
+function kiGate(){
+  if(ki.ok)return `<div class="card kiok"><div class="row" style="justify-content:space-between;gap:8px"><span><b>Material-Check bestätigt</b><br><span class="note">Quelle: ${ki.src.map(k=>KSRC.find(x=>x[0]===k)[1]).join(' · ')}</span></span><button class="btn small ghost" id="ki-reopen">Ändern</button></div></div>`;
+  const has=k=>ki.src.includes(k);
+  return `<div class="card kigate" id="ki-gate"><div class="row" style="gap:10px;align-items:center"><span class="ic gate-ic">${ic('lock')}</span><div><span class="tag" style="background:var(--rose-l);color:var(--rose)">Pflicht vor dem Start</span><h2 style="margin-top:4px">Material-Check</h2></div></div>
+   <p>Bevor du den Prompt-Generator nutzt: Prüf kurz, ob du dein Material überhaupt in eine KI geben darfst. Was du dort einfügst, verlässt dein Gerät und landet bei einem fremden Anbieter.</p>
+   <div><b style="font-size:.92rem;color:var(--ink)">Woher stammt dein Lernmaterial?</b> <span class="note">(mehrere möglich)</span>
+    <div class="chips" style="margin-top:8px">${KSRC.map(([k,l])=>`<button class="chip" data-ksrc="${k}" aria-pressed="${has(k)}">${l}</button>`).join('')}</div></div>
+   ${has('praxis')?`<div class="box stop"><b>Stopp – das darf nie in eine KI.</b> Inhalte aus der Praxis unterliegen der Schweigepflicht und dem Datenschutz – auch beim Lernen, auch gekürzt oder ohne Namen. Wähle diese Quelle ab und arbeite mit erfundenen Fällen.</div>`:''}
+   ${has('lehrkraft')?`<div class="box warm"><b>Materialien von Lehrkräften gehören ihnen.</b> Skripte, Folien und Arbeitsblätter sind geistiges Eigentum der Lehrkraft, die sie erstellt hat. Du darfst sie nur in eine KI geben, wenn sie <b>vorher zugestimmt</b> hat – frag kurz nach dem Unterricht oder per E-Mail. Ohne Zustimmung: Nimm deine eigene Mitschrift.</div>`:''}
+   ${has('buch')?`<div class="box info"><b>Lehrbücher und Artikel</b> sind urheberrechtlich geschützt. Kopiere keine ganzen Seiten in eine KI – fasse das Wichtigste in eigenen Worten zusammen und nutze diese Zusammenfassung.</div>`:''}
+   ${has('mitschrift')&&ki.src.length===1?`<div class="box ok">Sehr gut – deine eigene Mitschrift ist die sicherste Wahl.</div>`:''}
+   ${ki.src.length&&!has('praxis')?`<div class="kichecks">${KCK.filter(([,,need])=>need()).map(([k,l])=>`<label class="ck ${ki.ck[k]?'on':''}"><input type="checkbox" data-kck="${k}" ${ki.ck[k]?'checked':''}><span class="bx">${ic('check')}</span><span>${l}</span></label>`).join('')}</div>`:''}
+   <div class="row"><button class="btn" id="ki-confirm" ${kiValid()?'':'disabled'}>Bestätigen und Prompt-Generator öffnen</button></div>
+   <p class="src">Deine Bestätigung wird nicht gespeichert und nicht gesendet. Sie ist deine Selbstverpflichtung und gilt nur für diesen Besuch.</p></div>`;
+}
 function vKI(){
   return head('Probeklausur mit KI','Probeklausur in 7 Schritten','Mit einem KI-Chat (z. B. Claude oder ChatGPT) kannst du aus deinen eigenen Unterlagen eine Probeklausur machen – passend zu den Taxonomiestufen eurer Schule. Die Klausur ist dann eine Abrufübung.','lernen')+
   `<div class="card"><h2>Die Taxonomiestufen eurer Schule</h2><div class="tw"><table class="optable"><thead><tr><th>Stufe</th><th>Was verlangt ist</th><th>Operatoren</th><th>Antwort</th></tr></thead><tbody>${OPTAB.map(r=>`<tr>${r.map((c,i)=>`<td>${i===0?'<b>'+c+'</b>':c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
   <p class="src">Nach dem Taxonomie-Blatt eurer Pflegeschule (nach Bloom, 1956; Schewior-Popp, 2005). Zur überarbeiteten Taxonomie siehe Anderson & Krathwohl (2001).</p></div>
   <div class="card"><h2>So gehst du vor</h2><ol class="steps">
-   <li><span><b>Regeln klären.</b> Frag nach, ob und wie eure Schule KI-Werkzeuge erlaubt. Zum Üben zu Hause ist das meist unproblematisch – in Prüfungen nicht.</span></li>
-   <li><span><b>Datenschutz beachten.</b> Lade <b>keine Patientendaten</b>, keine echten Namen und nichts aus der Pflegedokumentation hoch. Am sichersten ist deine eigene Mitschrift. Bei Skripten von Lehrkräften kurz fragen, ob du sie in eine KI kopieren darfst.</span></li>
-   <li><span><b>Material vorbereiten.</b> Wähle ein abgegrenztes Thema und kopiere deine Mitschrift oder den passenden Skript-Abschnitt.</span></li>
+   <li class="must"><span><b>Regeln klären.</b> Frag nach, ob und wie eure Schule KI-Werkzeuge erlaubt. Zum Üben zu Hause ist das meist unproblematisch – in Prüfungen nicht.</span></li>
+   <li class="must"><span><b>Datenschutz und Urheberrecht beachten.</b> Lade <b>keine Patientendaten</b>, keine echten Namen und nichts aus der Pflegedokumentation hoch. <b>Skripte, Folien und Arbeitsblätter von Lehrkräften nur mit deren Zustimmung.</b> Am sichersten ist deine eigene Mitschrift.</span></li>
+   <li><span><b>Material vorbereiten.</b> Wähle ein abgegrenztes Thema und nimm deine Mitschrift – oder ein Skript, für das du die Erlaubnis hast.</span></li>
    <li><span><b>Prompt 1 erstellen und kopieren</b> (unten). Ersetze im KI-Chat die Platzhalter in eckigen Klammern durch dein Material und schick ihn ab.</span></li>
    <li><span><b>Klausur ohne Hilfe schreiben.</b> Unterlagen weg, Timer stellen, auf Papier antworten – wie in echt.</span></li>
    <li><span><b>Prompt 2 schicken:</b> Erwartungshorizont und Rückmeldung zu deinen Antworten anfordern.</span></li>
    <li><span><b>Alles prüfen und nutzen.</b> KI kann überzeugend klingende Fehler machen. Vergleiche Aufgaben und Lösungen mit Skript und Lehrbuch. Was du nicht wusstest, kommt ins <button class="link" data-go="abruf">Abruf-Tool</button> oder auf Karteikarten – in drei Tagen noch einmal.</span></li></ol></div>
-  <div class="card"><h2>Prompt 1 · Probeklausur erstellen</h2>
+  ${kiGate()}${ki.ok?'':`<div class="card kilocked"><span class="ic gate-ic">${ic('lock')}</span><div><b>Prompt-Generator gesperrt</b><br><span class="note">Er öffnet sich, sobald du den Material-Check oben bestätigt hast.</span></div></div>`}
+  ${ki.ok?`<div class="card"><h2>Prompt 1 · Probeklausur erstellen</h2>
    <label class="f">Thema<input type="text" id="ki-thema" maxlength="100" placeholder="z. B. Dekubitusprophylaxe" value="${esc(ki.thema)}"></label>
    <div class="grid2">
     <label class="f">Anzahl Aufgaben<select id="ki-n">${[6,9,12].map(n=>`<option value="${n}" ${ki.n===n?'selected':''}>${n} Aufgaben</option>`).join('')}</select></label>
@@ -941,7 +1877,7 @@ function vKI(){
    <div class="row"><button class="btn" id="ki-c1">Prompt 1 kopieren</button></div></div>
   <div class="card"><h2>Prompt 2 · Lösung und Rückmeldung</h2><p>Erst schicken, wenn du die Klausur ohne Hilfe geschrieben hast.</p>
    <div class="prompt" id="ki-p2"></div>
-   <div class="row"><button class="btn" id="ki-c2">Prompt 2 kopieren</button></div></div>
+   <div class="row"><button class="btn" id="ki-c2">Prompt 2 kopieren</button></div></div>`:''}
   <div class="card"><h3>Qualitäts-Check für die KI-Klausur</h3><ul class="plain">
    <li>Beginnt jede Aufgabe mit einem Operator aus der Liste?</li>
    <li>Passt die Stufe zum Operator – und zur verlangten Antwortform?</li>
@@ -951,6 +1887,11 @@ function vKI(){
    <p class="src">KI-Sprachmodelle bieten Chancen fürs Lernen, können aber falsche Inhalte erzeugen. Kritisches Prüfen bleibt nötig (Kasneci et al., 2023).</p></div>`;
 }
 AFTER.ki=()=>{
+  document.querySelectorAll('[data-ksrc]').forEach(b=>b.onclick=()=>{const k=b.dataset.ksrc;ki.src=ki.src.includes(k)?ki.src.filter(x=>x!==k):[...ki.src,k];ki.ok=false;const y=window.scrollY;render();window.scrollTo({top:y})});
+  document.querySelectorAll('[data-kck]').forEach(c=>c.onchange=()=>{ki.ck[c.dataset.kck]=c.checked;c.closest('.ck').classList.toggle('on',c.checked);$('#ki-confirm').disabled=!kiValid()});
+  const cf=$('#ki-confirm');if(cf)cf.onclick=()=>{if(!kiValid())return;ki.ok=true;render();setTimeout(()=>{const p=$('#ki-thema');if(p)p.closest('.card').scrollIntoView({behavior:'smooth',block:'start'})},60);toast('Danke – der Prompt-Generator ist offen')};
+  const ro=$('#ki-reopen');if(ro)ro.onclick=()=>{ki.ok=false;render();setTimeout(()=>{const g=$('#ki-gate');if(g)g.scrollIntoView({behavior:'smooth',block:'start'})},60)};
+  if(!ki.ok)return;
   const upd=()=>{$('#ki-p1').textContent=prompt1();$('#ki-p2').textContent=prompt2()};upd();
   $('#ki-thema').oninput=e=>{ki.thema=e.target.value;upd()};
   $('#ki-n').onchange=e=>{ki.n=+e.target.value;upd()};
@@ -975,8 +1916,9 @@ AFTER.quellen=()=>{$('#q-copy').onclick=()=>{const ids=Object.keys(REF).sort((x,
 
 /* ---------- Start ---------- */
 function fromHash(){const h=location.hash.replace('#','');
+ if(h.startsWith('t=')){tandemIn(h.slice(2));return ['pakete',null]}
  if(h.startsWith('methode-')&&MBY[h.slice(8)])return ['methode',h.slice(8)];
- if(['start','finder','methoden','abruf','timer','anfangen','ki','quellen'].includes(h))return [h,null];
+ if(['start','plan','finder','methoden','abruf','timer','mehr','auswerten','durchatmen','schlaf','klausurtag','pakete','woche','anfangen','ki','quellen'].includes(h))return [h,null];
  return null}
 const fh=fromHash();if(fh){view=fh[0];param=fh[1]}
 render();
