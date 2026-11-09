@@ -20,7 +20,7 @@
 @font-face{font-family:"Poppins";src:url(fonts/poppins-500.woff) format("woff");font-weight:500;font-display:swap}
 @font-face{font-family:"Poppins";src:url(fonts/poppins-700.woff) format("woff");font-weight:600 700;font-display:swap}
 /* Layout: helle, luftige Lesespalte; feine Linienornamente schweben im Hintergrund; Karten mit weichen, mehrschichtigen Schatten; unten eine schwebende Navigationsleiste. */
-:root{
+:root{--on-acc:#fff;
   --bg:#fcfbfe; --bg2:#f6f3fb; --paper:#ffffff; --ink:#2b2834; --body:#514c5c; --muted:#8a8494; --line:#ece8f2; --line2:#ddd6e8;
   --lav:#7a68b8; --lav-l:#f0ecfa; --peach:#c47f52; --peach-l:#fdf0e6; --sage:#4f8a68; --sage-l:#e7f3ec;
   --sky:#4f86b8; --sky-l:#e8f1fa; --rose:#c06a7e; --rose-l:#fbebef; --gold:#a07714; --gold-l:#fcf4dc;
@@ -36,21 +36,21 @@
   --bg:#1c1a22; --bg2:#221f29; --paper:#27242e; --ink:#f1edf4; --body:#d5cfdb; --muted:#a39cab; --line:#363140; --line2:#433d4f;
   --lav:#b5a8e0; --lav-l:#322d45; --peach:#eeb995; --peach-l:#3f3128; --sage:#9cc4ab; --sage-l:#28372e;
   --sky:#9fc0de; --sky-l:#283542; --rose:#e4a1b0; --rose-l:#402e37; --gold:#e2bc5d; --gold-l:#3d3420;
-  --ok:#8fd0a6; --ok-l:#24372b; --no:#ec98a8; --no-l:#43272e;
+  --ok:#8fd0a6; --ok-l:#24372b; --on-acc:#1c1a22; --no:#ec98a8; --no-l:#43272e;
   --sh-1:0 1px 2px rgba(0,0,0,.3); --sh-2:0 1px 2px rgba(0,0,0,.3),0 10px 24px -12px rgba(0,0,0,.55); --sh-3:0 2px 4px rgba(0,0,0,.35),0 18px 40px -16px rgba(0,0,0,.6);
   --orn:#5d5480; --orn2:#7a5a45; --orn3:#4b6b58; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#1c1a22; --bg2:#221f29; --paper:#27242e; --ink:#f1edf4; --body:#d5cfdb; --muted:#a39cab; --line:#363140; --line2:#433d4f;
   --lav:#b5a8e0; --lav-l:#322d45; --peach:#eeb995; --peach-l:#3f3128; --sage:#9cc4ab; --sage-l:#28372e;
   --sky:#9fc0de; --sky-l:#283542; --rose:#e4a1b0; --rose-l:#402e37; --gold:#e2bc5d; --gold-l:#3d3420;
-  --ok:#8fd0a6; --ok-l:#24372b; --no:#ec98a8; --no-l:#43272e;
+  --ok:#8fd0a6; --ok-l:#24372b; --on-acc:#1c1a22; --no:#ec98a8; --no-l:#43272e;
   --sh-1:0 1px 2px rgba(0,0,0,.3); --sh-2:0 1px 2px rgba(0,0,0,.3),0 10px 24px -12px rgba(0,0,0,.55); --sh-3:0 2px 4px rgba(0,0,0,.35),0 18px 40px -16px rgba(0,0,0,.6);
   --orn:#5d5480; --orn2:#7a5a45; --orn3:#4b6b58; color-scheme:dark}
 
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);background-image:radial-gradient(120% 60% at 100% 0%,var(--lav-l) 0%,transparent 55%),radial-gradient(90% 50% at 0% 100%,var(--peach-l) 0%,transparent 60%);background-attachment:fixed;
+body{margin:0;background:var(--bg);background-image:radial-gradient(120% 60% at 100% 0%,color-mix(in srgb,var(--pc,var(--lav)) 17%,transparent) 0%,transparent 58%),radial-gradient(90% 55% at 0% 100%,color-mix(in srgb,var(--pc2,var(--peach)) 13%,transparent) 0%,transparent 62%),linear-gradient(180deg,color-mix(in srgb,var(--pc,var(--lav)) 7%,var(--bg)) 0%,var(--bg) 75%);background-attachment:fixed;
   color:var(--body);font-family:var(--sans);font-size:15px;line-height:1.65;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
   padding-top:max(20px,env(safe-area-inset-top,0px));padding-bottom:calc(var(--navh) + 40px + env(safe-area-inset-bottom,0px));overflow-x:hidden}
@@ -76,14 +76,31 @@ header.top .txt{display:flex;flex-direction:column;gap:8px;min-width:0}
 header.top .ill{width:clamp(104px,28vw,160px);aspect-ratio:1;max-width:100%}
 header.top .ill img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 10px 14px rgba(90,72,150,.14))}
 .lead{max-width:62ch;grid-column:1/-1}
-.card{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:20px clamp(16px,3.5vw,26px);display:flex;flex-direction:column;gap:14px;box-shadow:var(--sh-2)}
+/* Kopfbereich als geprägter Kasten */
+header.top{position:relative;overflow:hidden;padding:22px clamp(18px,4vw,28px) 20px;border-radius:28px;
+ background:linear-gradient(135deg,color-mix(in srgb,var(--pc,var(--lav)) 17%,var(--paper)) 0%,color-mix(in srgb,var(--pc,var(--lav)) 7%,var(--paper)) 55%,color-mix(in srgb,var(--pc2,var(--peach)) 9%,var(--paper)) 100%);
+ border:1px solid color-mix(in srgb,var(--pc,var(--lav)) 24%,var(--line));
+ box-shadow:var(--sh-2),inset 0 1px 0 color-mix(in srgb,var(--paper) 90%,transparent),inset 0 -10px 24px -18px color-mix(in srgb,var(--pc,var(--lav)) 45%,transparent);
+ outline:1px solid color-mix(in srgb,var(--paper) 75%,transparent);outline-offset:-8px}
+header.top::before{content:"";position:absolute;width:220px;height:220px;right:-70px;top:-90px;border-radius:50%;background:color-mix(in srgb,var(--pc,var(--lav)) 12%,transparent);pointer-events:none}
+header.top::after{content:"";position:absolute;width:260px;height:260px;right:-100px;top:-120px;border-radius:50%;border:1px dashed color-mix(in srgb,var(--pc,var(--lav)) 30%,transparent);pointer-events:none}
+header.top>*{position:relative;z-index:1}
+header.top h1{text-shadow:0 1px 0 color-mix(in srgb,var(--paper) 95%,transparent),0 3px 10px color-mix(in srgb,var(--pc,var(--lav)) 18%,transparent)}
+header.top .badge{color:var(--pc,var(--lav));border-color:color-mix(in srgb,var(--pc,var(--lav)) 30%,var(--line2))}
+header.top .flourish{color:var(--pc,var(--orn))}
+header.top .lead{color:var(--body)}
+/* Zwischenüberschriften der Seite */
+#app>h2,.sec>h2{display:inline-flex;align-self:flex-start;align-items:center;gap:8px;padding:7px 16px 7px 14px;border-radius:14px;background:linear-gradient(90deg,color-mix(in srgb,var(--pc,var(--lav)) 13%,var(--paper)),var(--paper));border:1px solid color-mix(in srgb,var(--pc,var(--lav)) 18%,var(--line));border-left:4px solid var(--pc,var(--lav));box-shadow:var(--sh-1),inset 0 1px 0 color-mix(in srgb,var(--paper) 90%,transparent)}
+.sec{display:flex;flex-direction:column;gap:12px}
+
+.card{background:linear-gradient(180deg,var(--paper) 55%,color-mix(in srgb,var(--pc,var(--lav)) 3.5%,var(--paper)));border:1px solid color-mix(in srgb,var(--pc,var(--lav)) 10%,var(--line));border-radius:24px;padding:20px clamp(16px,3.5vw,26px);display:flex;flex-direction:column;gap:14px;box-shadow:var(--sh-2)}
 .box{border-radius:16px;padding:13px 15px;font-size:.92rem;color:var(--ink);border:1px solid transparent}
 .box.tip{background:var(--gold-l);border-color:color-mix(in srgb,var(--gold) 14%,transparent)} .box.info{background:var(--sky-l);border-color:color-mix(in srgb,var(--sky) 14%,transparent)} .box.warm{background:var(--rose-l);border-color:color-mix(in srgb,var(--rose) 14%,transparent)} .box.ok{background:var(--ok-l)} .box.lav{background:var(--lav-l);border-color:color-mix(in srgb,var(--lav) 14%,transparent)}
 .box b.k{color:var(--gold)}
 .note{font-size:.82rem;color:var(--muted)}
 .src{font-size:.78rem;color:var(--muted)}
 .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.btn{font:inherit;font-weight:600;font-size:.9rem;border-radius:99px;padding:10px 20px;border:1px solid transparent;background:linear-gradient(180deg,color-mix(in srgb,var(--lav) 88%,#fff),var(--lav));color:#fff;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;box-shadow:0 1px 1px rgba(60,48,96,.12),0 6px 16px -6px color-mix(in srgb,var(--lav) 70%,transparent);transition:transform .18s var(--ease),box-shadow .18s var(--ease),filter .18s}
+.btn{font:inherit;font-weight:600;font-size:.9rem;border-radius:99px;padding:10px 20px;border:1px solid transparent;background:linear-gradient(180deg,color-mix(in srgb,var(--lav) 88%,#fff),var(--lav));color:var(--on-acc);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;box-shadow:0 1px 1px rgba(60,48,96,.12),0 6px 16px -6px color-mix(in srgb,var(--lav) 70%,transparent);transition:transform .18s var(--ease),box-shadow .18s var(--ease),filter .18s}
 .btn:hover{transform:translateY(-1px);box-shadow:0 2px 2px rgba(60,48,96,.12),0 10px 22px -8px color-mix(in srgb,var(--lav) 75%,transparent)}
 .btn:active{transform:translateY(0) scale(.97)}
 .btn.ghost{background:var(--paper);color:var(--ink);border-color:var(--line2);box-shadow:var(--sh-1)}
@@ -135,7 +152,7 @@ label.f{display:flex;flex-direction:column;gap:6px;font-size:.86rem;font-weight:
 /* Methoden */
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{font:inherit;font-size:.82rem;border-radius:99px;padding:6px 14px;border:1px solid var(--line2);background:var(--paper);color:var(--body);cursor:pointer;box-shadow:var(--sh-1);transition:all .2s var(--ease)}
-.chip[aria-pressed="true"]{background:var(--lav);color:#fff;border-color:var(--lav);box-shadow:0 6px 14px -6px var(--lav)}
+.chip[aria-pressed="true"]{background:var(--lav);color:var(--on-acc);border-color:var(--lav);box-shadow:0 6px 14px -6px var(--lav)}
 .mlist{display:grid;gap:10px}
 .mitem{font:inherit;text-align:left;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;border:1px solid var(--line);border-radius:18px;padding:15px 16px;background:var(--paper);color:var(--body);box-shadow:var(--sh-1);transition:transform .22s var(--ease),box-shadow .22s var(--ease)}
 .mitem:hover{transform:translateY(-2px);box-shadow:var(--sh-2)}
@@ -149,7 +166,7 @@ label.f{display:flex;flex-direction:column;gap:6px;font-size:.86rem;font-weight:
 .tags{display:flex;flex-wrap:wrap;gap:6px}
 .tag{font-size:.72rem;font-weight:500;border-radius:99px;padding:2px 10px;background:var(--lav-l);color:var(--lav)}
 .tag.art{background:var(--paper);border:1px solid var(--line2);color:var(--body)}
-.sec{display:flex;flex-direction:column;gap:8px}
+
 .sec h3{display:flex;gap:10px;align-items:center}
 .sec h3 .bar{width:18px;height:1px;background:currentColor;opacity:.6}
 ol.steps{margin:0;padding:0;list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:9px}
@@ -183,7 +200,7 @@ input[type=time]:focus{outline:none;border-color:var(--lav);background:var(--pap
 .ck .bx{width:26px;height:26px;border-radius:8px;border:1.5px solid var(--line2);display:grid;place-items:center;color:transparent;background:var(--paper);transition:all .25s var(--ease)}
 .ck .bx svg{width:16px;height:16px}
 .ck.on{background:var(--ok-l);border-color:color-mix(in srgb,var(--ok) 20%,transparent)}
-.ck.on .bx{background:var(--ok);border-color:var(--ok);color:#fff;transform:scale(1.05)}
+.ck.on .bx{background:var(--ok);border-color:var(--ok);color:var(--on-acc);transform:scale(1.05)}
 .ck.on span:last-child{color:var(--muted);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--ok) 50%,transparent)}
 .ck:has(input:focus-visible){outline:2px solid var(--lav);outline-offset:2px}
 .card.sos{background:linear-gradient(160deg,var(--paper),var(--sky-l));border-color:color-mix(in srgb,var(--sky) 25%,transparent)}
@@ -249,6 +266,22 @@ details.card[open] summary::after{content:"–"}
 .kiok{background:linear-gradient(140deg,var(--ok-l),var(--paper) 70%);border-color:color-mix(in srgb,var(--ok) 25%,transparent)}
 ol.steps li.must{background:var(--rose-l);border-radius:14px;padding:10px 12px}
 ol.steps li.must::before{border-color:var(--rose);color:var(--rose)}
+.wsteps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;position:relative}
+@media (min-width:700px){.wsteps{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.wstep .art{height:96px;position:relative}
+.wstep .illu{height:92px}
+.wstep .txt{padding:10px 12px 14px;gap:2px}
+.wstep b{font-size:.98rem}
+.wstep .d{font-size:.78rem}
+.wstep .num{position:absolute;top:8px;left:10px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:.92rem;color:var(--tc);background:var(--paper);border:1px solid color-mix(in srgb,var(--tc) 40%,transparent);box-shadow:var(--sh-1)}
+@media (prefers-reduced-motion:no-preference){
+ .itile .i-needle{transform-box:fill-box;transform-origin:50% 50%;animation:ineedle 6s ease-in-out infinite}
+ .itile .i-ring{animation:iring 8s ease-in-out infinite}
+}
+/* ruhig bleiben: Illustrationen spielen ein paar Runden und kommen dann zur Ruhe – bei Berührung/Hover leben sie wieder auf */
+.itiles .itile:not(:hover):not(:focus-visible) .illu [class*="i-"],.wsteps .itile:not(:hover):not(:focus-visible) .illu [class*="i-"]{animation-iteration-count:3}
+@keyframes ineedle{0%,100%{transform:rotate(-18deg)}50%{transform:rotate(22deg)}}
+@keyframes iring{0%{stroke-dashoffset:125.7}70%,100%{stroke-dashoffset:31}}
 .itiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 @media (min-width:760px){.itiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .itile{font:inherit;text-align:left;cursor:pointer;border-radius:24px;padding:0;border:1px solid var(--line);background:var(--paper);color:var(--body);display:flex;flex-direction:column;overflow:hidden;position:relative;box-shadow:var(--sh-2);transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
@@ -321,6 +354,58 @@ ul.rl b{color:var(--ink)}
 .dd.do h3 svg{color:var(--ok)}.dd.dont h3 svg{color:var(--no)}
 .dd ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:.88rem;line-height:1.45}
 .dd b{color:var(--ink)}
+.kkintro h2{margin:0 0 6px}.kkintro p{margin:0 0 12px}
+.kkintro{display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px;align-items:center;background:linear-gradient(140deg,var(--peach-l),var(--paper) 70%)}
+@media (max-width:480px){.kkintro{grid-template-columns:1fr;text-align:center}.kkintro .row{justify-content:center}}
+.kkhero .illu{width:150px;height:130px}.kkhero .i-bg{fill:color-mix(in srgb,var(--peach) 14%,var(--paper))}
+.kkdecks{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:12px}
+.kkdeck{gap:10px}
+.kkt{font-family:var(--serif);font-size:1.08rem;color:var(--ink)}
+.kkbar{display:flex;height:10px;border-radius:99px;overflow:hidden;background:var(--bg2);gap:2px}
+.kkbar .k{background:var(--ok)}.kkbar .u{background:var(--rose)}
+.kked{display:flex;flex-direction:column;gap:10px}
+.kkhd .kn{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:.85rem;color:var(--peach);background:var(--peach-l)}
+.kkcard{border:1px solid var(--line);border-radius:18px;padding:10px 12px 12px;background:var(--bg);display:flex;flex-direction:column;gap:8px}
+.kkhd{display:flex;align-items:center;gap:8px}.kkhd .note{flex:1}
+.kkfaces{display:grid;grid-template-columns:1fr;gap:8px}
+@media (min-width:640px){.kkfaces{grid-template-columns:1fr 1fr}}
+.face{display:flex;flex-direction:column;gap:6px;padding:10px 12px 12px;border-radius:14px;border:1px solid var(--line);box-shadow:var(--sh-1);position:relative}
+.face.fr{background:linear-gradient(170deg,var(--paper),var(--peach-l));border-top:4px solid var(--peach)}
+.face.bk{background:linear-gradient(170deg,var(--paper),var(--lav-l));border-top:4px solid var(--lav)}
+.face .tag{align-self:flex-start}
+.face textarea{min-height:72px;font-size:.95rem;background:var(--paper);resize:vertical}
+.face.fr textarea{font-weight:600;color:var(--ink)}
+.face textarea::placeholder{font-weight:400;color:var(--muted);opacity:.85}
+.kktips summary{cursor:pointer;list-style:none}.kktips summary::-webkit-details-marker{display:none}
+.kktips summary::after{content:' ▾';color:var(--muted)}.kktips[open] summary::after{content:' ▴'}
+.kktips ul{margin:8px 0 6px}
+/* Üben */
+.stacks{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stk{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;border:1px solid var(--line)}
+.stk.u{background:var(--rose-l)}.stk.k{background:var(--ok-l);flex-direction:row-reverse;text-align:right}
+.stk b{font-family:var(--serif);font-size:1.5rem;line-height:1;display:block}
+.stk.u b{color:var(--rose)}.stk.k b{color:var(--ok)}
+.stk small{font-size:.74rem;color:var(--body);line-height:1.25;display:block}
+.stk .pile{width:30px;height:22px;border-radius:5px;flex:none;position:relative;background:var(--paper);border:1.5px solid currentColor;box-shadow:3px 3px 0 -1px var(--paper),3px 3px 0 0 currentColor,6px 6px 0 -1px var(--paper),6px 6px 0 0 currentColor}
+.stk.u .pile{color:var(--rose)}.stk.k .pile{color:var(--ok)}
+.stk.bump{animation:bump .4s var(--ease)}
+@keyframes bump{40%{transform:scale(1.06)}}
+.fc{perspective:1200px;min-height:230px;cursor:pointer;touch-action:pan-y;outline:none;transition:transform .2s}
+.fc:focus-visible .fc-f,.fc:focus-visible .fc-b{box-shadow:0 0 0 3px var(--lav-l),var(--sh-2)}
+.fc-in{position:relative;min-height:230px;transform-style:preserve-3d;transition:transform .45s var(--ease)}
+.fc.flipped .fc-in{transform:rotateY(180deg)}
+.fc-f,.fc-b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:10px;justify-content:center;align-items:center;text-align:center;box-shadow:var(--sh-2);border:1px solid var(--line)}
+.fc-f{background:linear-gradient(160deg,var(--paper),var(--peach-l))}
+.fc-b{background:linear-gradient(160deg,var(--paper),var(--lav-l));transform:rotateY(180deg)}
+.fc p{font-family:var(--serif);font-size:1.18rem;line-height:1.45;color:var(--ink);margin:0;max-width:40ch}
+.fc-b p{font-family:inherit;font-size:1rem}
+.fc.fly-l{transition:transform .32s ease-in,opacity .32s;transform:translateX(-120%) rotate(-14deg);opacity:0}
+.fc.fly-r{transition:transform .32s ease-in,opacity .32s;transform:translateX(120%) rotate(14deg);opacity:0}
+.sortbtns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sortbtns .btn{justify-content:center;white-space:normal;line-height:1.25}
+.sortbtns .sb-u{background:var(--rose);border-color:var(--rose)}
+.sortbtns .sb-k{background:var(--ok);border-color:var(--ok)}
+@media (prefers-reduced-motion:reduce){.fc-in,.fc.fly-l,.fc.fly-r{transition:none}}
 ul.plain{margin:0;padding-left:18px;font-size:.93rem;display:flex;flex-direction:column;gap:4px}
 .cite{border-left:1px solid var(--line2);padding:2px 0 2px 14px;font-size:.88rem;display:flex;flex-direction:column;gap:3px}
 .cite .ref{font-size:.79rem;color:var(--muted)}
@@ -349,7 +434,7 @@ ul.plain{margin:0;padding-left:18px;font-size:.93rem;display:flex;flex-direction
 /* Abruf */
 .flow{display:flex;gap:6px;flex-wrap:wrap}
 .flow span{font-size:.72rem;font-weight:600;border-radius:99px;padding:4px 11px;background:var(--paper);border:1px solid var(--line);color:var(--muted);transition:all .3s var(--ease)}
-.flow span.on{background:var(--lav);border-color:var(--lav);color:#fff;box-shadow:0 6px 14px -6px var(--lav)}
+.flow span.on{background:var(--lav);border-color:var(--lav);color:var(--on-acc);box-shadow:0 6px 14px -6px var(--lav)}
 .flow span.done{background:var(--lav-l);border-color:transparent;color:var(--lav)}
 .qrow{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start}
 .lvl{font-size:.72rem;font-weight:700;border-radius:9px;padding:4px 8px;white-space:nowrap;margin-top:8px}
@@ -623,6 +708,7 @@ const REF={
  kornell2009:{a:'Kornell, N. (2009).',t:'Optimising learning using flashcards: Spacing is more effective than cramming.',j:'Applied Cognitive Psychology, 23',v:'(9), 1297–1317.',doi:'10.1002/acp.1537',k:'Kornell, 2009'},
  miyatsu2018:{a:'Miyatsu, T., Nguyen, K., & McDaniel, M. A. (2018).',t:'Five popular study strategies: Their pitfalls and optimal implementations.',j:'Perspectives on Psychological Science, 13',v:'(3), 390–407.',doi:'10.1177/1745691617710510',k:'Miyatsu et al., 2018'},
  murre2015:{a:'Murre, J. M. J., & Dros, J. (2015).',t:'Replication and analysis of Ebbinghaus’ forgetting curve.',j:'PLOS ONE, 10',v:'(7), Artikel e0120644.',doi:'10.1371/journal.pone.0120644',k:'Murre & Dros, 2015'},
+ pan2023:{a:'Pan, S. C., Zung, I., Imundo, M. N., Zhang, X., & Qiu, Y. (2023).',t:'User-generated digital flashcards yield better learning than premade flashcards.',j:'Journal of Applied Research in Memory and Cognition, 12',v:'(4), 574–588.',doi:'10.1037/mac0000083',k:'Pan et al., 2023'},
  pashler2008:{a:'Pashler, H., McDaniel, M., Rohrer, D., & Bjork, R. (2008).',t:'Learning styles: Concepts and evidence.',j:'Psychological Science in the Public Interest, 9',v:'(3), 105–119.',doi:'10.1111/j.1539-6053.2009.01038.x',k:'Pashler et al., 2008'},
  ponce2022:{a:'Ponce, H. R., Mayer, R. E., & Méndez, E. E. (2022).',t:'Effects of learner-generated highlighting and instructor-provided highlighting on learning from text: A meta-analysis.',j:'Educational Psychology Review, 34',v:'(2), 989–1024.',doi:'10.1007/s10648-021-09654-1',k:'Ponce et al., 2022'},
  roediger2006:{a:'Roediger, H. L., III, & Karpicke, J. D. (2006).',t:'Test-enhanced learning: Taking memory tests improves long-term retention.',j:'Psychological Science, 17',v:'(3), 249–255.',doi:'10.1111/j.1467-9280.2006.01693.x',k:'Roediger & Karpicke, 2006'},
@@ -763,7 +849,10 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b
 function head(badge,title,lead,ill){return `<header class="top"><div class="txt"><span class="badge">${badge}</span><h1>${title}</h1>${FL}</div>${ill?`<div class="ill"><img src="img/${ill}.png" alt=""></div>`:''}${lead?`<p class="lead">${lead}</p>`:''}</header>`}
 const foot=`<footer>${FL.replace('class="flourish"','class="flourish" style="max-width:180px"')}<span>Jasmin Klug · Praxisanleiterin · Modul „Lernen lernen“</span><button class="link" data-go="quellen">Alle Quellen</button></footer>`;
 
+const PCOL={start:['lav','peach'],plan:['rose','lav'],finder:['lav','sky'],methoden:['sage','sky'],methode:['sage','sky'],abruf:['peach','rose'],pakete:['peach','sage'],timer:['sky','lav'],mehr:['lav','rose'],auswerten:['gold','sage'],durchatmen:['sky','sage'],schlaf:['lav','sky'],klausurtag:['rose','gold'],woche:['gold','peach'],regeln:['rose','lav'],anfangen:['sky','peach'],ki:['rose','lav'],quellen:['sage','gold']};
+function pageColor(){const [a,b]=PCOL[view]||['lav','peach'],r=document.documentElement.style;r.setProperty('--pc',`var(--${a})`);r.setProperty('--pcl',`var(--${a}-l)`);r.setProperty('--pc2',`var(--${b})`)}
 function render(){
+  pageColor();
   document.querySelectorAll('#tabs button').forEach(b=>b.setAttribute('aria-current',(b.dataset.tab===view||(view==='methode'&&b.dataset.tab==='methoden')||(view==='pakete'&&b.dataset.tab==='abruf')||(b.dataset.tab==='mehr'&&MEHR.includes(view)))?'page':'false'));
   const R={start:vStart,plan:vPlan,finder:vFinder,methoden:vMethoden,methode:vMethode,abruf:vAbruf,timer:vTimer,mehr:vMehr,auswerten:vEval,durchatmen:vDurch,schlaf:vSchlaf,klausurtag:vKlausur,pakete:vPakete,woche:vWoche,regeln:vRegeln,anfangen:vAnfangen,ki:vKI,quellen:vQuellen}[view]||vStart;
   const app=$('#app');app.classList.remove('enter');app.innerHTML=R()+foot;void app.offsetWidth;app.classList.add('enter');
@@ -795,14 +884,9 @@ function vStart(){
    ['ki','Probeklausur mit KI','Schritt für Schritt – passend zu den Anforderungsbereichen eurer Schule.','spark','rose']];
   return head('Lernen lernen','Lernkompass','Finde die Lernmethode, die zu deinem Ziel passt – und fang gleich an.','winken')+
  welcomeCard()+ktCard()+wrCard()+
-  `<div class="sec"><h2 style="font-size:1.15rem">Dein Weg in vier Schritten</h2><div class="steps3 four">
-   <button class="st3" data-go="plan" style="color:var(--rose)"><span class="n">1</span><b>Planen</b><span class="d">Klausur und Themen eintragen</span></button>
-   <button class="st3" data-go="finder" style="color:var(--lav)"><span class="n">2</span><b>Methode finden</b><span class="d">6 kurze Fragen im Finder</span></button>
-   <button class="st3" data-go="timer" style="color:var(--sage)"><span class="n">3</span><b>Lernen</b><span class="d">mit Methode und Fokus-Timer</span></button>
-   <button class="st3" data-go="abruf" style="color:var(--peach)"><span class="n">4</span><b>Festigen & auswerten</b><span class="d">abrufen, Lerntagebuch führen</span></button>
-  </div></div>`+todayCard(3,true)+`<button class="calm" data-go="durchatmen"><img src="img/ruhe.png" alt=""><span><b>Lernen geht gerade nicht?</b><br><span class="note">Durchatmen: kleine Werkzeuge gegen Unruhe, Überforderung und Erschöpfung.</span></span><span style="color:var(--lav)">${ic('breath')}</span></button>`+
+  `<div class="sec"><h2 style="font-size:1.15rem">Dein Weg in vier Schritten</h2><div class="wsteps">${[['plan','Planen','Klausur und Themen eintragen','rose'],['finder','Methode finden','6 kurze Fragen im Finder','lav'],['timer','Lernen','mit Methode und Fokus-Timer','sky'],['abruf','Festigen & auswerten','abrufen, Lerntagebuch führen','peach']].map(([k,t,d,c],n)=>`<button class="itile wstep" data-go="${k}" style="--tc:var(--${c});--tl:var(--${c}-l);--i:${n}"><span class="art">${illu(k)}<span class="num">${n+1}</span></span><span class="txt"><b>${t}</b><span class="d">${d}</span></span></button>`).join('')}</div></div>`+todayCard(3,true)+`<button class="calm" data-go="durchatmen"><img src="img/ruhe.png" alt=""><span><b>Lernen geht gerade nicht?</b><br><span class="note">Durchatmen: kleine Werkzeuge gegen Unruhe, Überforderung und Erschöpfung.</span></span><span style="color:var(--lav)">${ic('breath')}</span></button>`+
   (due?`<button class="due" data-go="abruf" style="font:inherit;border:0;text-align:left;cursor:pointer"><span class="n">${due}</span><span><b>Heute ${due===1?'ist eine Wiederholung':'sind '+due+' Wiederholungen'} fällig.</b><br><span class="note">Tippe, um sie aus dem Kopf zu beantworten.</span></span></button>`:'')+
-  `<h2 style="font-size:1.15rem">Alle Bereiche</h2><div class="tiles">${T.map(([k,t,d,i,c])=>`<button class="tile" data-go="${k}" style="--tc:var(--${c})"><span class="ic" style="background:var(--${c}-l);color:var(--${c})">${ic(i)}</span><b>${t}</b><span class="d">${d}</span></button>`).join('')}</div>`+
+  `<h2 style="font-size:1.15rem">Alle Bereiche</h2>${itilesHTML(T)}`+
   `<div class="box lav"><b>Kurz vorweg:</b> Es gibt keine „Lerntypen“, für die nur eine Methode passt. Dafür fehlen die Belege (Pashler et al., 2008). Welche Methode sinnvoll ist, hängt vor allem von deinem <b>Ziel</b> und deinem <b>Stoff</b> ab – und fast immer gehört Abrufen aus dem Kopf dazu.</div>`+
   installBox();
 }
@@ -815,7 +899,7 @@ function welcomeCard(){
     <li><span class="ic" style="background:var(--rose-l);color:var(--rose)">${ic('plan')}</span><span><b>Klausur in Sicht?</b> Im Lernplan trägst du Termin, Themen und Unterthemen ein – und siehst, was du schon geschafft hast.</span></li>
     <li><span class="ic" style="background:var(--lav-l);color:var(--lav)">${ic('compass')}</span><span><b>Unsicher, wie du lernen sollst?</b> Der Finder fragt dich kurz aus und schlägt dir passende Methoden vor.</span></li>
     <li><span class="ic" style="background:var(--sage-l);color:var(--sage)">${ic('book')}</span><span><b>Neugierig, warum eine Methode wirkt?</b> In der Bibliothek steht zu jeder Methode, wie sie geht und was die Forschung sagt.</span></li>
-    <li><span class="ic" style="background:var(--peach-l);color:var(--peach)">${ic('recall')}</span><span><b>Gerade aus dem Unterricht?</b> Fünf Minuten abrufen – die App erinnert dich an die Wiederholungen. Fertige Fragen zu jedem Block und den Fragen-Tausch mit deinem Tandem findest du dort auch.</span></li>
+    <li><span class="ic" style="background:var(--peach-l);color:var(--peach)">${ic('recall')}</span><span><b>Gerade aus dem Unterricht?</b> Fünf Minuten abrufen – die App erinnert dich an die Wiederholungen. Dort schreibst du auch deine eigenen Karteikarten und tauschst Fragen mit deinem Tandem.</span></li>
     <li><span class="ic" style="background:var(--sky-l);color:var(--sky)">${ic('timer')}</span><span><b>Bereit loszulegen?</b> Der Fokus-Timer hält dich bei einer Sache. Fällt der Start schwer, hilft „Anfangen“.</span></li>
     <li><span class="ic" style="background:var(--gold-l);color:var(--gold)">${ic('eval')}</span><span><b>Fertig mit Lernen?</b> Im Lerntagebuch bewertest du kurz, wie es lief. So lernt der Lernkompass, welche Methoden bei dir wirken.</span></li>
     <li><span class="ic" style="background:var(--sky-l);color:var(--sky)">${ic('breath')}</span><span><b>Kopf zu voll, Herz zu schwer?</b> Unter „Durchatmen“ findest du Atem-, Bewegungs- und Erdungsübungen – und Hilfe, wenn es dir richtig schlecht geht.</span></li>
@@ -1019,7 +1103,7 @@ function vAbruf(){
   const list=entries().slice().sort((x,y)=>(nextDue(x)??9e15)-(nextDue(y)??9e15));
   const t=today0();
   const lst=list.length?`<div class="card"><h3>Meine Wiederholungen</h3>${list.map(e=>{const d=nextDue(e);const st=d===null?['fest','gefestigt']:d<=t?['today','heute fällig']:['later',dstr(d)];return `<div class="entry"><b>${esc(e.thema)}</b><span class="st ${st[0]}">${st[1]}</span><div class="acts">${d!==null?`<button class="btn small ${d<=t?'':'ghost'}" data-rev="${e.id}">Jetzt wiederholen</button>`:`<button class="btn small ghost" data-again="${e.id}">In 14 Tagen nochmal</button>`}<button class="btn small ghost" data-del="${e.id}">Löschen</button></div></div>`}).join('')}</div>`:'';
-  return head('Abrufen nach dem Unterricht','5 Minuten aus dem Kopf','Direkt nach dem Unterricht: planen, aufschreiben, was hängen geblieben ist, vergleichen, Fragen formulieren – und die App plant die Wiederholungen nach 1, 3 und 7 Tagen.','lernen')+(ab.step===0?`<div class="pakbar"><button class="pakb" data-pktab="pakete"><span class="ic" style="background:var(--peach-l);color:var(--peach)">${ic('book')}</span><span><b>Fertige Fragen-Pakete</b><span class="note">zu allen 8 Blöcken des Moduls</span></span></button><button class="pakb" data-pktab="tandem"><span class="ic" style="background:var(--lav-l);color:var(--lav)">${ic('spark')}</span><span><b>Tandem</b><span class="note">Fragen tauschen per Link oder QR</span></span></button></div>`:'')+flow+body+lst+
+  return head('Abrufen nach dem Unterricht','5 Minuten aus dem Kopf','Direkt nach dem Unterricht: planen, aufschreiben, was hängen geblieben ist, vergleichen, Fragen formulieren – und die App plant die Wiederholungen nach 1, 3 und 7 Tagen.','lernen')+(ab.step===0?`<div class="pakbar"><button class="pakb" data-pktab="karten"><span class="ic" style="background:var(--peach-l);color:var(--peach)">${ic('book')}</span><span><b>Karteikarten</b><span class="note">aus deiner Zusammenfassung – sortieren nach „kann ich“ und „üben“</span></span></button><button class="pakb" data-pktab="tandem"><span class="ic" style="background:var(--lav-l);color:var(--lav)">${ic('spark')}</span><span><b>Tandem</b><span class="note">Fragen tauschen per Link oder QR</span></span></button></div>`:'')+flow+body+lst+
   `<p class="src">Warum das wirkt: Abrufen festigt Gelerntes stärker als Wiederlesen (Roediger & Karpicke, 2006; Adesope et al., 2017), und verteilte Wiederholungen halten es länger (Cepeda et al., 2006).</p>`;
 }
 AFTER.abruf=()=>{
@@ -1280,15 +1364,22 @@ const ILLU={
  auswerten:()=>`${fig({cx:70,skin:2,hair:'#3B2E2A',style:'bun',top:'#B8DCC6',eyes:'happy'})}<g transform="translate(46 100)"><path d="M0 4 Q12 0 24 4 L24 30 Q12 26 0 30Z" fill="#FFFDF9" stroke="#F2BFCB" stroke-width="1.6"/><path d="M48 4 Q36 0 24 4 L24 30 Q36 26 48 30Z" fill="#FFFDF9" stroke="#F2BFCB" stroke-width="1.6"/><path d="M5 12h14M5 18h12M29 12h14M29 18h10" stroke="#D9D3E6" stroke-width="1.6" stroke-linecap="round"/></g><g class="i-pen"><path d="M118 100 l14 -22 l5 3 l-14 22 l-6 2z" fill="#7A68B8"/></g><path class="i-float d2" d="M128 42 c-3 -5 -10 -2 -8 3 l8 7 l8 -7 c2 -5 -5 -8 -8 -3z" fill="#F29D9D"/>`,
  ki:()=>`${fig({cx:56,skin:3,hair:'#26222B',top:'#A9CDEB',eyes:'open',hood:'#8C7FB0'})}<g transform="translate(96 46)"><rect width="40" height="52" rx="6" fill="#FFFDF9" stroke="#CFC3EC" stroke-width="1.4"/><path d="M8 14h24M8 22h20M8 30h24M8 38h14" stroke="#D9D3E6" stroke-width="1.8" stroke-linecap="round"/></g>${spark(138,40,8,'#7A68B8','i-twinkle')}${spark(92,40,5,'#C06A7E','i-twinkle d2')}${spark(134,104,5,'#E2B865','i-twinkle d3')}`,
  regeln:()=>`${fig({cx:58,skin:2,hair:'#7A4E33',style:'long',top:'#F2BFCB',eyes:'happy'})}<g transform="translate(116 74)"><g class="i-float"><path d="M0 -26 l20 7 v14 c0 12 -9 21 -20 26 c-11 -5 -20 -14 -20 -26 v-14z" fill="#FBEBEF" stroke="#C06A7E" stroke-width="2.2"/><path class="i-draw" d="M-8 -1 l6 6 l11 -12" fill="none" stroke="#4F8A68" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></g></g>${spark(30,42,6,'#E2B865','i-twinkle')}`,
+ plan:()=>`${fig({cx:56,skin:1,hair:'#7A4E33',style:'bun',top:'#F2BFCB',eyes:'happy'})}<g transform="translate(98 44)"><rect x="0" y="4" width="42" height="56" rx="7" fill="#FFFDF9" stroke="#E3B8C8" stroke-width="1.4"/><rect x="13" y="0" width="16" height="9" rx="3" fill="#C06A7E"/>${[0,1,2].map(i=>`<circle class="i-pop" style="animation-delay:${i*.6}s" cx="10" cy="${21+i*13}" r="3.4" fill="${i<2?'#4F8A68':'#E6E1EE'}"/><path d="M18 ${21+i*13}h16" stroke="#D9D3E6" stroke-width="2" stroke-linecap="round"/>`).join('')}</g>${spark(30,42,6,'#E2B865','i-twinkle')}`,
+ finder:()=>`${fig({cx:56,skin:3,hair:'#26222B',style:'curly',top:'#CFC3EC',eyes:'open'})}<g transform="translate(118 72)"><circle r="25" fill="#FFFDF9" stroke="#7A68B8" stroke-width="2.2"/><circle r="19" fill="none" stroke="#CFC3EC" stroke-width="1" stroke-dasharray="1.5 3"/><text y="-12" text-anchor="middle" font-size="7" font-family="Georgia,serif" font-weight="700" fill="#7A68B8">N</text><g class="i-needle"><path d="M0 -15 L4 0 L0 15 L-4 0Z" fill="#E3B8C8"/><path d="M0 -15 L4 0 L-4 0Z" fill="#C06A7E"/></g><circle r="2.2" fill="#7A68B8"/></g>${spark(30,44,6,'#7FC4A3','i-twinkle')}`,
+ methoden:()=>`${fig({cx:56,skin:0,hair:'#B5532F',style:'long',top:'#B8DCC6',eyes:'happy'})}<g transform="translate(98 50)"><rect x="-4" y="56" width="52" height="4" rx="2" fill="#D9C7A0"/><rect x="0" y="22" width="11" height="34" rx="2.5" fill="#A9CDEB"/><rect x="13" y="16" width="12" height="40" rx="2.5" fill="#F2BFCB"/><g class="i-float"><rect x="28" y="8" width="11" height="48" rx="2.5" fill="#B8DCC6" transform="rotate(8 33 56)"/></g></g>${spark(138,36,7,'#4F8A68','i-twinkle')}${spark(92,34,4,'#E2B865','i-twinkle d2')}`,
+ abruf:()=>`${fig({cx:52,skin:2,hair:'#3B2E2A',style:'short',top:'#F7CDA6',eyes:'open'})}<circle class="i-pop" style="animation-delay:0s" cx="80" cy="60" r="3" fill="#F7CDA6"/><circle class="i-pop" style="animation-delay:.4s" cx="88" cy="50" r="4.5" fill="#F7CDA6"/><g class="i-float"><ellipse cx="118" cy="40" rx="26" ry="20" fill="#FFFDF9" stroke="#C47F52" stroke-width="1.8"/><path d="M118 30 a6 6 0 0 1 6 6 c0 3 -2 4.5 -4 6 v2 h-4 v-2 c-2 -1.5 -4 -3 -4 -6 a6 6 0 0 1 6 -6z" fill="#E2B865"/><rect x="115.5" y="45" width="5" height="3" rx="1" fill="#C47F52"/></g>${spark(146,70,5,'#E2B865','i-twinkle')}`,
+ timer:()=>`${fig({cx:56,skin:1,hair:'#26222B',style:'bun',top:'#A9CDEB',eyes:'open'})}<g transform="translate(118 74)"><circle r="24" fill="#FFFDF9"/><circle r="20" fill="none" stroke="#E6E1EE" stroke-width="5"/><circle class="i-ring" r="20" fill="none" stroke="#7A68B8" stroke-width="5" stroke-linecap="round" stroke-dasharray="125.7" transform="rotate(-90)"/><text y="4" text-anchor="middle" font-size="10" font-family="Georgia,serif" font-weight="700" fill="#7A68B8">25</text></g>${spark(30,42,6,'#7FC4A3','i-twinkle')}`,
+ pakete:()=>`${fig({cx:54,skin:2,hair:'#7A4E33',style:'bun',top:'#F7CDA6',eyes:'happy'})}<g transform="translate(92 86)"><rect x="-2" y="6" width="26" height="18" rx="4" fill="#FBEBEF" stroke="#C06A7E" stroke-width="1.3"/><rect x="0" y="2" width="26" height="18" rx="4" fill="#FBEBEF" stroke="#C06A7E" stroke-width="1.3"/><rect x="30" y="6" width="26" height="18" rx="4" fill="#E7F3EC" stroke="#4F8A68" stroke-width="1.3"/><rect x="32" y="2" width="26" height="18" rx="4" fill="#E7F3EC" stroke="#4F8A68" stroke-width="1.3"/><path d="M39 11 l4 4 l7 -8" fill="none" stroke="#4F8A68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 9 a4 4 0 1 1 1 5" fill="none" stroke="#C06A7E" stroke-width="1.8" stroke-linecap="round"/></g><g class="i-float"><rect x="104" y="34" width="34" height="24" rx="5" fill="#FFFDF9" stroke="#C47F52" stroke-width="1.6" transform="rotate(-8 121 46)"/><text x="121" y="51" text-anchor="middle" font-size="13" font-family="Georgia,serif" font-weight="700" fill="#C47F52" transform="rotate(-8 121 46)">?</text></g>${spark(30,42,6,'#E2B865','i-twinkle')}`,
  quellen:()=>`${fig({cx:56,skin:0,hair:'#E2B865',style:'long',top:'#B8DCC6',eyes:'open'})}<g transform="translate(100 78)"><rect y="30" width="44" height="11" rx="2.5" fill="#A9CDEB"/><rect x="3" y="19" width="40" height="11" rx="2.5" fill="#F2BFCB"/><rect x="-2" y="8" width="42" height="11" rx="2.5" fill="#B8DCC6"/></g><g class="i-glass"><circle cx="122" cy="62" r="11" fill="#FFFFFF" fill-opacity=".55" stroke="#4F86B8" stroke-width="2.6"/><line x1="130" y1="70" x2="138" y2="78" stroke="#4F86B8" stroke-width="3.2" stroke-linecap="round"/></g>${spark(30,40,6,'#7FC4A3','i-twinkle')}`
 };
+const itilesHTML=T=>`<div class="itiles">${T.map(([k,t,d,i,c],n)=>`<button class="itile" data-go="${k}" style="--tc:var(--${c});--tl:var(--${c}-l);--i:${n}"><span class="art">${illu(k)}</span><span class="txt"><b>${t}</b><svg class="fl" viewBox="0 0 80 6" aria-hidden="true"><path d="M1 3 C 14 0, 22 6, 36 3 S 58 0, 70 3" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><circle cx="75" cy="3" r="1.6" fill="currentColor"/></svg><span class="d">${d}</span></span><span class="go" aria-hidden="true">→</span></button>`).join('')}</div>`;
 const illu=k=>`<svg class="illu" viewBox="0 0 160 140" aria-hidden="true"><circle class="i-bg" cx="80" cy="76" r="58"/>${(ILLU[k]||(()=>''))()}</svg>`;
 
 /* ---------- Mehr & Datensicherung ---------- */
 function vMehr(){
-  const T=[['durchatmen','Durchatmen','Atmen, bewegen, erden – wenn Lernen gerade nicht geht.','breath','sky'],['woche','Wochenrückblick','Fünf Minuten pro Woche: zurückschauen, Bremsen erkennen, nachsteuern.','week','gold'],['klausurtag','Klausurtag-Begleiter','Vom Abend davor bis zum Rückblick danach – mit Notfallkarte für den Blackout.','flag','rose'],['schlaf','Schlaf-Kompass','Gut schlafen bei Früh-, Spät- und Nachtdienst – und warum Schlaf zum Lernen gehört.','moon','lav'],['anfangen','Anfangen statt Aufschieben','Wenn es gerade schwerfällt: der passende kleine Schritt.','start','lav'],['auswerten','Lerntagebuch','Lerneinheiten auswerten – sehen, was bei dir wirkt.','eval','gold'],['ki','Probeklausur mit KI','Schritt für Schritt – passend zu den Anforderungsbereichen eurer Schule.','spark','rose'],['quellen','Quellen','Alle Belege im APA-Format, mit geprüfter DOI.','src','sage'],['regeln','Regeln & Datenschutz','Welches Material erlaubt ist – mit und ohne KI.','shield','rose']];
+  const T=[['durchatmen','Durchatmen','Atmen, bewegen, erden – wenn Lernen gerade nicht geht.','breath','sky'],['woche','Wochenrückblick','Fünf Minuten pro Woche: zurückschauen, Bremsen erkennen, nachsteuern.','week','gold'],['klausurtag','Klausurtag-Begleiter','Vom Abend davor bis zum Rückblick danach – mit Notfallkarte für den Blackout.','flag','rose'],['schlaf','Schlaf-Kompass','Gut schlafen bei Früh-, Spät- und Nachtdienst – und warum Schlaf zum Lernen gehört.','moon','lav'],['anfangen','Anfangen statt Aufschieben','Wenn es gerade schwerfällt: der passende kleine Schritt.','start','lav'],['auswerten','Lerntagebuch','Lerneinheiten auswerten – sehen, was bei dir wirkt.','eval','gold'],['ki','Probeklausur mit KI','Schritt für Schritt – passend zu den Anforderungsbereichen eurer Schule.','spark','rose'],['quellen','Quellen','Alle Belege im APA-Format, mit geprüfter DOI.','src','sage'],['pakete','Karteikarten','Eigene Karten schreiben – und auf zwei Stapel sortieren.','book','peach'],['regeln','Regeln & Datenschutz','Welches Material erlaubt ist – mit und ohne KI.','shield','rose']];
   return head('Mehr','Weitere Bereiche','Alles, was nicht in die Leiste unten gepasst hat – und die Sicherung deiner Daten.')+
-  `<div class="itiles">${T.map(([k,t,d,i,c],n)=>`<button class="itile" data-go="${k}" style="--tc:var(--${c});--tl:var(--${c}-l);--i:${n}"><span class="art">${illu(k)}</span><span class="txt"><b>${t}</b><svg class="fl" viewBox="0 0 80 6" aria-hidden="true"><path d="M1 3 C 14 0, 22 6, 36 3 S 58 0, 70 3" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><circle cx="75" cy="3" r="1.6" fill="currentColor"/></svg><span class="d">${d}</span></span><span class="go" aria-hidden="true">→</span></button>`).join('')}</div>
+  `${itilesHTML(T)}
   <div class="card"><div class="row"><span class="ic" style="background:var(--lav-l);color:var(--lav)">${ic('data')}</span><h2>Deine Daten sichern</h2></div>
    <p>Lernplan, Wiederholungen und Lerntagebuch sind nur auf diesem Gerät gespeichert. Wenn du das Handy wechselst oder die Browserdaten löschst, sind sie weg – sichere sie deshalb ab und zu.</p>
    <div class="row"><button class="btn small" id="bk-copy">Sicherung kopieren</button><button class="btn small ghost" id="bk-file">Als Datei speichern</button></div>
@@ -1298,7 +1389,7 @@ function vMehr(){
   <div class="row" style="justify-content:center"><button class="link" id="mh-welcome">Einführung noch einmal zeigen</button></div>`;
 }
 const SKEY='lernkompass-schlaf-v1',KKEY='lernkompass-klausur-v1';
-const BKEYS=[KEY,PKEY,EKEY,SKEY,KKEY,'lernkompass-tandem-v1','lernkompass-woche-v1'];
+const BKEYS=[KEY,PKEY,EKEY,SKEY,KKEY,'lernkompass-tandem-v1','lernkompass-woche-v1','lernkompass-karten-v1'];
 AFTER.mehr=()=>{
   const dump=()=>JSON.stringify({app:'lernkompass',v:1,ts:new Date().toISOString(),data:Object.fromEntries(BKEYS.map(k=>[k,store.get(k,null)]))});
   $('#bk-copy').onclick=()=>copy(dump(),'Sicherung kopiert');
@@ -1532,60 +1623,105 @@ AFTER.klausurtag=()=>{
     kt.rf={feel:3,prep:3,gut:'',attr:[],mit:'',note:''};toast('Rückblick gespeichert');render()};
 };
 
-/* ---------- Abruf-Pakete & Tandem ---------- */
+/* ---------- Eigene Karteikarten ---------- */
+const KKKEY='lernkompass-karten-v1';
+const KK_GAP=[3,7,14,30]; /* Tage bis zur nächsten Wiederholung im Stapel „kann ich schon“ */
+let kk={mode:'list',deck:null,draft:null,queue:[],i:0,flip:false,round:{k:0,u:0},again:[],busy:false,all:false};
+function kdecks(){return store.get(KKKEY,[])}
+function ksave(a){store.set(KKKEY,a)}
+function kdeck(id){return kdecks().find(d=>d.id===id)}
+function kput(d){const a=kdecks(),i=a.findIndex(x=>x.id===d.id);if(i<0)a.push(d);else a[i]=d;ksave(a)}
+const kdue=c=>c.box===0||!c.due||c.due<=Date.now();
+function kcount(d){const u=d.cards.filter(c=>c.box===0).length,k=d.cards.length-u,f=d.cards.filter(c=>c.box>0&&c.due&&c.due<=Date.now()).length;return {u,k,f}}
+function kkStart(id,all){const d=kdeck(id);if(!d)return;kk.deck=id;kk.all=!!all;
+  kk.queue=shuffle(d.cards.filter(c=>all||kdue(c)).map(c=>c.id));kk.i=0;kk.flip=false;kk.round={k:0,u:0};kk.again=[];kk.mode='practice';render();window.scrollTo({top:0,behavior:'smooth'})}
+function kkSort(known){if(kk.busy)return;const d=kdeck(kk.deck),cid=kk.queue[kk.i],c=d&&d.cards.find(x=>x.id===cid);if(!c)return;kk.busy=true;
+  if(known){c.box=Math.min((c.box||0)+1,KK_GAP.length);c.due=addDays(today0(),KK_GAP[c.box-1]);kk.round.k++}else{c.box=0;c.due=0;kk.round.u++;kk.again.push(cid)}
+  c.seen=(c.seen||0)+1;kput(d);
+  const el=$('.fc'),stk=$(known?'#stk-k':'#stk-u');
+  if(stk){const nn=stk.querySelector('b');if(nn)nn.textContent=+nn.textContent+1;stk.classList.remove('bump');void stk.offsetWidth;stk.classList.add('bump')}
+  if(el)el.classList.add(known?'fly-r':'fly-l');
+  setTimeout(()=>{kk.busy=false;kk.i++;kk.flip=false;render()},matchMedia('(prefers-reduced-motion:reduce)').matches?0:330)}
+function kkStacks(d){const u=d.cards.filter(c=>c.box===0).length,k=d.cards.length-u;
+  return `<div class="stacks"><div class="stk u" id="stk-u"><span class="pile"></span><span><b>${u}</b><small>Das muss ich noch üben</small></span></div><div class="stk k" id="stk-k"><span class="pile"></span><span><b>${k}</b><small>Das kann ich schon</small></span></div></div>`}
+function kkView(){
+  const decks=kdecks();
+  if(kk.mode==='practice'){const d=kdeck(kk.deck);if(!d){kk.mode='list';return kkView()}
+    if(kk.i>=kk.queue.length){const n=kk.round.k+kk.round.u,next=d.cards.filter(c=>c.box>0&&c.due).map(c=>c.due).sort((a,b)=>a-b)[0];
+      return `<div class="card" style="align-items:center;text-align:center;gap:12px"><h2>${n?'Runde geschafft!':'Gerade ist nichts fällig'}</h2><img src="img/winken.png" alt="" style="width:min(140px,38vw)">
+       ${n?`<div class="score"><span class="s2"><b>${kk.round.k}</b>kann ich schon</span><span class="s0"><b>${kk.round.u}</b>noch üben</span></div>`:''}
+       <p style="max-width:46ch">${kk.again.length?'Die Karten aus „Das muss ich noch üben“ sind genau die, die sich jetzt lohnen. Am besten gleich noch eine Runde – oder später am Tag.':n?'Alles gewusst. Diese Karten kommen nach ein paar Tagen zurück, damit es so bleibt.':`Alle Karten liegen gerade auf „Das kann ich schon“.${next?' Die nächste Wiederholung ist am '+new Date(next).toLocaleDateString('de-DE',{weekday:'long',day:'numeric',month:'long'})+'.':''}`}</p>
+       <div class="row" style="justify-content:center">${kk.again.length?'<button class="btn" id="kk-again">„Noch üben“-Stapel noch einmal</button>':''}<button class="btn ghost" id="kk-all">Alle Karten mischen</button><button class="btn ghost" id="kk-back">Zu meinen Stapeln</button></div>
+       <p class="src" style="text-align:left">Karten aus „Das kann ich schon“ kommen nach 3, dann 7, 14 und 30 Tagen zurück. Verteiltes Üben mit Karteikarten wirkt besser als alles am Stück (Kornell, 2009) – und Karten, die man schon kann, nicht zu früh auszusortieren, schützt vor Selbstüberschätzung.</p></div>`}
+    const c=d.cards.find(x=>x.id===kk.queue[kk.i]);
+    return `<div class="card kkp"><div class="row" style="justify-content:space-between"><b style="font-family:var(--serif);color:var(--ink)">${esc(d.t)}</b><span class="note">Karte ${kk.i+1} von ${kk.queue.length}${c.box>0?' · Wiederholung':''}</span></div>
+     ${kkStacks(d)}
+     <div class="fc ${kk.flip?'flipped':''}" id="fc" tabindex="0" role="button" aria-label="${kk.flip?'Antwort':'Frage – tippen zum Umdrehen'}"><div class="fc-in">
+      <div class="fc-f"><span class="tag">Frage</span><p>${esc(c.q)}</p><span class="note">Erst antworten – laut oder im Kopf. Dann umdrehen.</span></div>
+      <div class="fc-b"><span class="tag">Antwort</span><p>${esc(c.a).replace(/\n/g,'<br>')}</p></div></div></div>
+     ${kk.flip?`<div class="sortbtns"><button class="btn sb-u" id="kk-u">${ic('recall')} Das muss ich noch üben</button><button class="btn sb-k" id="kk-k">${ic('check')} Das kann ich schon</button></div><p class="note" style="text-align:center">Tipp: Karte nach links oder rechts wischen.</p>`
+      :`<div class="row" style="justify-content:center"><button class="btn" id="kk-flip">Umdrehen</button></div>`}
+     <div class="row" style="justify-content:center"><button class="link" id="kk-stop">Runde beenden</button></div></div>`}
+  if(kk.mode==='new'||kk.mode==='edit'){const dr=kk.draft,ok=dr.cards.some(c=>c.q.trim()&&c.a.trim());
+    return `<div class="card"><h2>${kk.mode==='new'?'Neuer Kartenstapel':'Stapel bearbeiten'}</h2>
+     <label class="f">Thema des Stapels<input type="text" id="kk-t" maxlength="80" placeholder="z. B. Herz-Kreislauf-System" value="${esc(dr.t)}"></label>
+     ${kk.mode==='new'?`<details class="box tip kktips"><summary><b>So schreibst du gute Karten</b></summary><ul class="plain">
+      <li><b>Eine Sache pro Karte.</b> Lieber drei kleine Karten als eine mit fünf Antworten.</li>
+      <li><b>Die Frage in deinen eigenen Worten.</b> Nicht aus dem Skript abschreiben – beim Umformulieren lernst du schon.</li>
+      <li><b>Mische die Anforderungsbereiche:</b> „Nenne …“ (AFB I), „Erkläre, warum …“ (AFB II), „Was tust du, wenn …?“ (AFB III).</li>
+      <li><b>Die Antwort kurz und vollständig</b> – so, dass du sie beim Umdrehen klar vergleichen kannst.</li></ul>
+      <p class="src">In sechs Experimenten lernten Studierende mehr, wenn sie Definitionen und Beispiele auf ihren digitalen Karteikarten selbst formulierten, statt fertige Karten zu nutzen (Pan et al., 2023).</p></details>`:''}
+     <div class="kked">${dr.cards.map((c,i)=>`<div class="kkcard"><div class="kkhd"><span class="kn">${i+1}</span><span class="note">Karte ${i+1}</span><button class="mini x" data-kdel="${i}" aria-label="Karte ${i+1} löschen">×</button></div>
+      <div class="kkfaces"><label class="face fr"><span class="tag">Vorderseite · Frage</span><textarea data-kq="${i}" rows="3" placeholder="z. B. Was versteht man unter Systole?">${esc(c.q)}</textarea></label>
+      <label class="face bk"><span class="tag">Rückseite · Antwort</span><textarea data-ka="${i}" rows="3" placeholder="z. B. Die Phase, in der sich die Herzkammern zusammenziehen und Blut auswerfen.">${esc(c.a)}</textarea></label></div></div>`).join('')}</div>
+     <div class="row"><button class="btn ghost" id="kk-add">+ Weitere Karte</button><span class="note">${dr.cards.length} ${dr.cards.length===1?'Karte':'Karten'}</span></div>
+     <div class="row"><button class="btn" id="kk-save" ${ok?'':'disabled'}>Stapel speichern</button><button class="btn ghost" id="kk-cancel">Abbrechen</button></div>
+     <p class="note">Nur vollständig ausgefüllte Karten (Vorder- und Rückseite) werden gespeichert. Alles bleibt auf deinem Gerät.</p></div>`}
+  /* Übersicht */
+  return `<div class="card kkintro"><div class="kkhero">${illu('pakete')}</div><div><h2>Deine eigene Kartei</h2><p>Schreib deine Karten selbst – vorne die Frage, hinten die Antwort. Beim Üben sortierst du jede Karte: <b>„Das kann ich schon“</b> oder <b>„Das muss ich noch üben“</b>.</p><div class="row"><button class="btn" id="kk-new">Neuer Stapel</button></div></div></div>
+   ${decks.length?`<div class="kkdecks">${decks.slice().reverse().map(d=>{const n=kcount(d),due=d.cards.filter(kdue).length;return `<div class="card kkdeck"><div class="row" style="justify-content:space-between;align-items:flex-start"><div><b class="kkt">${esc(d.t)}</b><br><span class="note">${d.cards.length} Karten${due?` · <b style="color:var(--rose)">${due} jetzt dran</b>`:' · gerade nichts fällig'}</span></div></div>
+     <div class="kkbar" role="img" aria-label="${n.k} kann ich schon, ${n.u} noch üben"><span class="k" style="flex:${n.k}"></span><span class="u" style="flex:${n.u}"></span></div>
+     <div class="legend"><span><i style="background:var(--ok)"></i>${n.k} kann ich schon</span><span><i style="background:var(--rose)"></i>${n.u} noch üben</span></div>
+     <div class="row"><button class="btn small" data-kgo="${d.id}">${due?'Üben':'Trotzdem üben'}</button><button class="btn small ghost" data-ked="${d.id}">Bearbeiten</button><button class="btn small ghost" data-ksh="${d.id}">Mit Tandem teilen</button><button class="mini x" data-kdeld="${d.id}">Löschen</button></div></div>`}).join('')}</div>`:''}`;
+}
+function kkBind(){
+  const nw=$('#kk-new');if(nw)nw.onclick=()=>{kk.draft={t:'',cards:[{id:uid(),q:'',a:'',box:0,due:0}]};kk.mode='new';render();setTimeout(()=>{const t=$('#kk-t');if(t)t.focus()},60)};
+  document.querySelectorAll('[data-kgo]').forEach(b=>b.onclick=()=>{const d=kdeck(b.dataset.kgo);kkStart(b.dataset.kgo,!d.cards.some(kdue))});
+  document.querySelectorAll('[data-ked]').forEach(b=>b.onclick=()=>{const d=kdeck(b.dataset.ked);kk.draft={id:d.id,t:d.t,cards:d.cards.map(c=>({...c}))};kk.mode='edit';render()});
+  document.querySelectorAll('[data-ksh]').forEach(b=>b.onclick=()=>{const d=kdeck(b.dataset.ksh);pk.draft={t:d.t,q:d.cards.slice(0,8).map(c=>[1,c.q,c.a])};pk.link='';pk.tab='tandem';render();if(d.cards.length>8)toast('Fürs Tandem werden die ersten 8 Karten geteilt');setTimeout(()=>{const m=$('#td-make');if(m){m.scrollIntoView({behavior:'smooth',block:'center'});m.click()}},80)});
+  document.querySelectorAll('[data-kdeld]').forEach(b=>b.onclick=()=>{if(b.dataset.sure){ksave(kdecks().filter(x=>x.id!==b.dataset.kdeld));render()}else{b.dataset.sure='1';b.textContent='Sicher?';setTimeout(()=>{if(b.isConnected){delete b.dataset.sure;b.textContent='Löschen'}},3000)}});
+  /* Erstellen / Bearbeiten */
+  const dr=kk.draft;
+  const t=$('#kk-t');if(t)t.oninput=()=>dr.t=t.value;
+  document.querySelectorAll('[data-kq]').forEach(el=>el.oninput=()=>{dr.cards[+el.dataset.kq].q=el.value;const s=$('#kk-save');if(s)s.disabled=!dr.cards.some(c=>c.q.trim()&&c.a.trim())});
+  document.querySelectorAll('[data-ka]').forEach(el=>el.oninput=()=>{dr.cards[+el.dataset.ka].a=el.value;const s=$('#kk-save');if(s)s.disabled=!dr.cards.some(c=>c.q.trim()&&c.a.trim())});
+  document.querySelectorAll('[data-kdel]').forEach(b=>b.onclick=()=>{dr.cards.splice(+b.dataset.kdel,1);if(!dr.cards.length)dr.cards.push({id:uid(),q:'',a:'',box:0,due:0});render()});
+  const ad=$('#kk-add');if(ad)ad.onclick=()=>{dr.cards.push({id:uid(),q:'',a:'',box:0,due:0});render();setTimeout(()=>{const l=[...document.querySelectorAll('[data-kq]')].pop();if(l){l.scrollIntoView({behavior:'smooth',block:'center'});l.focus({preventScroll:true})}},60)};
+  const sv=$('#kk-save');if(sv)sv.onclick=()=>{const cards=dr.cards.filter(c=>c.q.trim()&&c.a.trim()).map(c=>({id:c.id||uid(),q:c.q.trim(),a:c.a.trim(),box:c.box||0,due:c.due||0,seen:c.seen||0}));
+    const d=dr.id?{...kdeck(dr.id),t:dr.t.trim()||'Mein Stapel',cards}:{id:uid(),t:dr.t.trim()||'Mein Stapel',created:Date.now(),cards};kput(d);kk.mode='list';kk.draft=null;toast('Stapel gespeichert');render()};
+  const cc=$('#kk-cancel');if(cc)cc.onclick=()=>{kk.mode='list';kk.draft=null;render()};
+  /* Üben */
+  const fc=$('#fc');
+  if(fc){const flip=()=>{if(!kk.flip){kk.flip=true;fc.classList.add('flipped');setTimeout(render,matchMedia('(prefers-reduced-motion:reduce)').matches?0:420)}};
+    const fb=$('#kk-flip');if(fb)fb.onclick=flip;
+    fc.onclick=()=>{if(!kk.flip)flip()};fc.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();flip()}};
+    let x0=null,dx=0;
+    fc.onpointerdown=e=>{if(!kk.flip)return;x0=e.clientX;dx=0;fc.setPointerCapture(e.pointerId)};
+    fc.onpointermove=e=>{if(x0==null)return;dx=e.clientX-x0;fc.style.transform=`translateX(${dx}px) rotate(${dx/18}deg)`};
+    fc.onpointerup=()=>{if(x0==null)return;x0=null;if(Math.abs(dx)>80){fc.style.transform='';kkSort(dx>0)}else fc.style.transform=''}}
+  const ku=$('#kk-u');if(ku)ku.onclick=()=>kkSort(false);
+  const kn=$('#kk-k');if(kn)kn.onclick=()=>kkSort(true);
+  const st=$('#kk-stop');if(st)st.onclick=()=>{kk.i=kk.queue.length;render()};
+  const ag=$('#kk-again');if(ag)ag.onclick=()=>{kk.queue=shuffle(kk.again);kk.again=[];kk.i=0;kk.flip=false;kk.round={k:0,u:0};render()};
+  const al=$('#kk-all');if(al)al.onclick=()=>kkStart(kk.deck,true);
+  const bk=$('#kk-back');if(bk)bk.onclick=()=>{kk.mode='list';render()};
+}
+
+/* ---------- Karteikarten & Tandem ---------- */
 /* Fragen: [Anforderungsbereich 1–3, Frage, Lösungshinweis] */
 const ROMAN=['','I','II','III'];
-const PAK=[
- {id:'b1',n:1,t:'Ankommen & Lernbiografie',c:'rose',q:[
-  [1,'Nenne zwei Unterschiede zwischen dem Lernen in der Schule und dem Lernen in der Pflegeausbildung.','Zum Beispiel: Du lernst an zwei Lernorten (Schule und Praxis), die zusammenhängen. Du organisierst dein Lernen viel selbstständiger. Und du lernst für die Versorgung echter Menschen – nicht nur für Noten.'],
-  [2,'Erkläre, warum es sich lohnt, auf die eigene Lernbiografie zu schauen.','Frühere Lernerfahrungen prägen, was du dir zutraust. Wer weiß, was früher geholfen hat, kann es gezielt wieder nutzen – und erkennt Muster, die eher geschadet haben.'],
-  [2,'Erläutere den Unterschied zwischen „Lernen müssen“ und „Lernen wollen“.','„Müssen“ kommt von außen (Druck, Noten), „Wollen“ von innen (Interesse, Sinn). Motivation von innen wird gestärkt, wenn du selbst mitentscheiden kannst, dich kompetent erlebst und dich verbunden fühlst (Deci & Ryan).'],
-  [3,'Beschreibe eine Lernerfahrung, die dir geholfen hat, und leite daraus eine Strategie für die Ausbildung ab.','Deine eigene Antwort. Beispiel: „Im Abi hat mir Lernen mit einer Freundin geholfen“ → „Ich verabrede mich einmal pro Woche mit meinem Tandem zum gegenseitigen Abfragen.“']]},
- {id:'b2',n:2,t:'Lernumgebung & Arbeitsplatz',c:'peach',q:[
-  [1,'Nenne vier Merkmale eines lernförderlichen Arbeitsplatzes.','Zum Beispiel: ruhig, aufgeräumt, gutes Licht, Material griffbereit, etwas zu trinken – und das Handy außer Sichtweite.'],
-  [2,'Erkläre, warum das Handy am besten in einem anderen Raum liegt.','Jede Benachrichtigung unterbricht, und nach jeder Unterbrechung brauchst du Zeit, um wieder reinzukommen. Liegt das Handy außer Sicht, musst du der Versuchung nicht ständig widerstehen.'],
-  [2,'Mythos oder Fakt: „Musik hilft immer beim Lernen.“ Begründe.','Eher Mythos. Vor allem Musik mit Gesang kann beim Lesen und Auswendiglernen stören. Ob leise Instrumentalmusik hilft, ist individuell verschieden – probier es bewusst aus.'],
-  [3,'Formuliere einen Wenn-dann-Plan für deinen Lernplatz.','Zum Beispiel: „Wenn ich mich zum Lernen an den Schreibtisch setze, dann lege ich mein Handy in die Küche.“ Wichtig: konkrete Situation + konkrete Handlung.']]},
- {id:'b3',n:3,t:'Wahrnehmung & Aufmerksamkeit',c:'sky',q:[
-  [1,'Nenne die Stationen vom Reiz bis zum Handeln.','Reiz → Sinnesorgan nimmt ihn auf → Weiterleitung über Nerven → Verarbeitung im Gehirn (auswählen, deuten, mit Bekanntem verknüpfen) → Reaktion bzw. Handeln.'],
-  [2,'Erkläre, was das Gorilla-Experiment zeigt.','Unaufmerksamkeitsblindheit: Was nicht im Fokus unserer Aufmerksamkeit liegt, nehmen wir oft gar nicht bewusst wahr – selbst wenn es auffällig ist.'],
-  [2,'Erkläre, warum Multitasking beim Lernen Zeit und Fehler kostet.','Die Aufmerksamkeit ist begrenzt. Beim „Multitasking“ springen wir in Wahrheit hin und her. Jeder Wechsel kostet Zeit und macht fehleranfälliger.'],
-  [2,'Beschreibe den Cocktailparty-Effekt.','Wir können uns auf ein Gespräch konzentrieren und andere ausblenden (selektive Aufmerksamkeit). Trotzdem bemerken wir es, wenn jemand im Hintergrund unseren Namen sagt – Bedeutsames wird unbewusst mitverarbeitet.'],
-  [3,'Übertrage es auf die Pflege: Wo kann Unaufmerksamkeit gefährlich werden – und was hilft?','Zum Beispiel beim Richten von Medikamenten, wenn man ständig unterbrochen wird. Hilfreich: ungestörte Zeiten oder Bereiche, Checklisten, Vier-Augen-Prinzip, eine Aufgabe nach der anderen.']]},
- {id:'b4',n:4,t:'Fokus, Gefühle & Balance',c:'sage',q:[
-  [1,'Nenne die vier Bausteine der Lernbalance.','Pausen, Schlaf, Bewegung und Ernährung.'],
-  [2,'Erkläre, warum es hilft, ein Gefühl in Worte zu fassen.','Ein Gefühl zu benennen („Ich bin gerade angespannt“), kann die emotionale Reaktion bereits etwas dämpfen. Das schafft Abstand, um zu entscheiden, was jetzt hilft (Lieberman et al., 2007).'],
-  [2,'Erkläre, warum Schlaf zum Lernen gehört.','Im Schlaf werden neu gelernte Inhalte gefestigt: Der Hippocampus reaktiviert sie, und sie werden in die Netzwerke der Großhirnrinde eingebaut (Diekelmann & Born, 2010).'],
-  [2,'Begründe, warum feste Pausen beim Lernen sinnvoll sind.','Die Konzentration lässt mit der Zeit nach. Kurze, feste Pausen – am besten mit Bewegung und ohne Handy – helfen, über längere Zeit aufmerksam zu bleiben.'],
-  [3,'Entwickle ein Lernstart-Ritual aus drei Schritten.','Deine eigene Antwort. Beispiel: 1. Handy in einen anderen Raum, 2. Ziel für diese Einheit aufschreiben, 3. einmal lang ausatmen und den Timer starten.']]},
- {id:'b5',n:5,t:'Gedächtnis & Lerntypen-Mythos',c:'lav',q:[
-  [1,'Nenne die drei Gedächtnisspeicher im Mehrspeichermodell.','Ultrakurzzeitgedächtnis (sensorisches Gedächtnis), Kurzzeit- bzw. Arbeitsgedächtnis und Langzeitgedächtnis.'],
-  [1,'Nenne die Schritte von TQ3L.','Tune in (einstimmen), Question (Fragen stellen), Look (hinschauen), Listen (zuhören), Look again (rückblickend durchsehen).'],
-  [2,'Beschreibe die Vergessenskurve und was dagegen hilft.','Kurz nach dem Lernen vergessen wir sehr schnell, danach langsamer. Verteilte Wiederholungen – am besten aus dem Kopf – „stocken“ die Kurve wieder auf und machen sie flacher.'],
-  [2,'Erkläre, warum Abrufen wirksamer ist als nochmaliges Lesen.','Beim Abrufen wird die Erinnerung aktiv neu aufgebaut. Das festigt die Gedächtnisspur und die Abrufwege. Und du siehst ehrlich, was du noch nicht kannst (Roediger & Karpicke, 2006).'],
-  [3,'Beurteile die Aussage: „Ich bin ein visueller Lerntyp, also muss ich mir nur Bilder ansehen.“','Vorlieben gibt es, aber Unterricht passend zum „Lerntyp“ führt nicht zu besseren Ergebnissen (Pashler et al., 2008). Für alle hilft: Wort und Bild verbinden und den Stoff so darstellen, wie es zum Inhalt passt.'],
-  [3,'Plane die Wiederholungen für ein Thema, das du heute gelernt hast.','Zum Beispiel: nach 1, 3 und 7 Tagen jeweils ein paar Minuten aus dem Kopf abrufen, danach vergleichen. Der Abruf-Bereich der App plant das für dich.']]},
- {id:'b6',n:6,t:'Lernmethoden-Werkstatt',c:'gold',q:[
-  [1,'Nenne die fünf Schritte der Fünf-Schritt-Lesemethode (SQ3R).','Überblick verschaffen (Survey), Fragen stellen (Question), Lesen (Read), Wiedergeben (Recite), Wiederholen (Review).'],
-  [2,'Erkläre, warum Markieren allein wenig bringt.','Markieren fühlt sich nach Lernen an, verarbeitet den Stoff aber kaum. Wirksamer: sparsam markieren und danach etwas damit tun – Fragen beantworten, zusammenfassen, abrufen (Dunlosky et al., 2013).'],
-  [2,'Erkläre, wie du Karteikarten am wirksamsten nutzt.','Vorderseite Frage, Rückseite Antwort. Erst aus dem Kopf antworten, dann umdrehen. Verteilt wiederholen (z. B. Lernkartei) und auch Karten, die du schon kannst, nicht zu früh aussortieren.'],
-  [2,'Erläutere den Unterschied zwischen Mind-Map und Zusammenfassung.','Die Mind-Map zeigt Struktur und Zusammenhänge vom Zentrum aus, in Stichworten. Die Zusammenfassung gibt den Inhalt in eigenen Worten und in einer Reihenfolge wieder.'],
-  [2,'Erkläre, warum Sketchnotes beim Behalten helfen können.','Beim Zeichnen verbindest du Wort und Bild und musst den Inhalt dafür verarbeiten. In Studien wurden gezeichnete Begriffe besser erinnert als nur aufgeschriebene (Wammes et al., 2016).'],
-  [3,'Wähle für das Thema Dekubitusprophylaxe eine passende Methode und begründe deine Wahl.','Zum Beispiel: Mind-Map für den Überblick über Risikofaktoren und Maßnahmen, danach Karteikarten zum Abfragen der Details. Entscheidend ist, dass die Methode zu deinem Ziel passt (Überblick, Verstehen oder Behalten).']]},
- {id:'b7',n:7,t:'Versagensangst & Aufschieben',c:'rose',q:[
-  [1,'Nenne drei Anzeichen von Prokrastination.','Wichtige Aufgaben werden trotz absehbarer Nachteile verschoben, stattdessen erledigt man Unwichtiges, und es bleibt ein schlechtes Gewissen. Vieles passiert dann auf den letzten Drücker.'],
-  [2,'Erkläre, warum wir aufschieben.','Meist nicht aus Faulheit: Aufschieben ist oft ein Versuch, unangenehme Gefühle kurzfristig zu vermeiden – zum Preis von mehr Stress später (Sirois & Pychyl, 2013).'],
-  [2,'Erkläre, warum es hilft, sich das Aufschieben zu verzeihen.','Wer sich nach dem Aufschieben verzeiht, schiebt beim nächsten Mal weniger auf – Selbstvorwürfe halten dagegen die unangenehmen Gefühle am Leben (Wohl et al., 2010).'],
-  [2,'Erkläre, wie ein Wenn-dann-Plan funktioniert.','Du legst vorher fest: In Situation X mache ich Y. Die Situation wird dann zum Startsignal, und du musst nicht jedes Mal neu entscheiden (Gollwitzer & Sheeran, 2006).'],
-  [3,'Formuliere einen 5-Minuten-Start für eine Aufgabe, die du gerade aufschiebst.','Deine eigene Antwort. Beispiel: „Ich öffne heute um 17 Uhr das Skript, lese die Überschriften von Kapitel 3 und schreibe drei Fragen dazu auf.“']]},
- {id:'b8',n:8,t:'Klausurvorbereitung',c:'sky',q:[
-  [1,'Nenne die drei Anforderungsbereiche eurer Schule mit je einem Operator.','AFB I Wissen (z. B. nennen), AFB II Verständnis (z. B. erklären), AFB III Anwendung (z. B. anwenden, ermitteln).'],
-  [2,'Erläutere den Unterschied zwischen „nennen“ und „erläutern“.','„Nennen“: aufzählen, ohne zu erklären. „Erläutern“: einen Sachverhalt verständlich machen – mit Begründung und Beispielen.'],
-  [2,'Erkläre, warum eine durchlernte Nacht vor der Klausur keine gute Idee ist.','Im Schlaf wird das Gelernte gefestigt. Übermüdet speicherst du Neues deutlich schlechter ein und rufst schlechter ab (Yoo et al., 2007; Diekelmann & Born, 2010).'],
-  [3,'Erstelle einen groben Lernplan für eine Klausur in zehn Tagen.','Zum Beispiel: Themen in Unterthemen teilen, auf Tag 1–8 verteilen, jedes Unterthema mehrfach abrufen, Tag 9 nur wiederholen, Tag 10 Klausur. Puffer für Dienste einplanen.'],
-  [3,'Was machst du, wenn du in der Klausur einen Blackout hast?','Stift hinlegen, dreimal lang ausatmen, Füße auf den Boden, ein Stichwort zur Aufgabe aufschreiben – oder zur nächsten Aufgabe wechseln und später zurückkommen.']]}];
 const LVN=['','Wissen','Verständnis','Anwendung'];
-let pk={tab:'pakete',src:null,title:'',list:[],i:0,show:false,ans:'',res:[],lv:0,incoming:null,inErr:'',draft:{t:'',q:[[1,'',''],[2,'',''],[3,'','']]},link:'',qrErr:''};
+let pk={tab:'karten',src:null,title:'',list:[],i:0,show:false,ans:'',res:[],lv:0,incoming:null,inErr:'',draft:{t:'',q:[[1,'',''],[2,'',''],[3,'','']]},link:'',qrErr:''};
 const TKEY='lernkompass-tandem-v1';
 function tPacks(){return store.get(TKEY,[])}
 function tSave(a){store.set(TKEY,a)}
@@ -1626,20 +1762,15 @@ function quizView(){
     <div class="row"><button class="btn" id="pk-show">Lösung zeigen</button><button class="btn small ghost" id="pk-quit">Abbrechen</button></div>`}</div>`;
 }
 function vPakete(){
-  const T0=[['pakete','Fertige Pakete'],['tandem','Tandem']];
+  const T0=[['karten','Karteikarten'],['tandem','Tandem']];
   let body='';
   if(pk.src){body=quizView()}
-  else if(pk.tab==='pakete'){
-    body=`<div class="card" style="gap:10px"><h2>Welche Anforderungsbereiche?</h2><div class="seg" role="group" aria-label="Anforderungsbereich">${[[0,'Alle gemischt'],[1,'AFB I'],[2,'AFB II'],[3,'AFB III']].map(([v,l])=>`<button data-lv="${v}" aria-pressed="${pk.lv===v}">${l}</button>`).join('')}</div>
-     <p class="note">AFB I = Wissen (nennen) · AFB II = Verständnis (erklären) · AFB III = Anwendung (anwenden, beurteilen)</p></div>
-     <div class="paks"><button class="pak mix" data-pak="mix"><span class="pn">${ic('recall')}</span><b>Bunt gemischt</b><span class="d">10 Fragen aus allen Blöcken – die anspruchsvollste und wirksamste Variante.</span></button>
-     ${PAK.map(p=>{const c=p.q.filter(q=>!pk.lv||q[0]===pk.lv).length;return `<button class="pak" data-pak="${p.id}" style="--tc:var(--${p.c})" ${c?'':'disabled'}><span class="pn">${p.n}</span><b>${p.t}</b><span class="d">${c} ${c===1?'Frage':'Fragen'}</span></button>`}).join('')}</div>
-     <p class="src">Die Pakete passen zu den acht Blöcken des Moduls „Lernen lernen“. Gemischtes Üben ist anstrengender, hilft aber, Inhalte auseinanderzuhalten und flexibel abzurufen (Brunmair & Richter, 2019). Erst antworten, dann die Lösung ansehen: Das ist Abrufüben (Roediger & Karpicke, 2006).</p>`;}
+  else if(pk.tab==='karten'){body=kkView()}
   else {
     const mine=tPacks(),ents=entries().filter(e=>e.q&&e.q.some(x=>x.trim()));
     body=(pk.inErr?`<div class="box warm">${pk.inErr}</div>`:'')+
      (pk.incoming?`<div class="card incoming"><span class="tag">Neu für dich</span><h2>${esc(pk.incoming.t)}</h2><p>Dein Tandem hat dir <b>${pk.incoming.q.length} ${pk.incoming.q.length===1?'Frage':'Fragen'}</b> geschickt.</p>
-      <div class="row"><button class="btn" id="in-go">Jetzt beantworten</button><button class="btn ghost" id="in-save">Speichern</button></div></div>`:'')+
+      <div class="row"><button class="btn" id="in-go">Jetzt beantworten</button><button class="btn ghost" id="in-save">Speichern</button><button class="btn ghost" id="in-kk">Als Karteikarten speichern</button></div></div>`:'')+
      `<div class="card"><h2>Fragen für dein Tandem</h2><p>Formuliere Fragen zu einem Thema – dein Tandem beantwortet sie aus dem Kopf. Beim Fragen-Ausdenken lernst du gleich mit.</p>
       <label class="f">Thema<input type="text" id="td-t" maxlength="80" placeholder="z. B. Atmung – Block 3 Anatomie" value="${esc(pk.draft.t)}"></label>
       ${ents.length?`<label class="f">Fragen aus deinem Abruf übernehmen <span class="note" style="font-weight:400">(optional)</span><select id="td-from"><option value="">– auswählen –</option>${ents.map(e=>`<option value="${e.id}">${esc(e.thema)}</option>`).join('')}</select></label>`:''}
@@ -1653,15 +1784,12 @@ function vPakete(){
      (mine.length?`<div class="card"><h3>Gespeicherte Fragen-Pakete</h3><div class="hist">${mine.slice().reverse().map(m=>`<div class="h"><b>${esc(m.t)}</b><span class="note">${m.q.length} Fragen</span><span class="row" style="gap:6px;grid-column:1/-1"><button class="mini" data-tgo="${m.id}">Üben</button><button class="mini" data-tsh="${m.id}">Teilen</button><button class="mini x" data-tdelp="${m.id}">Löschen</button></span></div>`).join('')}</div></div>`:'')+
      `<div class="box info">Tipp für Lehrkräfte: Auf demselben Weg lassen sich Fragen an die ganze Klasse verteilen – Link in Moodle stellen oder QR-Code an die Wand werfen.</div>`;
   }
-  return head('Abrufen','Fragen-Pakete & Tandem','Fertige Abruf-Fragen zu allen Blöcken des Moduls – und ein einfacher Weg, Fragen mit deinem Tandem zu tauschen.','lernen')+
-   (pk.src?'':`<div class="chips" role="tablist" aria-label="Bereiche">${T0.map(([x,l])=>`<button class="chip" data-pktab="${x}" aria-pressed="${pk.tab===x}">${l}</button>`).join('')}</div>`)+body;
+  return head('Abrufen','Karteikarten & Tandem','Schreib deine eigenen Karteikarten und sortiere sie beim Üben: „Das kann ich schon“ oder „Das muss ich noch üben“. Und mit deinem Tandem tauscht ihr Fragen.','lernen')+
+   (pk.src||(pk.tab==='karten'&&kk.mode!=='list')?'':`<div class="chips" role="tablist" aria-label="Bereiche">${T0.map(([x,l])=>`<button class="chip" data-pktab="${x}" aria-pressed="${pk.tab===x}">${l}</button>`).join('')}</div>`)+body;
 }
 document.addEventListener('click',e=>{const b=e.target.closest('[data-pktab]');if(!b)return;pk.tab=b.dataset.pktab;pk.src=null;if(view!=='pakete')go('pakete');else render()});
 AFTER.pakete=()=>{
-  document.querySelectorAll('[data-lv]').forEach(b=>b.onclick=()=>{pk.lv=+b.dataset.lv;render()});
-  document.querySelectorAll('[data-pak]').forEach(b=>b.onclick=()=>{const id=b.dataset.pak;
-    if(id==='mix'){const all=PAK.flatMap(p=>p.q.filter(q=>!pk.lv||q[0]===pk.lv));pkStart('Bunt gemischt',shuffle(all).slice(0,10),'mix')}
-    else{const p=PAK.find(x=>x.id===id);pkStart('Block '+p.n+' · '+p.t,p.q.filter(q=>!pk.lv||q[0]===pk.lv),id)}});
+  if(pk.tab==='karten'&&!pk.src)kkBind();
   const an=$('#pk-ans');if(an)an.oninput=()=>pk.ans=an.value;
   const sh=$('#pk-show');if(sh)sh.onclick=()=>{pk.show=true;render()};
   const qt=$('#pk-quit');if(qt)qt.onclick=()=>{pk.src=null;render()};
@@ -1673,6 +1801,7 @@ AFTER.pakete=()=>{
   /* Tandem */
   const ig=$('#in-go');if(ig)ig.onclick=()=>pkStart(pk.incoming.t,pk.incoming.q,'in');
   const is=$('#in-save');if(is)is.onclick=()=>{const a=tPacks();a.push({id:uid(),t:pk.incoming.t,q:pk.incoming.q,ts:Date.now()});tSave(a.slice(-40));pk.incoming=null;toast('Gespeichert');render()};
+  const ik=$('#in-kk');if(ik)ik.onclick=()=>{kput({id:uid(),t:pk.incoming.t,created:Date.now(),cards:pk.incoming.q.map(x=>({id:uid(),q:x[1],a:x[2]||'(ohne Lösungshinweis – vergleiche mit deinen Unterlagen)',box:0,due:0}))});pk.incoming=null;pk.tab='karten';kk.mode='list';toast('Als Karteikarten gespeichert');render()};
   const tt=$('#td-t');if(tt)tt.oninput=()=>{pk.draft.t=tt.value;pk.link=''};
   const fr=$('#td-from');if(fr)fr.onchange=()=>{const e=entries().find(x=>x.id===fr.value);if(!e)return;pk.draft.t=pk.draft.t||e.thema;const qs=e.q.map((q,i)=>[Math.min(3,i+1),q,'']).filter(x=>x[1].trim());pk.draft.q=[...pk.draft.q.filter(x=>x[1].trim()),...qs].slice(0,8);if(!pk.draft.q.length)pk.draft.q=[[1,'','']];pk.link='';render()};
   document.querySelectorAll('[data-tdl]').forEach(b=>b.onclick=()=>{const [i,l]=b.dataset.tdl.split('|').map(Number);pk.draft.q[i][0]=l;pk.link='';document.querySelectorAll(`[data-tdl^="${i}|"]`).forEach(x=>x.setAttribute('aria-pressed',x===b))});
