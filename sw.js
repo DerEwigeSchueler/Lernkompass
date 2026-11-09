@@ -1,5 +1,5 @@
 // Offline-Speicher für die App. Bei jeder Änderung der App VERSION erhöhen.
-const VERSION = 'lk-v9';
+const VERSION = 'lk-v11';
 const FILES = [
   './', './index.html', './manifest.webmanifest', './qr.js',
   './fonts/kompass-serif.woff', './fonts/kompass-serif-italic.woff', './fonts/OFL.txt',

@@ -249,6 +249,78 @@ details.card[open] summary::after{content:"–"}
 .kiok{background:linear-gradient(140deg,var(--ok-l),var(--paper) 70%);border-color:color-mix(in srgb,var(--ok) 25%,transparent)}
 ol.steps li.must{background:var(--rose-l);border-radius:14px;padding:10px 12px}
 ol.steps li.must::before{border-color:var(--rose);color:var(--rose)}
+.itiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (min-width:760px){.itiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.itile{font:inherit;text-align:left;cursor:pointer;border-radius:24px;padding:0;border:1px solid var(--line);background:var(--paper);color:var(--body);display:flex;flex-direction:column;overflow:hidden;position:relative;box-shadow:var(--sh-2);transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.itile:hover,.itile:focus-visible{transform:translateY(-4px);box-shadow:var(--sh-3)}
+.itile .art{display:grid;place-items:center;height:118px;background:linear-gradient(165deg,var(--tl),var(--paper) 92%);border-bottom:1px solid color-mix(in srgb,var(--tc) 14%,transparent)}
+.itile .illu{width:min(150px,100%);height:112px;transition:transform .4s var(--ease)}
+.itile:hover .illu{transform:scale(1.06) translateY(-2px)}
+.itile .i-bg{fill:color-mix(in srgb,var(--tc) 13%,var(--paper))}
+.itile .txt{display:flex;flex-direction:column;gap:4px;padding:12px 14px 16px}
+.itile b{font-family:var(--serif);font-size:1.06rem;line-height:1.22;color:var(--ink)}
+.itile .fl{width:56px;height:6px;color:var(--tc);opacity:.75}
+.itile .d{font-size:.8rem;line-height:1.4;color:var(--body)}
+.itile .go{position:absolute;top:10px;right:12px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:.85rem;background:var(--paper);color:var(--tc);box-shadow:var(--sh-1);opacity:0;transform:translateX(-4px);transition:all .3s var(--ease)}
+.itile:hover .go,.itile:focus-visible .go{opacity:1;transform:none}
+@media (prefers-reduced-motion:no-preference){
+ .itile{animation:rise .5s var(--ease) both;animation-delay:calc(var(--i) * 60ms)}
+ .itile .i-breathe{transform-box:fill-box;transform-origin:center;animation:ibreathe 5s ease-in-out infinite}
+ .itile .i-twinkle{transform-box:fill-box;transform-origin:center;animation:itw 2.6s ease-in-out infinite}
+ .itile .i-float{transform-box:fill-box;transform-origin:center;animation:ifloat 4s ease-in-out infinite}
+ .itile .i-pop{transform-box:fill-box;transform-origin:center;animation:ipop 3.2s ease-in-out infinite}
+ .itile .i-wave{transform-box:fill-box;transform-origin:left center;animation:iwave 1.8s ease-in-out infinite}
+ .itile .i-draw{stroke-dasharray:30;animation:idraw 3.4s ease-in-out infinite}
+ .itile .i-zz{animation:izz 3s ease-in-out infinite}
+ .itile .i-tick{transform-box:fill-box;transform-origin:50% 100%;animation:itick 6s steps(12) infinite}
+ .itile .i-pen{transform-box:fill-box;transform-origin:center;animation:ipen 2.4s ease-in-out infinite}
+ .itile .i-glass{transform-box:fill-box;transform-origin:center;animation:iglass 5s ease-in-out infinite}
+ .itile .d2{animation-delay:.8s}.itile .d3{animation-delay:1.6s}
+}
+@keyframes ibreathe{0%,100%{transform:scale(.88);opacity:.25}50%{transform:scale(1.06);opacity:.6}}
+@keyframes itw{0%,100%{transform:scale(.6) rotate(0);opacity:.5}50%{transform:scale(1.1) rotate(20deg);opacity:1}}
+@keyframes ifloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes ipop{0%,100%{transform:scale(1)}15%{transform:scale(1.35)}30%{transform:scale(1)}}
+@keyframes iwave{0%,100%{transform:skewY(0) scaleX(1)}50%{transform:skewY(-8deg) scaleX(.92)}}
+@keyframes idraw{0%{stroke-dashoffset:30}40%,80%{stroke-dashoffset:0}100%{stroke-dashoffset:30}}
+@keyframes izz{0%{transform:translate(0,4px);opacity:0}30%{opacity:1}100%{transform:translate(6px,-8px);opacity:0}}
+@keyframes itick{to{transform:rotate(360deg)}}
+@keyframes ipen{0%,100%{transform:translate(0,0) rotate(0)}25%{transform:translate(-3px,2px) rotate(-6deg)}50%{transform:translate(-6px,0) rotate(0)}75%{transform:translate(-3px,-2px) rotate(6deg)}}
+@keyframes iglass{0%,100%{transform:translate(0,0)}50%{transform:translate(-10px,6px)}}
+html.noscroll,html.noscroll body{overflow:hidden}
+.gate{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:16px;background:rgba(47,43,58,.42);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .3s var(--ease)}
+.gate.on{opacity:1}
+.gate-card{width:min(720px,100%);max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain;background:var(--paper);border-radius:28px;border:1px solid var(--line);box-shadow:0 30px 80px -20px rgba(47,43,58,.45);padding:26px 22px 0;display:flex;flex-direction:column;gap:14px;transform:translateY(16px) scale(.98);transition:transform .4s var(--ease)}
+.gate.on .gate-card{transform:none}
+.gate-card h1{font-family:var(--serif);font-size:clamp(1.5rem,5vw,2rem);line-height:1.15;color:var(--ink);margin:0;outline:none}
+.gate-card .lead{margin:0}
+.gate-end{height:1px;flex:none}
+.gate-foot{position:sticky;bottom:0;margin:0 -22px;padding:14px 22px calc(14px + env(safe-area-inset-bottom));background:var(--paper);display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;border-top:1px solid var(--line)}
+.gate-hint{font-size:.82rem;color:var(--muted)}
+.gate-ck{background:var(--lav-l)!important}
+.ampel{display:flex;flex-direction:column;gap:10px}
+.am{border-radius:20px;padding:14px 16px;border:1px solid var(--line)}
+.am.go{background:var(--ok-l)}.am.ask{background:var(--gold-l)}.am.no{background:var(--no-l)}
+.amh{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.amh h3{margin:0;font-family:var(--serif);font-size:1.08rem;color:var(--ink)}
+.amh .dot{width:14px;height:14px;border-radius:50%;flex:none}
+.am.go .dot{background:var(--ok);box-shadow:0 0 0 4px color-mix(in srgb,var(--ok) 20%,transparent)}.am.ask .dot{background:var(--gold);box-shadow:0 0 0 4px color-mix(in srgb,var(--gold) 20%,transparent)}.am.no .dot{background:var(--no);box-shadow:0 0 0 4px color-mix(in srgb,var(--no) 20%,transparent)}
+ul.rl{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:5px;font-size:.9rem;line-height:1.45}
+ul.rl b{color:var(--ink)}
+.why h3{font-family:var(--serif);font-size:1.02rem;color:var(--ink);margin:4px 0 8px}
+.whyg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:480px){.whyg{grid-template-columns:1fr}}
+.whyg div{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;font-size:.84rem}
+.whyg b{color:var(--ink);font-size:.86rem}
+.dodont{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:560px){.dodont{grid-template-columns:1fr}}
+.dd{border-radius:20px;padding:14px 16px}
+.dd.do{background:var(--ok-l)}.dd.dont{background:var(--no-l)}
+.dd h3{display:flex;align-items:center;gap:8px;margin:0 0 8px;font-family:var(--serif);font-size:1.05rem;color:var(--ink)}
+.dd h3 svg{width:24px;height:24px;padding:3px;border-radius:50%;background:var(--paper);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.dd.do h3 svg{color:var(--ok)}.dd.dont h3 svg{color:var(--no)}
+.dd ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:.88rem;line-height:1.45}
+.dd b{color:var(--ink)}
 ul.plain{margin:0;padding-left:18px;font-size:.93rem;display:flex;flex-direction:column;gap:4px}
 .cite{border-left:1px solid var(--line2);padding:2px 0 2px 14px;font-size:.88rem;display:flex;flex-direction:column;gap:3px}
 .cite .ref{font-size:.79rem;color:var(--muted)}
@@ -473,6 +545,8 @@ function Timer(sec,tick,end){let e=0,id=null;const t={start(){e=Date.now()+sec*1
 
 /* ---------- Icons ---------- */
 const I={
+ x:'<path d="M7 7l10 10M17 7L7 17"/>',
+ shield:'<path d="M12 3.5l7 2.6v5.2c0 4.3-3 7.6-7 9.2-4-1.6-7-4.9-7-9.2V6.1z"/><path d="m9 12 2.2 2.2L15.5 10"/>',
  week:'<rect x="4" y="5.5" width="16" height="14" rx="3"/><path d="M8 3.5v4M16 3.5v4M4 10h16"/><path d="m9.5 14.5 2 2 3.5-3.5"/>',
  flag:'<path d="M5.5 20.5V4"/><path d="M5.5 4.5h11.5l-2.4 3.8 2.4 3.7H5.5"/>',
  moon:'<path d="M19 14.6A7.6 7.6 0 0 1 9.4 5a7.6 7.6 0 1 0 9.6 9.6z"/><path d="M16.5 3.5v3M15 5h3"/>',
@@ -496,6 +570,7 @@ const ic=(k,c)=>`<svg viewBox="0 0 24 24" fill="none" stroke="${c||'currentColor
 
 /* ---------- Quellen (DOIs am 25./26.10.2026 über Crossref geprüft) ---------- */
 const REF={
+ bastani2025:{a:'Bastani, H., Bastani, O., Sungu, A., Ge, H., Kabakcı, Ö., & Mariman, R. (2025).',t:'Generative AI without guardrails can harm learning: Evidence from high school mathematics.',j:'Proceedings of the National Academy of Sciences, 122',v:'(26), Artikel e2422633122.',doi:'10.1073/pnas.2422633122',k:'Bastani et al., 2025'},
  harkin2016:{a:'Harkin, B., Webb, T. L., Chang, B. P. I., Prestwich, A., Conner, M., Kellar, I., Benn, Y., & Sheeran, P. (2016).',t:'Does monitoring goal progress promote goal attainment? A meta-analysis of the experimental evidence.',j:'Psychological Bulletin, 142',v:'(2), 198–229.',doi:'10.1037/bul0000025',k:'Harkin et al., 2016'},
  bosshard2024:{a:'Bosshard, M., & Gomez, P. (2024).',t:'Effectiveness of stress arousal reappraisal and stress-is-enhancing mindset interventions on task performance outcomes: A meta-analysis of randomized controlled trials.',j:'Scientific Reports, 14',v:', Artikel 7923.',doi:'10.1038/s41598-024-58408-w',k:'Bosshard & Gomez, 2024'},
  camerer2018:{a:'Camerer, C. F., Dreber, A., Holzmeister, F., Ho, T.-H., Huber, J., Johannesson, M., Kirchler, M., Nave, G., Nosek, B. A., Pfeiffer, T., Altmejd, A., Buttrick, N., Chan, T., Chen, Y., Forsell, E., Gampa, A., Heikensten, E., Hummer, L., Imai, T., … Wu, H. (2018).',t:'Evaluating the replicability of social science experiments in Nature and Science between 2010 and 2015.',j:'Nature Human Behaviour, 2',v:'(9), 637–644.',doi:'10.1038/s41562-018-0399-z',k:'Camerer et al., 2018'},
@@ -676,7 +751,7 @@ const evBadge=e=>`<span class="ev e${e}"><i>${[1,2,3].map(k=>`<em class="${k<=e?
 
 /* ---------- Navigation ---------- */
 const TABS=[['start','Start','home'],['plan','Plan','plan'],['finder','Finder','compass'],['methoden','Methoden','book'],['abruf','Abrufen','recall'],['timer','Timer','timer'],['mehr','Mehr','more']];
-const MEHR=['mehr','anfangen','ki','auswerten','quellen','durchatmen','schlaf','klausurtag','woche'];
+const MEHR=['mehr','anfangen','ki','auswerten','quellen','durchatmen','schlaf','klausurtag','woche','regeln'];
 let view='start',param=null;
 function go(v,p){stopTimers();view=v;param=p||null;render();window.scrollTo({top:0})}
 $('#tabs').insertAdjacentHTML('beforeend',TABS.map(([k,l,i])=>`<button data-tab="${k}">${ic(i)}<span>${l}</span></button>`).join(''));
@@ -690,7 +765,7 @@ const foot=`<footer>${FL.replace('class="flourish"','class="flourish" style="max
 
 function render(){
   document.querySelectorAll('#tabs button').forEach(b=>b.setAttribute('aria-current',(b.dataset.tab===view||(view==='methode'&&b.dataset.tab==='methoden')||(view==='pakete'&&b.dataset.tab==='abruf')||(b.dataset.tab==='mehr'&&MEHR.includes(view)))?'page':'false'));
-  const R={start:vStart,plan:vPlan,finder:vFinder,methoden:vMethoden,methode:vMethode,abruf:vAbruf,timer:vTimer,mehr:vMehr,auswerten:vEval,durchatmen:vDurch,schlaf:vSchlaf,klausurtag:vKlausur,pakete:vPakete,woche:vWoche,anfangen:vAnfangen,ki:vKI,quellen:vQuellen}[view]||vStart;
+  const R={start:vStart,plan:vPlan,finder:vFinder,methoden:vMethoden,methode:vMethode,abruf:vAbruf,timer:vTimer,mehr:vMehr,auswerten:vEval,durchatmen:vDurch,schlaf:vSchlaf,klausurtag:vKlausur,pakete:vPakete,woche:vWoche,regeln:vRegeln,anfangen:vAnfangen,ki:vKI,quellen:vQuellen}[view]||vStart;
   const app=$('#app');app.classList.remove('enter');app.innerHTML=R()+foot;void app.offsetWidth;app.classList.add('enter');
   (AFTER[view]||(()=>{}))();movePill();ftLive();
 }
@@ -717,7 +792,7 @@ function vStart(){
    ['timer','Fokus-Timer','Eine Sache, volle Aufmerksamkeit – mit festen Pausen.','timer','lav'],
    ['anfangen','Anfangen statt Aufschieben','Wenn es gerade schwerfällt: der passende kleine Schritt.','start','sky'],
    ['auswerten','Lerntagebuch','Nach dem Lernen auswerten – und herausfinden, was bei dir wirkt.','eval','gold'],
-   ['ki','Probeklausur mit KI','Schritt für Schritt – passend zu den Taxonomiestufen eurer Schule.','spark','rose']];
+   ['ki','Probeklausur mit KI','Schritt für Schritt – passend zu den Anforderungsbereichen eurer Schule.','spark','rose']];
   return head('Lernen lernen','Lernkompass','Finde die Lernmethode, die zu deinem Ziel passt – und fang gleich an.','winken')+
  welcomeCard()+ktCard()+wrCard()+
   `<div class="sec"><h2 style="font-size:1.15rem">Dein Weg in vier Schritten</h2><div class="steps3 four">
@@ -760,7 +835,7 @@ AFTER.start=()=>{const ok=$('#w-ok');if(ok)ok.onclick=()=>{store.set(WKEY,true);
 
 /* ---------- Finder ---------- */
 const FQ=[
- {k:'ziel',why:'Je nach Ziel passen andere Methoden: Für den Überblick hilft eine Concept-Map, fürs dauerhafte Merken vor allem Abrufen und Wiederholen.',q:'Was ist dein Ziel für diese Lerneinheit?',o:[['ueberblick','Mir einen Überblick verschaffen','Was gehört alles zu diesem Thema?'],['verstehen','Etwas wirklich verstehen','Zusammenhänge, Warum-Fragen'],['behalten','Mir etwas dauerhaft merken','Fachbegriffe, Normwerte, Abläufe'],['anwenden','Wissen anwenden können','Fallaufgaben, Praxis, Taxonomiestufe 3'],['wiederholen','Stoff vor einer Prüfung wiederholen','Den ich eigentlich schon gelernt habe']]},
+ {k:'ziel',why:'Je nach Ziel passen andere Methoden: Für den Überblick hilft eine Concept-Map, fürs dauerhafte Merken vor allem Abrufen und Wiederholen.',q:'Was ist dein Ziel für diese Lerneinheit?',o:[['ueberblick','Mir einen Überblick verschaffen','Was gehört alles zu diesem Thema?'],['verstehen','Etwas wirklich verstehen','Zusammenhänge, Warum-Fragen'],['behalten','Mir etwas dauerhaft merken','Fachbegriffe, Normwerte, Abläufe'],['anwenden','Wissen anwenden können','Fallaufgaben, Praxis, Anforderungsbereich III'],['wiederholen','Stoff vor einer Prüfung wiederholen','Den ich eigentlich schon gelernt habe']]},
  {k:'stoff',why:'Begriffe lernt man anders als Zusammenhänge oder lange Texte. Und leicht verwechselbare Themen profitieren vom gemischten Üben.',q:'Welche Art von Stoff hast du vor dir?',o:[['fakten','Fachbegriffe, Zahlen, Fakten','z. B. Normwerte, Anatomie'],['zusammenhang','Abläufe und Zusammenhänge','z. B. Krankheitsentstehung, Pflegeprozess'],['text','Einen langen Fachtext','z. B. Lehrbuchkapitel, Skript'],['faelle','Ähnliche Themen, die man verwechseln kann','z. B. Krankheitsbilder, Medikamentengruppen']]},
  {k:'pruefung',why:'Kurz vor einer Prüfung lohnt es sich, zu prüfen, was sitzt. Mit mehr Zeit kannst du in mehreren kurzen Runden lernen – das hält länger.',q:'Wann ist die nächste Prüfung zu diesem Stoff?',o:[['offen','Noch keine bestimmt',''],['lang','In mehr als einer Woche',''],['kurz','In 2 bis 7 Tagen',''],['morgen','Morgen oder übermorgen','']]},
  {k:'zeit',why:'Manche Methoden brauchen Anlauf. In 10 Minuten schlage ich dir nur Methoden vor, die auch in 10 Minuten funktionieren.',q:'Wie viel Zeit hast du jetzt?',o:[['10','Etwa 10 Minuten',''],['25','Etwa 25 Minuten',''],['45','45 Minuten oder mehr','']]},
@@ -899,7 +974,7 @@ AFTER.methode=()=>{document.querySelectorAll('[data-ref]').forEach(b=>b.onclick=
 
 /* ---------- Abrufen ---------- */
 let ab={step:0,thema:'',sub:'',ziel:'',mode:'frei',dump:'',gaps:'',q:['','',''],conf:null,mins:3,review:null};
-const OPS=[['l1','Stufe 1 · Wissen','nennen, aufzählen, angeben, wiedergeben, bezeichnen'],['l2','Stufe 2 · Verständnis','erklären, begründen, erläutern, beschreiben, verdeutlichen'],['l3','Stufe 3 · Anwendung','anwenden, ermitteln, erarbeiten, herausfinden, entwickeln']];
+const OPS=[['l1','AFB I · Wissen','nennen, aufzählen, angeben, wiedergeben, bezeichnen'],['l2','AFB II · Verständnis','erklären, begründen, erläutern, beschreiben, verdeutlichen'],['l3','AFB III · Anwendung','anwenden, ermitteln, erarbeiten, herausfinden, entwickeln']];
 function vAbruf(){
   if(ab.review)return vReview();
   const fl=['Planen','Aus dem Kopf','Vergleichen','Fragen','Plan'];
@@ -930,7 +1005,7 @@ function vAbruf(){
     <div class="box info"><b>Warum vergleichen so wichtig ist:</b> Erinnern ist kein Abspielen, sondern ein Rekonstruieren. Schon Bartlett (1932) zeigte, dass Erinnerungen beim wiederholten Nacherzählen vereinfacht und an eigene Erwartungen angepasst werden. Der Abgleich mit den Unterlagen schützt davor, Fehler einzuprägen.</div>
     <div class="row"><button class="btn ghost" id="ab-prev">Zurück</button><button class="btn" id="ab-next">Weiter zu den Fragen</button></div></div>`;
   } else if(ab.step===3){
-    body=`<div class="card"><h2>Drei Fragen für dein zukünftiges Ich</h2><p>Schreib je eine Frage pro Taxonomiestufe. Die beantwortest du bei der nächsten Wiederholung aus dem Kopf.</p>
+    body=`<div class="card"><h2>Drei Fragen für dein zukünftiges Ich</h2><p>Schreib je eine Frage pro Anforderungsbereich. Die beantwortest du bei der nächsten Wiederholung aus dem Kopf.</p>
     ${OPS.map(([c,l,v],i)=>`<div class="qrow"><span class="lvl ${c}">${i+1}</span><label class="f">${l}<input type="text" data-q="${i}" maxlength="200" placeholder="${v.split(',')[0][0].toUpperCase()+v.split(',')[0].slice(1)} …" value="${esc(ab.q[i])}"><span class="note">Operatoren: ${v}</span></label></div>`).join('')}
     <div><div class="note" style="margin-bottom:6px">Wie sicher fühlst du dich jetzt mit dem Thema?</div><div class="conf">${['unsicher','teils','ziemlich sicher'].map((c,i)=>`<button data-conf="${i}" aria-pressed="${ab.conf===i}">${c}</button>`).join('')}</div></div>
     <div class="row"><button class="btn ghost" id="ab-prev">Zurück</button><button class="btn" id="ab-save" ${ab.q.some(x=>x.trim())?'':'disabled'}>Speichern und Plan erstellen</button></div></div>`;
@@ -1174,11 +1249,46 @@ AFTER.auswerten=()=>{
     copy('Lernkompass – meine Methoden-Auswertung (anonym)\n'+lines.join('\n'),'Zusammenfassung kopiert')};
 };
 
+/* ---------- Illustrationen für „Mehr“ (eigene, frei erfundene Figuren im Stil der Kopf-Illustrationen) ---------- */
+const SKIN=['#F6D5BC','#EBB894','#C98D63','#94603F'];
+const spark=(x,y,s,c,cl='')=>`<path class="${cl}" d="M${x} ${y-s} Q${x+s*.18} ${y-s*.18} ${x+s} ${y} Q${x+s*.18} ${y+s*.18} ${x} ${y+s} Q${x-s*.18} ${y+s*.18} ${x-s} ${y} Q${x-s*.18} ${y-s*.18} ${x} ${y-s}Z" fill="${c}"/>`;
+function fig({cx=70,skin=1,hair='#7A4E33',style='bun',top='#B8DCC6',eyes='open',hood=null}={}){
+  const s=SKIN[skin],hy=70,f=[];
+  if(style==='long')f.push(`<rect x="${cx-21}" y="${hy-6}" width="42" height="40" rx="14" fill="${hair}"/>`);
+  if(hood)f.push(`<path d="M${cx-26} 140 L${cx-26} 96 Q${cx-26} ${hy-30} ${cx} ${hy-30} Q${cx+26} ${hy-30} ${cx+26} 96 L${cx+26} 140Z" fill="${hood}"/>`);
+  f.push(`<path d="M${cx-27} 141 L${cx-27} 113 Q${cx-27} 96 ${cx-11} 95 L${cx+11} 95 Q${cx+27} 96 ${cx+27} 113 L${cx+27} 141Z" fill="${top}"/>`);
+  f.push(`<rect x="${cx-5}" y="${hy+14}" width="10" height="9" rx="3" fill="${s}" opacity=".85"/>`);
+  if(!hood){f.push(`<circle cx="${cx-17}" cy="${hy+4}" r="3.6" fill="${s}"/><circle cx="${cx+17}" cy="${hy+4}" r="3.6" fill="${s}"/>`);
+    if(style==='bun')f.push(`<circle cx="${cx}" cy="${hy-21}" r="8" fill="${hair}"/>`);
+    if(style==='curly')[[-15,-10],[-8,-17],[0,-19],[8,-17],[15,-10]].forEach(([dx,dy])=>f.push(`<circle cx="${cx+dx}" cy="${hy+dy}" r="7" fill="${hair}"/>`));
+    f.push(`<circle cx="${cx}" cy="${hy}" r="18.5" fill="${hair}"/>`)}
+  f.push(`<ellipse cx="${cx}" cy="${hy+5}" rx="16" ry="15.5" fill="${s}"/>`);
+  if(!hood&&style!=='curly')f.push(`<path d="M${cx-16} ${hy+1} Q${cx-6} ${hy-6} ${cx+2} ${hy-9} Q${cx+12} ${hy-6} ${cx+16} ${hy+1} Q${cx+16} ${hy-14} ${cx} ${hy-15} Q${cx-16} ${hy-14} ${cx-16} ${hy+1}Z" fill="${hair}"/>`);
+  if(eyes==='closed')f.push(`<path d="M${cx-9} ${hy+5} q3 2.6 6 0 M${cx+3} ${hy+5} q3 2.6 6 0" stroke="#3B3846" stroke-width="1.6" fill="none" stroke-linecap="round"/>`);
+  else if(eyes==='happy')f.push(`<path d="M${cx-9} ${hy+6} q3 -3 6 0 M${cx+3} ${hy+6} q3 -3 6 0" stroke="#3B3846" stroke-width="1.6" fill="none" stroke-linecap="round"/>`);
+  else f.push(`<circle cx="${cx-6}" cy="${hy+5}" r="1.9" fill="#3B3846"/><circle cx="${cx+6}" cy="${hy+5}" r="1.9" fill="#3B3846"/>`);
+  f.push(`<circle cx="${cx-10}" cy="${hy+10}" r="3" fill="#F29D9D" opacity=".55"/><circle cx="${cx+10}" cy="${hy+10}" r="3" fill="#F29D9D" opacity=".55"/>`);
+  f.push(`<path d="M${cx-4} ${hy+12} q4 3.4 8 0" stroke="#3B3846" stroke-width="1.6" fill="none" stroke-linecap="round"/>`);
+  return f.join('');
+}
+const ILLU={
+ durchatmen:()=>`<circle class="i-breathe" cx="70" cy="76" r="40" fill="none" stroke="#4F86B8" stroke-width="1" opacity=".5"/><circle class="i-breathe d2" cx="70" cy="76" r="50" fill="none" stroke="#4F86B8" stroke-width=".8" opacity=".35" stroke-dasharray="2 4"/>${fig({skin:1,hair:'#3B2E2A',style:'long',top:'#A9CDEB',eyes:'closed'})}${spark(126,40,7,'#7FC4A3','i-twinkle')}<path class="i-float" d="M118 92 q8 -10 16 -2 q-8 10 -16 2z" fill="#9FD1B7"/>`,
+ woche:()=>`${fig({cx:58,skin:2,hair:'#26222B',style:'curly',top:'#F2DC93',eyes:'happy'})}<g transform="translate(98 52)"><rect width="44" height="48" rx="7" fill="#FFFDF9" stroke="#E2B865" stroke-width="1.4"/><rect width="44" height="12" rx="6" fill="#E2B865"/><rect y="6" width="44" height="6" fill="#E2B865"/>${[0,1,2,3,4,5,6].map(i=>`<circle class="i-pop" style="animation-delay:${i*.35}s" cx="${8+(i%4)*9.5}" cy="${22+Math.floor(i/4)*12}" r="3.2" fill="${i<5?'#4F8A68':'#E6E1EE'}"/>`).join('')}</g>${spark(134,36,6,'#E2B865','i-twinkle')}`,
+ klausurtag:()=>`${fig({cx:62,skin:0,hair:'#B5532F',style:'bun',top:'#F2BFCB',eyes:'happy'})}<g class="i-flag"><line x1="112" y1="38" x2="112" y2="104" stroke="#8C7F96" stroke-width="2.4" stroke-linecap="round"/><path class="i-wave" d="M113 40 q12 -4 22 2 q-10 6 0 14 q-12 -4 -22 2z" fill="#C06A7E"/></g><g transform="translate(46 104)"><rect width="34" height="28" rx="4" fill="#FFFDF9" stroke="#E3B8C8" stroke-width="1.2"/><path class="i-draw" d="M9 14 l6 6 l11 -12" fill="none" stroke="#4F8A68" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g>${spark(30,40,6,'#E2B865','i-twinkle')}`,
+ schlaf:()=>`<path class="i-float" d="M120 30 a18 18 0 1 0 14 26 a14 14 0 1 1 -14 -26z" fill="#E2B865"/>${spark(100,30,4,'#CFC3EC','i-twinkle')}${spark(142,70,5,'#CFC3EC','i-twinkle d2')}${fig({cx:62,skin:3,hair:'#26222B',style:'short',top:'#CFC3EC',eyes:'closed'})}<g class="i-zz" fill="#7A68B8" font-family="Georgia,serif" font-weight="700"><text x="88" y="58" font-size="11">z</text><text x="96" y="48" font-size="14">z</text></g>`,
+ anfangen:()=>`${fig({cx:58,skin:1,hair:'#7A4E33',style:'short',top:'#F7CDA6',eyes:'open'})}<g transform="translate(118 74)"><rect x="-4" y="-34" width="8" height="7" rx="2" fill="#C47F52"/><circle r="24" fill="#FFFDF9" stroke="#C47F52" stroke-width="2.4"/><circle r="2.4" fill="#C47F52"/><line class="i-tick" x1="0" y1="0" x2="0" y2="-16" stroke="#C47F52" stroke-width="2.4" stroke-linecap="round"/><text x="0" y="14" text-anchor="middle" font-size="9" font-family="Georgia,serif" font-weight="700" fill="#C47F52">5 Min.</text></g>${spark(30,44,6,'#7FC4A3','i-twinkle')}`,
+ auswerten:()=>`${fig({cx:70,skin:2,hair:'#3B2E2A',style:'bun',top:'#B8DCC6',eyes:'happy'})}<g transform="translate(46 100)"><path d="M0 4 Q12 0 24 4 L24 30 Q12 26 0 30Z" fill="#FFFDF9" stroke="#F2BFCB" stroke-width="1.6"/><path d="M48 4 Q36 0 24 4 L24 30 Q36 26 48 30Z" fill="#FFFDF9" stroke="#F2BFCB" stroke-width="1.6"/><path d="M5 12h14M5 18h12M29 12h14M29 18h10" stroke="#D9D3E6" stroke-width="1.6" stroke-linecap="round"/></g><g class="i-pen"><path d="M118 100 l14 -22 l5 3 l-14 22 l-6 2z" fill="#7A68B8"/></g><path class="i-float d2" d="M128 42 c-3 -5 -10 -2 -8 3 l8 7 l8 -7 c2 -5 -5 -8 -8 -3z" fill="#F29D9D"/>`,
+ ki:()=>`${fig({cx:56,skin:3,hair:'#26222B',top:'#A9CDEB',eyes:'open',hood:'#8C7FB0'})}<g transform="translate(96 46)"><rect width="40" height="52" rx="6" fill="#FFFDF9" stroke="#CFC3EC" stroke-width="1.4"/><path d="M8 14h24M8 22h20M8 30h24M8 38h14" stroke="#D9D3E6" stroke-width="1.8" stroke-linecap="round"/></g>${spark(138,40,8,'#7A68B8','i-twinkle')}${spark(92,40,5,'#C06A7E','i-twinkle d2')}${spark(134,104,5,'#E2B865','i-twinkle d3')}`,
+ regeln:()=>`${fig({cx:58,skin:2,hair:'#7A4E33',style:'long',top:'#F2BFCB',eyes:'happy'})}<g transform="translate(116 74)"><g class="i-float"><path d="M0 -26 l20 7 v14 c0 12 -9 21 -20 26 c-11 -5 -20 -14 -20 -26 v-14z" fill="#FBEBEF" stroke="#C06A7E" stroke-width="2.2"/><path class="i-draw" d="M-8 -1 l6 6 l11 -12" fill="none" stroke="#4F8A68" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></g></g>${spark(30,42,6,'#E2B865','i-twinkle')}`,
+ quellen:()=>`${fig({cx:56,skin:0,hair:'#E2B865',style:'long',top:'#B8DCC6',eyes:'open'})}<g transform="translate(100 78)"><rect y="30" width="44" height="11" rx="2.5" fill="#A9CDEB"/><rect x="3" y="19" width="40" height="11" rx="2.5" fill="#F2BFCB"/><rect x="-2" y="8" width="42" height="11" rx="2.5" fill="#B8DCC6"/></g><g class="i-glass"><circle cx="122" cy="62" r="11" fill="#FFFFFF" fill-opacity=".55" stroke="#4F86B8" stroke-width="2.6"/><line x1="130" y1="70" x2="138" y2="78" stroke="#4F86B8" stroke-width="3.2" stroke-linecap="round"/></g>${spark(30,40,6,'#7FC4A3','i-twinkle')}`
+};
+const illu=k=>`<svg class="illu" viewBox="0 0 160 140" aria-hidden="true"><circle class="i-bg" cx="80" cy="76" r="58"/>${(ILLU[k]||(()=>''))()}</svg>`;
+
 /* ---------- Mehr & Datensicherung ---------- */
 function vMehr(){
-  const T=[['durchatmen','Durchatmen','Atmen, bewegen, erden – wenn Lernen gerade nicht geht.','breath','sky'],['woche','Wochenrückblick','Fünf Minuten pro Woche: zurückschauen, Bremsen erkennen, nachsteuern.','week','gold'],['klausurtag','Klausurtag-Begleiter','Vom Abend davor bis zum Rückblick danach – mit Notfallkarte für den Blackout.','flag','rose'],['schlaf','Schlaf-Kompass','Gut schlafen bei Früh-, Spät- und Nachtdienst – und warum Schlaf zum Lernen gehört.','moon','lav'],['anfangen','Anfangen statt Aufschieben','Wenn es gerade schwerfällt: der passende kleine Schritt.','start','lav'],['auswerten','Lerntagebuch','Lerneinheiten auswerten – sehen, was bei dir wirkt.','eval','gold'],['ki','Probeklausur mit KI','Schritt für Schritt – passend zu den Taxonomiestufen eurer Schule.','spark','rose'],['quellen','Quellen','Alle Belege im APA-Format, mit geprüfter DOI.','src','sage']];
+  const T=[['durchatmen','Durchatmen','Atmen, bewegen, erden – wenn Lernen gerade nicht geht.','breath','sky'],['woche','Wochenrückblick','Fünf Minuten pro Woche: zurückschauen, Bremsen erkennen, nachsteuern.','week','gold'],['klausurtag','Klausurtag-Begleiter','Vom Abend davor bis zum Rückblick danach – mit Notfallkarte für den Blackout.','flag','rose'],['schlaf','Schlaf-Kompass','Gut schlafen bei Früh-, Spät- und Nachtdienst – und warum Schlaf zum Lernen gehört.','moon','lav'],['anfangen','Anfangen statt Aufschieben','Wenn es gerade schwerfällt: der passende kleine Schritt.','start','lav'],['auswerten','Lerntagebuch','Lerneinheiten auswerten – sehen, was bei dir wirkt.','eval','gold'],['ki','Probeklausur mit KI','Schritt für Schritt – passend zu den Anforderungsbereichen eurer Schule.','spark','rose'],['quellen','Quellen','Alle Belege im APA-Format, mit geprüfter DOI.','src','sage'],['regeln','Regeln & Datenschutz','Welches Material erlaubt ist – mit und ohne KI.','shield','rose']];
   return head('Mehr','Weitere Bereiche','Alles, was nicht in die Leiste unten gepasst hat – und die Sicherung deiner Daten.')+
-  `<div class="tiles">${T.map(([k,t,d,i,c])=>`<button class="tile" data-go="${k}" style="--tc:var(--${c})"><span class="ic" style="background:var(--${c}-l);color:var(--${c})">${ic(i)}</span><b>${t}</b><span class="d">${d}</span></button>`).join('')}</div>
+  `<div class="itiles">${T.map(([k,t,d,i,c],n)=>`<button class="itile" data-go="${k}" style="--tc:var(--${c});--tl:var(--${c}-l);--i:${n}"><span class="art">${illu(k)}</span><span class="txt"><b>${t}</b><svg class="fl" viewBox="0 0 80 6" aria-hidden="true"><path d="M1 3 C 14 0, 22 6, 36 3 S 58 0, 70 3" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><circle cx="75" cy="3" r="1.6" fill="currentColor"/></svg><span class="d">${d}</span></span><span class="go" aria-hidden="true">→</span></button>`).join('')}</div>
   <div class="card"><div class="row"><span class="ic" style="background:var(--lav-l);color:var(--lav)">${ic('data')}</span><h2>Deine Daten sichern</h2></div>
    <p>Lernplan, Wiederholungen und Lerntagebuch sind nur auf diesem Gerät gespeichert. Wenn du das Handy wechselst oder die Browserdaten löschst, sind sie weg – sichere sie deshalb ab und zu.</p>
    <div class="row"><button class="btn small" id="bk-copy">Sicherung kopieren</button><button class="btn small ghost" id="bk-file">Als Datei speichern</button></div>
@@ -1378,7 +1488,7 @@ function vKlausur(){
       <li><span><b>Mit etwas Leichtem beginnen.</b> Ein sicherer Einstieg beruhigt und bringt Punkte.</span></li>
       <li><span><b>Hängen geblieben?</b> Stichworte notieren, Aufgabe markieren, weitermachen – später zurückkommen.</span></li>
       <li><span><b>Am Ende:</b> Hast du alle Aufgaben gesehen? Passt die Antwort zum Operator?</span></li></ol>
-     <p class="src">Praxiswissen aus der Prüfungsvorbereitung. Die Operatoren entsprechen den Taxonomiestufen nach Bloom (Bloom et al., 1956; Anderson & Krathwohl, 2001) – mehr dazu bei der <button class="link" data-go="ki">Probeklausur mit KI</button>.</p></div>
+     <p class="src">Praxiswissen aus der Prüfungsvorbereitung. Die Operatoren entsprechen den Anforderungsbereichen I–III eurer Schule, angelehnt an die Taxonomie nach Bloom (Bloom et al., 1956; Anderson & Krathwohl, 2001) – mehr dazu bei der <button class="link" data-go="ki">Probeklausur mit KI</button>.</p></div>
      <div class="card sos"><h2>Blackout? Notfallkarte</h2><ol class="steps">
       <li><span><b>Stift hinlegen.</b> Du darfst kurz pausieren.</span></li>
       <li><span><b>Dreimal lang ausatmen</b> – länger aus als ein.</span></li>
@@ -1423,7 +1533,8 @@ AFTER.klausurtag=()=>{
 };
 
 /* ---------- Abruf-Pakete & Tandem ---------- */
-/* Fragen: [Stufe 1–3, Frage, Lösungshinweis] */
+/* Fragen: [Anforderungsbereich 1–3, Frage, Lösungshinweis] */
+const ROMAN=['','I','II','III'];
 const PAK=[
  {id:'b1',n:1,t:'Ankommen & Lernbiografie',c:'rose',q:[
   [1,'Nenne zwei Unterschiede zwischen dem Lernen in der Schule und dem Lernen in der Pflegeausbildung.','Zum Beispiel: Du lernst an zwei Lernorten (Schule und Praxis), die zusammenhängen. Du organisierst dein Lernen viel selbstständiger. Und du lernst für die Versorgung echter Menschen – nicht nur für Noten.'],
@@ -1468,7 +1579,7 @@ const PAK=[
   [2,'Erkläre, wie ein Wenn-dann-Plan funktioniert.','Du legst vorher fest: In Situation X mache ich Y. Die Situation wird dann zum Startsignal, und du musst nicht jedes Mal neu entscheiden (Gollwitzer & Sheeran, 2006).'],
   [3,'Formuliere einen 5-Minuten-Start für eine Aufgabe, die du gerade aufschiebst.','Deine eigene Antwort. Beispiel: „Ich öffne heute um 17 Uhr das Skript, lese die Überschriften von Kapitel 3 und schreibe drei Fragen dazu auf.“']]},
  {id:'b8',n:8,t:'Klausurvorbereitung',c:'sky',q:[
-  [1,'Nenne die drei Taxonomiestufen eurer Schule mit je einem Operator.','Stufe 1 Wissen (z. B. nennen), Stufe 2 Verständnis (z. B. erklären), Stufe 3 Anwendung (z. B. anwenden, ermitteln).'],
+  [1,'Nenne die drei Anforderungsbereiche eurer Schule mit je einem Operator.','AFB I Wissen (z. B. nennen), AFB II Verständnis (z. B. erklären), AFB III Anwendung (z. B. anwenden, ermitteln).'],
   [2,'Erläutere den Unterschied zwischen „nennen“ und „erläutern“.','„Nennen“: aufzählen, ohne zu erklären. „Erläutern“: einen Sachverhalt verständlich machen – mit Begründung und Beispielen.'],
   [2,'Erkläre, warum eine durchlernte Nacht vor der Klausur keine gute Idee ist.','Im Schlaf wird das Gelernte gefestigt. Übermüdet speicherst du Neues deutlich schlechter ein und rufst schlechter ab (Yoo et al., 2007; Diekelmann & Born, 2010).'],
   [3,'Erstelle einen groben Lernplan für eine Klausur in zehn Tagen.','Zum Beispiel: Themen in Unterthemen teilen, auf Tag 1–8 verteilen, jedes Unterthema mehrfach abrufen, Tag 9 nur wiederholen, Tag 10 Klausur. Puffer für Dienste einplanen.'],
@@ -1507,7 +1618,7 @@ function quizView(){
   const Q=pk.list[pk.i];
   return `<div class="card"><div class="row" style="justify-content:space-between"><span class="note">${esc(pk.title)}</span><span class="note">Frage ${pk.i+1} von ${n}</span></div>
    <div class="prog">${pk.list.map((_,i)=>`<i class="${i<pk.i?'done':''}"></i>`).join('')}</div>
-   <div class="qrow"><span class="lvl l${Q.l}">${Q.l}</span><div style="display:flex;flex-direction:column;gap:2px"><span class="note">Stufe ${Q.l} · ${LVN[Q.l]}</span><p class="qq">${esc(Q.q)}</p></div></div>
+   <div class="qrow"><span class="lvl l${Q.l}">${ROMAN[Q.l]}</span><div style="display:flex;flex-direction:column;gap:2px"><span class="note">Anforderungsbereich ${ROMAN[Q.l]} · ${LVN[Q.l]}</span><p class="qq">${esc(Q.q)}</p></div></div>
    ${pk.show?`<div class="box ${Q.a?'lav':'info'} reveal">${Q.a?`<b>Lösungshinweis:</b> ${esc(Q.a)}`:'Zu dieser Frage gibt es keinen Lösungshinweis. Vergleiche mit deinen Unterlagen oder frag dein Tandem.'}</div>
     ${pk.ans.trim()?`<div class="box ghostbox"><b>Deine Antwort:</b> ${esc(pk.ans)}</div>`:''}
     <div><div class="note" style="margin-bottom:6px">Ehrlich verglichen – wie war’s?</div><div class="conf">${['noch nicht','teilweise','gewusst'].map((c,i)=>`<button data-rate="${i}">${c}</button>`).join('')}</div></div>`
@@ -1519,8 +1630,8 @@ function vPakete(){
   let body='';
   if(pk.src){body=quizView()}
   else if(pk.tab==='pakete'){
-    body=`<div class="card" style="gap:10px"><h2>Welche Stufen?</h2><div class="seg" role="group" aria-label="Taxonomiestufe">${[[0,'Alle gemischt'],[1,'Stufe 1'],[2,'Stufe 2'],[3,'Stufe 3']].map(([v,l])=>`<button data-lv="${v}" aria-pressed="${pk.lv===v}">${l}</button>`).join('')}</div>
-     <p class="note">Stufe 1 = Wissen (nennen) · Stufe 2 = Verständnis (erklären) · Stufe 3 = Anwendung (anwenden, beurteilen)</p></div>
+    body=`<div class="card" style="gap:10px"><h2>Welche Anforderungsbereiche?</h2><div class="seg" role="group" aria-label="Anforderungsbereich">${[[0,'Alle gemischt'],[1,'AFB I'],[2,'AFB II'],[3,'AFB III']].map(([v,l])=>`<button data-lv="${v}" aria-pressed="${pk.lv===v}">${l}</button>`).join('')}</div>
+     <p class="note">AFB I = Wissen (nennen) · AFB II = Verständnis (erklären) · AFB III = Anwendung (anwenden, beurteilen)</p></div>
      <div class="paks"><button class="pak mix" data-pak="mix"><span class="pn">${ic('recall')}</span><b>Bunt gemischt</b><span class="d">10 Fragen aus allen Blöcken – die anspruchsvollste und wirksamste Variante.</span></button>
      ${PAK.map(p=>{const c=p.q.filter(q=>!pk.lv||q[0]===pk.lv).length;return `<button class="pak" data-pak="${p.id}" style="--tc:var(--${p.c})" ${c?'':'disabled'}><span class="pn">${p.n}</span><b>${p.t}</b><span class="d">${c} ${c===1?'Frage':'Fragen'}</span></button>`}).join('')}</div>
      <p class="src">Die Pakete passen zu den acht Blöcken des Moduls „Lernen lernen“. Gemischtes Üben ist anstrengender, hilft aber, Inhalte auseinanderzuhalten und flexibel abzurufen (Brunmair & Richter, 2019). Erst antworten, dann die Lösung ansehen: Das ist Abrufüben (Roediger & Karpicke, 2006).</p>`;}
@@ -1532,7 +1643,7 @@ function vPakete(){
      `<div class="card"><h2>Fragen für dein Tandem</h2><p>Formuliere Fragen zu einem Thema – dein Tandem beantwortet sie aus dem Kopf. Beim Fragen-Ausdenken lernst du gleich mit.</p>
       <label class="f">Thema<input type="text" id="td-t" maxlength="80" placeholder="z. B. Atmung – Block 3 Anatomie" value="${esc(pk.draft.t)}"></label>
       ${ents.length?`<label class="f">Fragen aus deinem Abruf übernehmen <span class="note" style="font-weight:400">(optional)</span><select id="td-from"><option value="">– auswählen –</option>${ents.map(e=>`<option value="${e.id}">${esc(e.thema)}</option>`).join('')}</select></label>`:''}
-      <div class="tdq">${pk.draft.q.map((q,i)=>`<div class="tdrow"><div class="row" style="justify-content:space-between"><div class="seg sm" role="group" aria-label="Stufe Frage ${i+1}">${[1,2,3].map(l=>`<button data-tdl="${i}|${l}" aria-pressed="${q[0]===l}">Stufe ${l}</button>`).join('')}</div>${pk.draft.q.length>1?`<button class="mini x" data-tddel="${i}" aria-label="Frage entfernen">×</button>`:''}</div>
+      <div class="tdq">${pk.draft.q.map((q,i)=>`<div class="tdrow"><div class="row" style="justify-content:space-between"><div class="seg sm" role="group" aria-label="Anforderungsbereich Frage ${i+1}">${[1,2,3].map(l=>`<button data-tdl="${i}|${l}" aria-pressed="${q[0]===l}">AFB ${ROMAN[l]}</button>`).join('')}</div>${pk.draft.q.length>1?`<button class="mini x" data-tddel="${i}" aria-label="Frage entfernen">×</button>`:''}</div>
         <input type="text" data-tdq="${i}" maxlength="240" placeholder="Frage ${i+1}" value="${esc(q[1])}"><input type="text" data-tda="${i}" maxlength="400" placeholder="Lösungshinweis (optional)" value="${esc(q[2])}"></div>`).join('')}</div>
       <div class="row">${pk.draft.q.length<8?'<button class="btn small ghost" id="td-add">+ Frage</button>':''}<button class="btn" id="td-make">Link und QR-Code erstellen</button></div>
       ${pk.link?`<div class="share">${(()=>{try{return pk.link.length<=2200?qrSVG(pk.link):'<p class="note">Zu viele Zeichen für einen QR-Code – bitte den Link teilen oder Fragen kürzen.</p>'}catch(e){return '<p class="note">QR-Code konnte nicht erstellt werden – bitte den Link teilen.</p>'}})()}
@@ -1797,9 +1908,9 @@ const KCK=[['daten','Mein Material enthält <b>keine Patientendaten</b>, keine e
  ['erlaubt','Die Lehrkraft, von der das Material stammt, hat mir <b>erlaubt</b>, es in eine KI zu geben.',()=>ki.src.includes('lehrkraft')],
  ['zsf','Ich verwende <b>meine eigene Zusammenfassung</b> – keine kopierten Buchseiten oder ganzen Artikel.',()=>ki.src.includes('buch')]];
 function kiValid(){return ki.src.length>0&&!ki.src.includes('praxis')&&KCK.every(([k,,need])=>!need()||ki.ck[k])}
-const OPTAB=[['1 · Wissen','Gelerntes wiedergeben: Fakten, Begriffe, Methoden','nennen, angeben, aufzählen, wiedergeben, bezeichnen, vervollständigen, aufschreiben','Stichpunkte'],
- ['2 · Verständnis','Sachverhalte erfassen und mit eigenen Worten erklären','erklären, begründen, erläutern, beschreiben, umschreiben, schildern, präzisieren, verdeutlichen','ganze Sätze'],
- ['3 · Anwendung','Gelerntes in einer neuen Situation anwenden, z. B. an einem Fall aus der Praxis','anwenden, ermitteln, erarbeiten, herausfinden, entwickeln, ausführen','ganze Sätze']];
+const OPTAB=[['AFB I · Wissen','Gelerntes wiedergeben: Fakten, Begriffe, Methoden','nennen, angeben, aufzählen, wiedergeben, bezeichnen, vervollständigen, aufschreiben','Stichpunkte'],
+ ['AFB II · Verständnis','Sachverhalte erfassen und mit eigenen Worten erklären','erklären, begründen, erläutern, beschreiben, umschreiben, schildern, präzisieren, verdeutlichen','ganze Sätze'],
+ ['AFB III · Anwendung','Gelerntes in einer neuen Situation anwenden, z. B. an einem Fall aus der Praxis','anwenden, ermitteln, erarbeiten, herausfinden, entwickeln, ausführen','ganze Sätze']];
 function split(n,mix){if(mix==='anwendung'){const a=Math.round(n*.25),c=Math.round(n*.4);return [a,n-a-c,c]}const a=Math.round(n/3),b=Math.round(n/3);return [a,b,n-a-b]}
 function prompt1(){
   const [a,b,c]=split(ki.n,ki.mix),th=ki.thema.trim()||'[THEMA EINTRAGEN]';
@@ -1807,17 +1918,17 @@ function prompt1(){
 
 Verwende AUSSCHLIESSLICH die Inhalte aus meinem Lernmaterial weiter unten. Erfinde keine Fakten. Wenn mein Material für eine Aufgabe nicht ausreicht, schreib das offen dazu, statt etwas zu ergänzen.
 
-Unsere Schule formuliert Aufgaben nach drei Taxonomiestufen (nach Bloom). Nutze genau diese Operatoren:
-- Stufe 1 – Wissen (Antwort in Stichpunkten): nennen, angeben, aufzählen, wiedergeben, bezeichnen, vervollständigen, aufschreiben
-- Stufe 2 – Verständnis (Antwort in ganzen Sätzen): erklären, begründen, erläutern, beschreiben, umschreiben, schildern, präzisieren, verdeutlichen
-- Stufe 3 – Anwendung (Antwort in ganzen Sätzen): anwenden, ermitteln, erarbeiten, herausfinden, entwickeln, ausführen
+Unsere Schule formuliert Aufgaben nach drei Anforderungsbereichen (AFB I–III). Nutze genau diese Operatoren:
+- AFB I – Wissen (Antwort in Stichpunkten): nennen, angeben, aufzählen, wiedergeben, bezeichnen, vervollständigen, aufschreiben
+- AFB II – Verständnis (Antwort in ganzen Sätzen): erklären, begründen, erläutern, beschreiben, umschreiben, schildern, präzisieren, verdeutlichen
+- AFB III – Anwendung (Antwort in ganzen Sätzen): anwenden, ermitteln, erarbeiten, herausfinden, entwickeln, ausführen
 
 Anforderungen:
-- ${ki.n} Aufgaben: ${a} × Stufe 1, ${b} × Stufe 2, ${c} × Stufe 3.
+- ${ki.n} Aufgaben: ${a} × AFB I, ${b} × AFB II, ${c} × AFB III.
 - Bearbeitungszeit insgesamt: ${ki.zeit} Minuten.
-- Jede Aufgabe beginnt mit einem Operator. Kennzeichne hinter jeder Aufgabe die Stufe und eine Punktzahl zur Orientierung, z. B. „(Stufe 2 · 4 Punkte)“.
+- Jede Aufgabe beginnt mit einem Operator. Kennzeichne hinter jeder Aufgabe den Anforderungsbereich und eine Punktzahl zur Orientierung, z. B. „(AFB II · 4 Punkte)“.
 - Gib bei Aufzählungen an, wie viele Aspekte erwartet werden, z. B. „Nennen Sie drei …“.${ki.fall?`
-- Baue die Aufgaben der Stufe 3 auf einer kurzen, realistischen Fallsituation aus der Pflege auf. Verwende einen erfundenen Namen und keine echten Patientendaten.`:''}
+- Baue die Aufgaben des AFB III auf einer kurzen, realistischen Fallsituation aus der Pflege auf. Verwende einen erfundenen Namen und keine echten Patientendaten.`:''}
 - Formuliere klar und eindeutig, ohne Fangfragen.
 - Gib noch KEINE Lösungen aus. Warte, bis ich „Lösung“ schreibe.
 
@@ -1830,7 +1941,7 @@ function prompt2(){
 Erstelle jetzt einen Erwartungshorizont zu jeder Aufgabe:
 - Was muss eine vollständige Antwort enthalten? Nenne die erwarteten Aspekte.
 - Wie verteilen sich die Punkte?
-- Woran erkennt man, ob die Antwortform zur Taxonomiestufe passt (Stichpunkte bei Stufe 1, ganze Sätze bei Stufe 2 und 3)?
+- Woran erkennt man, ob die Antwortform zum Anforderungsbereich passt (Stichpunkte bei AFB I, ganze Sätze bei AFB II und 3)?
 
 Hier sind meine Antworten. Gib mir zu jeder Aufgabe eine freundliche, konkrete Rückmeldung: Was ist schon richtig? Was fehlt? Was ist fachlich falsch? Beziehe dich nur auf mein Lernmaterial. Wenn du dir bei einer Aussage nicht sicher bist, kennzeichne das.
 
@@ -1853,9 +1964,9 @@ function kiGate(){
    <p class="src">Deine Bestätigung wird nicht gespeichert und nicht gesendet. Sie ist deine Selbstverpflichtung und gilt nur für diesen Besuch.</p></div>`;
 }
 function vKI(){
-  return head('Probeklausur mit KI','Probeklausur in 7 Schritten','Mit einem KI-Chat (z. B. Claude oder ChatGPT) kannst du aus deinen eigenen Unterlagen eine Probeklausur machen – passend zu den Taxonomiestufen eurer Schule. Die Klausur ist dann eine Abrufübung.','lernen')+
-  `<div class="card"><h2>Die Taxonomiestufen eurer Schule</h2><div class="tw"><table class="optable"><thead><tr><th>Stufe</th><th>Was verlangt ist</th><th>Operatoren</th><th>Antwort</th></tr></thead><tbody>${OPTAB.map(r=>`<tr>${r.map((c,i)=>`<td>${i===0?'<b>'+c+'</b>':c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
-  <p class="src">Nach dem Taxonomie-Blatt eurer Pflegeschule (nach Bloom, 1956; Schewior-Popp, 2005). Zur überarbeiteten Taxonomie siehe Anderson & Krathwohl (2001).</p></div>
+  return head('Probeklausur mit KI','Probeklausur in 7 Schritten','Mit einem KI-Chat (z. B. Claude oder ChatGPT) kannst du aus deinen eigenen Unterlagen eine Probeklausur machen – passend zu den Anforderungsbereichen eurer Schule. Die Klausur ist dann eine Abrufübung.','lernen')+
+  `<div class="card"><h2>Die Anforderungsbereiche eurer Schule</h2><div class="tw"><table class="optable"><thead><tr><th>Anforderungsbereich</th><th>Was verlangt ist</th><th>Operatoren</th><th>Antwort</th></tr></thead><tbody>${OPTAB.map(r=>`<tr>${r.map((c,i)=>`<td>${i===0?'<b>'+c+'</b>':c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
+  <p class="src">Nach dem Blatt mit den Anforderungsbereichen eurer Pflegeschule (nach Bloom, 1956; Schewior-Popp, 2005). Zur überarbeiteten Taxonomie siehe Anderson & Krathwohl (2001).</p></div>
   <div class="card"><h2>So gehst du vor</h2><ol class="steps">
    <li class="must"><span><b>Regeln klären.</b> Frag nach, ob und wie eure Schule KI-Werkzeuge erlaubt. Zum Üben zu Hause ist das meist unproblematisch – in Prüfungen nicht.</span></li>
    <li class="must"><span><b>Datenschutz und Urheberrecht beachten.</b> Lade <b>keine Patientendaten</b>, keine echten Namen und nichts aus der Pflegedokumentation hoch. <b>Skripte, Folien und Arbeitsblätter von Lehrkräften nur mit deren Zustimmung.</b> Am sichersten ist deine eigene Mitschrift.</span></li>
@@ -1870,8 +1981,8 @@ function vKI(){
    <div class="grid2">
     <label class="f">Anzahl Aufgaben<select id="ki-n">${[6,9,12].map(n=>`<option value="${n}" ${ki.n===n?'selected':''}>${n} Aufgaben</option>`).join('')}</select></label>
     <label class="f">Bearbeitungszeit<select id="ki-zeit">${[30,45,60,90].map(n=>`<option value="${n}" ${ki.zeit===n?'selected':''}>${n} Minuten</option>`).join('')}</select></label>
-    <label class="f">Verteilung der Stufen<select id="ki-mix"><option value="ausgewogen" ${ki.mix==='ausgewogen'?'selected':''}>gleichmäßig auf alle drei Stufen</option><option value="anwendung" ${ki.mix==='anwendung'?'selected':''}>Schwerpunkt Anwendung</option></select></label>
-    <label class="f" style="flex-direction:row;align-items:center;gap:8px;padding-top:24px"><input type="checkbox" id="ki-fall" ${ki.fall?'checked':''}> Stufe 3 mit Fallsituation</label>
+    <label class="f">Verteilung auf die Anforderungsbereiche<select id="ki-mix"><option value="ausgewogen" ${ki.mix==='ausgewogen'?'selected':''}>gleichmäßig auf alle drei Anforderungsbereiche</option><option value="anwendung" ${ki.mix==='anwendung'?'selected':''}>Schwerpunkt Anwendung</option></select></label>
+    <label class="f" style="flex-direction:row;align-items:center;gap:8px;padding-top:24px"><input type="checkbox" id="ki-fall" ${ki.fall?'checked':''}> AFB III mit Fallsituation</label>
    </div>
    <div class="prompt" id="ki-p1"></div>
    <div class="row"><button class="btn" id="ki-c1">Prompt 1 kopieren</button></div></div>
@@ -1880,13 +1991,14 @@ function vKI(){
    <div class="row"><button class="btn" id="ki-c2">Prompt 2 kopieren</button></div></div>`:''}
   <div class="card"><h3>Qualitäts-Check für die KI-Klausur</h3><ul class="plain">
    <li>Beginnt jede Aufgabe mit einem Operator aus der Liste?</li>
-   <li>Passt die Stufe zum Operator – und zur verlangten Antwortform?</li>
+   <li>Passt der Anforderungsbereich zum Operator – und zur verlangten Antwortform?</li>
    <li>Stehen alle Inhalte wirklich in deinem Material?</li>
    <li>Ist klar, wie viele Aspekte erwartet werden?</li>
    <li>Stimmen die Lösungen mit Skript und Lehrbuch überein?</li></ul>
    <p class="src">KI-Sprachmodelle bieten Chancen fürs Lernen, können aber falsche Inhalte erzeugen. Kritisches Prüfen bleibt nötig (Kasneci et al., 2023).</p></div>`;
 }
 AFTER.ki=()=>{
+  if(!kiBannerSeen)setTimeout(showKIBanner,250);
   document.querySelectorAll('[data-ksrc]').forEach(b=>b.onclick=()=>{const k=b.dataset.ksrc;ki.src=ki.src.includes(k)?ki.src.filter(x=>x!==k):[...ki.src,k];ki.ok=false;const y=window.scrollY;render();window.scrollTo({top:y})});
   document.querySelectorAll('[data-kck]').forEach(c=>c.onchange=()=>{ki.ck[c.dataset.kck]=c.checked;c.closest('.ck').classList.toggle('on',c.checked);$('#ki-confirm').disabled=!kiValid()});
   const cf=$('#ki-confirm');if(cf)cf.onclick=()=>{if(!kiValid())return;ki.ok=true;render();setTimeout(()=>{const p=$('#ki-thema');if(p)p.closest('.card').scrollIntoView({behavior:'smooth',block:'start'})},60);toast('Danke – der Prompt-Generator ist offen')};
@@ -1908,20 +2020,101 @@ function vQuellen(){
   return `<button class="back" data-go="start">← Zur Startseite</button>`+head('Quellen','Literatur','Alle Quellen im APA-Format (7. Auflage). Bei Zeitschriftenartikeln wurden Autorinnen, Jahr, Titel, Band, Seiten und DOI am 25.10.2026 über die Datenbank Crossref geprüft.')+
   `<div class="card"><div class="reflist">${ids.map(id=>`<p>${refHTML(id)}${REF[id].doi?'<span class="chk">✓ DOI geprüft</span>':'<span class="chk" style="color:var(--muted)">Buch, ohne DOI</span>'}</p>`).join('')}
   <p>Robinson, F. P. (1946). <i>Effective study.</i> Harper & Brothers. <span class="chk" style="color:var(--muted)">Buch, ohne DOI</span></p>
-  <p>Schewior-Popp, S. (2005). <i>Lernsituationen planen und gestalten: Handlungsorientierter Unterricht im Lernfeldkontext.</i> Thieme. <span class="chk" style="color:var(--muted)">laut Taxonomie-Blatt der Schule</span></p></div></div>
+  <p>Schewior-Popp, S. (2005). <i>Lernsituationen planen und gestalten: Handlungsorientierter Unterricht im Lernfeldkontext.</i> Thieme. <span class="chk" style="color:var(--muted)">laut Blatt mit den Anforderungsbereichen der Schule</span></p></div></div>
   <div class="box tip"><b class="k">Für eine wissenschaftliche Arbeit:</b> Die Effektgrößen in dieser App stammen aus den Zusammenfassungen der Artikel bzw. aus den deutschsprachigen Kurzfassungen des Clearing House Unterricht der TU München. Lies für eine Arbeit bitte immer das Original. Bei Büchern Auflage und Seitenzahlen am Exemplar prüfen.</div>
   <div class="row"><button class="btn small" id="q-copy">Alle Quellen kopieren</button><a class="btn small ghost" href="https://www.clearinghouse.edu.tum.de/" target="_blank" rel="noopener">Clearing House Unterricht</a></div>`;
 }
 AFTER.quellen=()=>{$('#q-copy').onclick=()=>{const ids=Object.keys(REF).sort((x,y)=>REF[x].a.localeCompare(REF[y].a,'de'));copy(ids.map(refText).join('\n\n'),'Alle Quellen kopiert')}};
 
-/* ---------- Start ---------- */
+/* ---------- Regeln vor dem Start & Banner „Selbst denken mit KI“ ---------- */
+const RKEY='lernkompass-regeln-v1';
+const rulesOk=()=>{const r=store.get(RKEY,null);return !!(r&&r.ok)};
+let kiBannerSeen=false;try{kiBannerSeen=sessionStorage.getItem('lk-ki-banner')==='1'}catch(e){}
+function rulesHTML(){
+  const L=(c,items)=>`<ul class="rl ${c}">${items.map(t=>`<li>${t}</li>`).join('')}</ul>`;
+  return `<div class="ampel">
+   <div class="am go"><div class="amh"><span class="dot"></span><h3>Erlaubt</h3></div>${L('g',['Deine <b>eigene Mitschrift</b> und deine eigenen Notizen','Zusammenfassungen <b>in deinen eigenen Worten</b>','Fragen zum Thema, die du selbst formulierst','Material, für das die Lehrkraft <b>zugestimmt</b> hat'])}</div>
+   <div class="am ask"><div class="amh"><span class="dot"></span><h3>Nur mit Erlaubnis</h3></div>${L('y',['<b>Skripte, Folien, Arbeitsblätter</b> von Lehrkräften – nur, wenn die Lehrkraft zugestimmt hat','<b>Lehrbücher und Fachartikel</b> – keine ganzen Seiten kopieren, lieber deine eigene Zusammenfassung','<b>Ton- oder Videoaufnahmen</b> aus dem Unterricht – nur mit Einwilligung von Lehrkraft und Klasse, nie weitergeben','<b>KI bei Prüfungen und bewerteten Arbeiten</b> – nur, wenn die Lehrkraft es ausdrücklich erlaubt'])}</div>
+   <div class="am no"><div class="amh"><span class="dot"></span><h3>Niemals</h3></div>${L('r',['<b>Patientendaten</b>, echte Namen, Inhalte aus der Pflegedokumentation oder aus Übergaben – auch nicht gekürzt oder „nur kurz“','<b>Aufnahmen aus der Praxis</b>','Persönliche Angaben über <b>Mitschülerinnen, Kolleginnen</b> oder Lehrkräfte'])}</div>
+  </div>
+  <div class="why"><h3>Warum diese Regeln?</h3><div class="whyg">
+   <div><b>Schweigepflicht &amp; Datenschutz</b><span>Gesundheitsdaten sind besonders geschützt (Art. 9 DSGVO).</span></div>
+   <div><b>Das gesprochene Wort</b><span>Andere ohne Einwilligung aufzunehmen, kann strafbar sein (§ 201 StGB).</span></div>
+   <div><b>Urheberrecht</b><span>Skripte, Folien und Bücher gehören denen, die sie erstellt haben.</span></div>
+   <div><b>Prüfungsregeln</b><span>Was bei bewerteten Leistungen erlaubt ist, regelt deine Schule.</span></div></div>
+   <p class="note">Vereinfacht dargestellt, keine Rechtsberatung. Zusätzlich gelten die Regeln deiner Schule.</p></div>
+  <div class="box info"><b>Und die App selbst?</b> Der Lernkompass hat keine Anmeldung und sendet nichts. Alles, was du einträgst, bleibt nur auf deinem Gerät.</div>`;
+}
+function lockScroll(on){document.documentElement.classList.toggle('noscroll',on)}
+function openGate(html,onReady){
+  const g=document.createElement('div');g.className='gate';g.setAttribute('role','dialog');g.setAttribute('aria-modal','true');g.setAttribute('aria-labelledby','gate-h');
+  g.innerHTML=`<div class="gate-card">${html}</div>`;document.body.appendChild(g);lockScroll(true);
+  requestAnimationFrame(()=>g.classList.add('on'));
+  const h=g.querySelector('#gate-h');if(h){h.setAttribute('tabindex','-1');h.focus({preventScroll:true})}
+  g.addEventListener('keydown',e=>{if(e.key!=='Tab')return;const f=[...g.querySelectorAll('button,input,a[href]')].filter(x=>!x.disabled);if(!f.length)return;const a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}});
+  const close=()=>{g.classList.remove('on');lockScroll(false);setTimeout(()=>g.remove(),300)};
+  onReady(g,close);
+}
+/* „gelesen“ = bis zum Ende gescrollt (oder alles passt auf den Bildschirm) */
+function watchEnd(g,cb){const end=g.querySelector('.gate-end'),sc=g.querySelector('.gate-card');
+  if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>{if(es.some(x=>x.isIntersecting)){io.disconnect();cb()}},{root:sc,threshold:1});io.observe(end)}else cb()}
+function showRules(){
+  if(document.querySelector('.gate'))return;
+  openGate(`<span class="badge">Bevor du startest</span><h1 id="gate-h">Was erlaubt ist – und was nicht</h1><span style="color:var(--rose);display:block">${FL}</span>
+   <p class="lead">Der Lernkompass hilft dir, mit deinen Unterlagen zu lernen – auch mit KI. Damit dabei niemand zu Schaden kommt, lies diese Regeln bitte einmal ganz durch.</p>
+   ${rulesHTML()}
+   <label class="ck gate-ck"><input type="checkbox" id="g-ok"><span class="bx">${ic('check')}</span><span>Ich habe die Regeln gelesen und halte mich daran.</span></label>
+   <div class="gate-end"></div>
+   <div class="gate-foot"><span class="gate-hint" id="g-hint">Bitte bis zum Ende lesen und bestätigen.</span><button class="btn" id="g-go" disabled>Verstanden – los geht’s</button></div>`,(g,close)=>{
+    let read=false;const ck=g.querySelector('#g-ok'),go=g.querySelector('#g-go'),hint=g.querySelector('#g-hint');
+    const upd=()=>{go.disabled=!(read&&ck.checked);hint.textContent=!read?'Bitte bis zum Ende lesen.':!ck.checked?'Bitte noch bestätigen.':'Danke!'};
+    watchEnd(g,()=>{read=true;upd()});
+    ck.onchange=()=>{ck.closest('.ck').classList.toggle('on',ck.checked);upd()};
+    go.onclick=()=>{store.set(RKEY,{ok:true,ts:Date.now()});close();toast('Danke – viel Freude beim Lernen!');if(view==='ki')setTimeout(showKIBanner,350)};
+  });
+}
+function showKIBanner(){
+  if(kiBannerSeen||!rulesOk()||document.querySelector('.gate'))return;
+  const SEC=15;
+  openGate(`<span class="badge">Bevor du KI nutzt</span><h1 id="gate-h">Selbst denken – mit KI</h1><span style="color:var(--lav);display:block">${FL}</span>
+   <p class="lead">KI kann dir beim Lernen helfen – oder dir das Lernen abnehmen. Der Unterschied: <b>Wer denkt?</b></p>
+   <div class="dodont">
+    <div class="dd do"><h3>${ic('check')} So denkst du selbst</h3><ul>
+     <li><b>Erst ich, dann die KI:</b> Beantworte die Frage zuerst selbst.</li>
+     <li>Lass dir von der KI <b>Fragen stellen</b> – und antworte aus dem Kopf.</li>
+     <li>Bitte um <b>einen Hinweis</b>, nicht um die Lösung.</li>
+     <li><b>Erklär der KI ein Thema</b> und lass dir Lücken zeigen.</li>
+     <li><b>Prüf jede Antwort</b> mit Skript und Lehrbuch.</li>
+     <li>Gib bei Abgaben an, <b>wofür du KI genutzt</b> hast.</li></ul></div>
+    <div class="dd dont"><h3>${ic('x')} So nicht</h3><ul>
+     <li>Hausaufgaben, Pflegeplanungen oder Reflexionen <b>schreiben lassen</b> und abgeben.</li>
+     <li>KI-Zusammenfassungen <b>nur durchlesen</b>, statt selbst zu üben.</li>
+     <li>Lösungen <b>abschreiben</b>, ohne sie zu verstehen.</li>
+     <li>Zahlen, Quellen oder Pflegefachliches – etwa Dosierungen – <b>ungeprüft übernehmen</b>.</li></ul></div>
+   </div>
+   <div class="box tip"><b>Warum das wichtig ist:</b> In einer Studie mit fast 1.000 Schülerinnen und Schülern wurden die Ergebnisse beim Üben mit KI um 48 % besser – in der Prüfung ohne KI aber um 17 % schlechter als ohne KI. Eine KI, die nur Hinweise gab, glich den Nachteil weitgehend aus (Bastani et al., 2025).</div>
+   <div class="gate-end"></div>
+   <div class="gate-foot"><span class="gate-hint" id="g-hint">Bitte lies den Hinweis …</span><button class="btn" id="g-go" disabled>Noch ${SEC} Sek.</button></div>`,(g,close)=>{
+    let left=SEC,read=false;const go=g.querySelector('#g-go'),hint=g.querySelector('#g-hint');
+    const upd=()=>{const ok=left<=0&&read;go.disabled=!ok;go.textContent=left>0?`Noch ${left} Sek.`:'Verstanden – ich denke selbst';hint.textContent=!read?'Bitte bis zum Ende lesen.':left>0?'Gleich geht’s weiter …':'Danke!'};
+    const t=setInterval(()=>{left--;upd();if(left<=0)clearInterval(t)},1000);
+    watchEnd(g,()=>{read=true;upd()});upd();
+    go.onclick=()=>{clearInterval(t);kiBannerSeen=true;try{sessionStorage.setItem('lk-ki-banner','1')}catch(e){}close()};
+  });
+}
+function vRegeln(){return head('Regeln','Was erlaubt ist – und was nicht','Welches Material du nutzen darfst – mit und ohne KI – und warum.','')+`<div class="card">${rulesHTML()}</div>
+  <div class="row"><button class="btn small ghost" id="rg-ki">Hinweis „Selbst denken mit KI“ noch einmal lesen</button></div>`}
+AFTER.regeln=()=>{$('#rg-ki').onclick=()=>{kiBannerSeen=false;showKIBanner()}};
+
+/* ---------- Startlogik ---------- */
 function fromHash(){const h=location.hash.replace('#','');
  if(h.startsWith('t=')){tandemIn(h.slice(2));return ['pakete',null]}
  if(h.startsWith('methode-')&&MBY[h.slice(8)])return ['methode',h.slice(8)];
- if(['start','plan','finder','methoden','abruf','timer','mehr','auswerten','durchatmen','schlaf','klausurtag','pakete','woche','anfangen','ki','quellen'].includes(h))return [h,null];
+ if(['start','plan','finder','methoden','abruf','timer','mehr','auswerten','durchatmen','schlaf','klausurtag','pakete','woche','regeln','anfangen','ki','quellen'].includes(h))return [h,null];
  return null}
 const fh=fromHash();if(fh){view=fh[0];param=fh[1]}
 render();
+if(!rulesOk())setTimeout(showRules,400);
 window.addEventListener('hashchange',()=>{const f=fromHash();if(f&&(f[0]!==view||f[1]!==param))go(f[0],f[1])});
 document.addEventListener('pointerdown',unlock,{once:true});
 if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost')){navigator.serviceWorker.register('sw.js').catch(()=>{})}

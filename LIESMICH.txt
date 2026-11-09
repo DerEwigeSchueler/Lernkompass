@@ -17,10 +17,10 @@ Deploy from a branch → main → / (root) → Save.
 Update: einfach alle Dateien erneut hochladen (vorhandene werden ersetzt).
 
 Direktlinks: <Adresse>/#plan · #finder · #methoden · #abruf · #timer · #auswerten
-             #pakete · #anfangen · #ki · #durchatmen · #schlaf · #klausurtag · #woche · #quellen
+             #pakete · #anfangen · #ki · #durchatmen · #schlaf · #klausurtag · #woche · #regeln · #quellen
 Einzelne Methode: #methode-abruf, #methode-verteilt, #methode-karten …
 
-Später etwas geändert? In sw.js  const VERSION = 'lk-v9';  hochzählen und neu hochladen.
+Später etwas geändert? In sw.js  const VERSION = 'lk-v11';  hochzählen und neu hochladen.
 
 Datenschutz: Die App hat keine Anmeldung und sendet nichts. Lernplan, Abruf-Wiederholungen,
 Lerntagebuch, Schlaf-Einstellungen, Klausur- und Wochenrückblicke werden nur auf dem
